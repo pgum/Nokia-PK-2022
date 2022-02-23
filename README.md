@@ -2,6 +2,12 @@
 
 ## Nie pushujemy/zmieniamy mastera w tym repozytorium
 
+## Tree
+ * BTS, COMMON, UE - components
+ * googletest - ut library
+ * docs - project documentation
+ * lectures - notes and examples from lectures
+
 ## Pytania techniczne
 Używamy **/issues**
 
