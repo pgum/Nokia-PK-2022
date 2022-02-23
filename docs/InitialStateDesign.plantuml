@@ -1,0 +1,19 @@
+@startuml
+title Initial States Design
+
+state BaseState {
+
+state NotConnectedState 
+state ConnectingState 
+state ConnectedState 
+
+NotConnectedState --> ConnectingState : handleSib(btsId) \n sendAttachRequest(btsId),showConnecting(),startTimer(500ms)
+
+ConnectingState --> ConnectedState  : handleAttachAccept() \n stopTimer(),showConnected()
+
+ConnectingState --> NotConnectedState  : handleAttachReject() \n stopTimer(),showNotConnected()
+ConnectingState --> NotConnectedState  : handleTimeout() \n showNotConnected()
+
+
+}
+@enduml

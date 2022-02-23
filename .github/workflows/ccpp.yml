@@ -1,0 +1,37 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2
+    - name: cmake
+      run: cmake .
+    - name: make all targets
+      run: make all
+
+    - name: UT for BtsApplication
+      run: make BtsApplicationUT 
+
+    - name: run BTS ut
+      run: ./BTS/Tests/Application/BtsApplicationUT
+
+    - name: UT for COMMON
+      run: make COMMON_UT
+
+    - name: UT for UeApplication
+      run: make UeApplicationUT
+
+    - name: next steps
+      run: echo "Here you can add next steps"
+

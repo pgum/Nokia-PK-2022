@@ -1,0 +1,58 @@
+@startuml
+title Initial design
+
+package ApplicationEnvironment {
+class ITransport
+class IUeGui
+}
+
+interface IBtsEventsHandler {
+    handleSib(btsId)
+    handleAttachAccept()
+    handleAttachReject()
+}
+interface IBtsPort {
+ sendAttachRequest(btsId)
+}
+class BtsPort
+BtsPort --|> IBtsPort
+BtsPort ---> IBtsEventsHandler 
+BtsPort ---> ITransport
+
+
+interface ITimerPort {
+ startTimer(duration)
+ stopTimer()
+}
+interface ITimerEventsHandler {
+  handleTimeout()
+}
+class TimerPort
+TimerPort --|> ITimerPort
+TimerPort ---> ITimerEventsHandler 
+
+
+interface IUserPort {
+ showNotConnected()
+ showConnecting()
+ showConnected()
+}
+interface IUserEventsHandler {
+  # TBD, like handleEditSms
+}
+class UserPort
+UserPort --|> IUserPort
+UserPort ---> IUserEventsHandler
+UserPort ---> IUeGui
+
+interface IEventsHandler
+IEventsHandler --|> IBtsEventsHandler
+IEventsHandler --|> ITimerEventsHandler
+IEventsHandler --|> IUserEventsHandler
+
+class Application
+Application --|> IEventsHandler 
+Application ---> IBtsPort
+Application ---> ITimerPort
+Application ---> IUserPort
+@enduml
