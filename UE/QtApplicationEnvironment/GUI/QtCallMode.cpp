@@ -44,6 +44,11 @@ void QtCallMode::activateForDialModeSlot()
     activateWithPhoneNumberEditEnabled();
 }
 
+void QtCallMode::clearIncomingText()
+{
+    incomingTextEdit.clear();
+}
+
 void QtCallMode::appendIncomingText(const std::string &text)
 {
     emit appendTalkTextSignal(QString::fromStdString(text));

@@ -23,7 +23,7 @@ struct IUeGuiMock : public IUeGui
     MOCK_METHOD(void, showConnected, (), (final));
     MOCK_METHOD(void, showConnecting, (), (final));
     MOCK_METHOD(void, showNotConnected, (), (final));
-    MOCK_METHOD(void, showNewSms, (), (final));
+    MOCK_METHOD(void, showNewSms, (bool present), (final));
     MOCK_METHOD(void, showPeerUserNotAvailable, (common::PhoneNumber), (final));
 
     MOCK_METHOD(IListViewMode&, setListViewMode, (), (final));
@@ -71,6 +71,7 @@ public:
     ICallModeMock();
     ~ICallModeMock() override;
 
+    MOCK_METHOD(void, clearIncomingText, (), (final));
     MOCK_METHOD(void, appendIncomingText, (const std::string &text), (final));
     MOCK_METHOD(void, clearOutgoingText, (), (final));
     MOCK_METHOD(std::string, getOutgoingText, (), (const, final));

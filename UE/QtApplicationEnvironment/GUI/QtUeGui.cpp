@@ -223,9 +223,9 @@ void QtUeGui::showNotConnected()
     emit setConnectedStateSignal("Not connected", false);
 }
 
-void QtUeGui::showNewSms()
+void QtUeGui::showNewSms(bool present)
 {
-    emit setNewMessageSignal(true);
+    emit setNewMessageSignal(present);
 }
 
 void QtUeGui::showPeerUserNotAvailable(PhoneNumber peer)
