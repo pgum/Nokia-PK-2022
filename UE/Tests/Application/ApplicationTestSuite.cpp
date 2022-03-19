@@ -11,29 +11,57 @@
 
 namespace ue
 {
-using namespace ::testing;
+    using namespace ::testing;
 
-class ApplicationTestSuite : public Test
-{
-protected:
-    const common::PhoneNumber PHONE_NUMBER{112};
-    NiceMock<common::ILoggerMock> loggerMock;
-    StrictMock<IBtsPortMock> btsPortMock;
-    StrictMock<IUserPortMock> userPortMock;
-    StrictMock<ITimerPortMock> timerPortMock;
+    class ApplicationTestSuite : public Test
+    {
+    protected:
+        const common::PhoneNumber PHONE_NUMBER{112};
+        const common::BtsId BTS_ID{42};
+        NiceMock<common::ILoggerMock> loggerMock;
+        StrictMock<IBtsPortMock> btsPortMock;
+        StrictMock<IUserPortMock> userPortMock;
+        StrictMock<ITimerPortMock> timerPortMock;
 
-    Application objectUnderTest{PHONE_NUMBER,
-                                loggerMock,
-                                btsPortMock,
-                                userPortMock,
-                                timerPortMock};
-};
+        Application objectUnderTest{PHONE_NUMBER,
+                                    loggerMock,
+                                    btsPortMock,
+                                    userPortMock,
+                                    timerPortMock};
+    };
 
-struct ApplicationNotConnectedTestSuite : ApplicationTestSuite
-{};
+    struct ApplicationNotConnectedTestSuite : ApplicationTestSuite
+    {
+        void requestAttachOnSib();
+    };
 
-TEST_F(ApplicationNotConnectedTestSuite, todo)
-{
-}
+    void ApplicationNotConnectedTestSuite::requestAttachOnSib()
+    {
+        EXPECT_CALL(btsPortMock, sendAttachRequest(BTS_ID));
+        EXPECT_CALL(timerPortMock, startTimer(_));
+        EXPECT_CALL(userPortMock, showConnecting());
+        objectUnderTest.handleSib(BTS_ID);
+    }
 
+    TEST_F(ApplicationNotConnectedTestSuite, shallRequestAttachOnSib)
+    {
+        requestAttachOnSib();
+    }
+
+    struct ApplicationConnectingTestSuite : ApplicationNotConnectedTestSuite
+    {
+        ApplicationConnectingTestSuite();
+    };
+
+    ApplicationConnectingTestSuite::ApplicationConnectingTestSuite()
+    {
+        requestAttachOnSib();
+    }
+
+    TEST_F(ApplicationConnectingTestSuite, shallCompleteAttachWhenAttachAccepted)
+    {
+        EXPECT_CALL(timerPortMock, stopTimer());
+        EXPECT_CALL(userPortMock, showConnected());
+        objectUnderTest.handleAttachAccept();
+    }
 }
