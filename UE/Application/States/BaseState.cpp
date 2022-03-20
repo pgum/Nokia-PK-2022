@@ -27,7 +27,7 @@ void BaseState::handleSib(common::BtsId btsId)
 
 void BaseState::handleAttachAccept()
 {
-    logger.logError("Uexpected: handleTimeout");
+    logger.logError("Uexpected: handleAttachAccept");
 }
 
 void BaseState::handleAttachReject()
