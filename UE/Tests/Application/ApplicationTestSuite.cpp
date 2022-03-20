@@ -23,6 +23,8 @@ namespace ue
         StrictMock<IUserPortMock> userPortMock;
         StrictMock<ITimerPortMock> timerPortMock;
 
+        Expectation expectNotConnected = EXPECT_CALL(userPortMock, showNotConnected());
+
         Application objectUnderTest{PHONE_NUMBER,
                                     loggerMock,
                                     btsPortMock,
@@ -63,5 +65,12 @@ namespace ue
         EXPECT_CALL(timerPortMock, stopTimer());
         EXPECT_CALL(userPortMock, showConnected());
         objectUnderTest.handleAttachAccept();
+    }
+
+    TEST_F(ApplicationConnectingTestSuite, shallFailAttachWhenAttachRejected)
+    {
+        EXPECT_CALL(timerPortMock, stopTimer());
+        EXPECT_CALL(userPortMock, showNotConnected());
+        objectUnderTest.handleAttachReject();
     }
 }
