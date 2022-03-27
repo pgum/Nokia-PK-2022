@@ -9,6 +9,10 @@ class NotConnectedState : public BaseState
 {
 public:
     NotConnectedState(Context& context);
+
+    // IBtsEventsHandler interface
+public:
+    virtual void handleSib(common::BtsId btsId) override;
 };
 
 }
