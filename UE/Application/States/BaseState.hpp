@@ -19,8 +19,9 @@ public:
     void handleAttachAccept() override;
     void handleAttachReject() override;
 
-private:
+protected:
     Context& context;
+private:
     common::PrefixedLogger logger;
 };
 
