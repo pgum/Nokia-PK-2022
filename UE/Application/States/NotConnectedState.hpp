@@ -12,6 +12,7 @@ public:
 
     // IBtsEventsHandler interface
 public:
+    NotConnectedState(Context& context);
     virtual void handleSib(common::BtsId btsId) override;
 };
 

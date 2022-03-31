@@ -21,7 +21,6 @@ public:
 
 protected:
     Context& context;
-private:
     common::PrefixedLogger logger;
 };
 
