@@ -12,7 +12,7 @@ Application::Application(common::PhoneNumber phoneNumber,
     : context{iLogger, bts, user, timer},
       logger(iLogger, "[APP] ")
 {
-    logger.logInfo("Started");
+    logger.logInfo("Startedddd");
     context.setState<NotConnectedState>();
 }
 
