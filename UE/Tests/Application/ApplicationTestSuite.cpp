@@ -78,4 +78,32 @@ TEST_F(ApplicationConnectingTestSuite, shallFailAttachOnTimerout)
     objectUnderTest.handleTimeout();
 }
 
+struct ApplicationConnectedTestSuite : ApplicationConnectingTestSuite {
+    ApplicationConnectedTestSuite();
+};
+
+ApplicationConnectedTestSuite::ApplicationConnectedTestSuite() {
+    EXPECT_CALL(timerPortMock, stopTimer());
+    EXPECT_CALL(userPortMock, showConnected());
+    objectUnderTest.handleAttachAccept();
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallShowNotConnectedWhenDisconnected)
+{
+    EXPECT_CALL(userPortMock, showNotConnected());
+    objectUnderTest.handleDisconnected();
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallReattach)
+{
+    EXPECT_CALL(userPortMock, showNotConnected());
+    objectUnderTest.handleDisconnected();
+
+    requestAttachOnSib();
+
+    EXPECT_CALL(timerPortMock, stopTimer());
+    EXPECT_CALL(userPortMock, showConnected());
+    objectUnderTest.handleAttachAccept();
+}
+
 }
