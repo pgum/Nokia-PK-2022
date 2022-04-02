@@ -19,6 +19,7 @@ public:
 
 private:
     void handleMessage(BinaryMessage msg);
+    void handleDisconnected();
 
     common::PrefixedLogger logger;
     common::ITransport& transport;
