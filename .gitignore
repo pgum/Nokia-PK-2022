@@ -13,3 +13,6 @@ _deps
 *.a
 *.o
 *_autogen
+
+.idea
+googletest
