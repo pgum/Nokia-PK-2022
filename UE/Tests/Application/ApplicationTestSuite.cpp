@@ -132,7 +132,7 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleReceivingSMS)
     EXPECT_CALL(userPortMock, showNewSMS());
     // TODO: Add EXPECT_CALL for SMS DB adding new sms
 
-    //objectUnderTest.handleSMS(SENDER_NUMBER,MESSAGE);
+    objectUnderTest.handleSMS(SENDER_NUMBER,MESSAGE);
 }
 
 
