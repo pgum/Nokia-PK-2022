@@ -39,4 +39,10 @@ void UserPort::showConnected()
     menu.addSelectionListItem("View SMS", "");
 }
 
+void UserPort::showNewSMS()
+{
+    gui.showNewSms(true); // shows little 'M' in top bar, if false the 'M' is gray
+    // I think its all this function has to do
+}
+
 }

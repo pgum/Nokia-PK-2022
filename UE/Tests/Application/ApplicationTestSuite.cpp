@@ -18,6 +18,8 @@ class ApplicationTestSuite : public Test
 protected:
     const common::PhoneNumber PHONE_NUMBER{112};
     const common::BtsId BTS_ID{42};
+    const common::PhoneNumber SENDER_NUMBER{111};
+    const std::string MESSAGE = "Hello there!";
     NiceMock<common::ILoggerMock> loggerMock;
     StrictMock<IBtsPortMock> btsPortMock;
     StrictMock<IUserPortMock> userPortMock;
@@ -44,7 +46,7 @@ void ApplicationNotConnectedTestSuite::requestAttachOnSib()
 {
     EXPECT_CALL(btsPortMock, sendAttachRequest(BTS_ID));
     EXPECT_CALL(timerPortMock, startTimer(_));
-    EXPECT_CALL(userPortMock,showConnecting());
+    EXPECT_CALL(userPortMock, showConnecting());
 
     objectUnderTest.handleSib(BTS_ID);
 }
@@ -123,6 +125,16 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleDisconnect)
 
     objectUnderTest.handleDisconnected();
 }
+
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleReceivingSMS)
+{
+    EXPECT_CALL(userPortMock, showNewSMS());
+    // TODO: Add EXPECT_CALL for SMS DB adding new sms
+
+    //objectUnderTest.handleSMS(SENDER_NUMBER,MESSAGE);
+}
+
 
 
 }

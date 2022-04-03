@@ -40,4 +40,9 @@ void BaseState::handleDisconnected()
     logger.logInfo("Uexpected: handleDisconnected");
 }
 
+//void BaseState::handleSMS()
+//{
+//    logger.logInfo("Uexpected: handleSMS");
+//}
+
 }

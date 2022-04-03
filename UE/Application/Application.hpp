@@ -29,6 +29,7 @@ public:
     void handleAttachAccept() override;
     void handleAttachReject() override;
     void handleDisconnected() override;
+    //void handleSMS() override;
 
 private:
     Context context;

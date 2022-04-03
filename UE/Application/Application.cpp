@@ -46,4 +46,9 @@ void Application::handleDisconnected()
     context.state->handleDisconnected();
 }
 
+//void Application::handleSMS()
+//{
+//    context.state->handleSMS();
+//}
+
 }
