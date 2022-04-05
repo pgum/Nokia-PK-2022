@@ -24,21 +24,31 @@ Application::~Application()
 void Application::handleTimeout()
 {
     context.state->handleTimeout();
+    logger.logError("Timeout");
 }
 
 void Application::handleSib(common::BtsId btsId)
 {
+    logger.logInfo("Handling Sib");
     context.state->handleSib(btsId);
 }
 
 void Application::handleAttachAccept()
 {
     context.state->handleAttachAccept();
+    logger.logInfo("Attached");
 }
 
 void Application::handleAttachReject()
 {
     context.state->handleAttachReject();
+    logger.logError("Cannot attach");
+}
+
+void Application::handleDisconnected()
+{
+    logger.logInfo("Disconnecting");
+    context.state->handleDisconnected();
 }
 
 }
