@@ -1,23 +1,17 @@
 #include <Sms.hpp>
 
 
-ue::SMS::SMS()
+ue::SMS::SMS( std::string set_smsMessage, common::PhoneNumber set_senderPhoneNumber)
 {
-    //TODO
-    //Konstruktor
+    ue::SMS::viewStatus = 1; //unread
+    ue::SMS::smsMessage = set_smsMessage;
+    ue::SMS::senderPhoneNumber = set_senderPhoneNumber;
+    ue::SMS::smsId ;
+    ue::SMS::recivingTime = std::chrono::system_clock::now();
+
 }
 void ue::SMS::changeViewStatus()
 {
     //todo
     //ustawienie ze dany sms jest lub by odczytany
 }
-void ue::SMS::setSms()
-{
-    //todo
-    //ustawienie zawartosci SMS
-}
- ue::SMS::~SMS()
- {
-     //todo
-     //Konstruktor
- }

@@ -4,6 +4,9 @@
 #include "Sms.hpp"
 #include "PhoneNumber.hpp"
 
+//Uwaga
+//do wszystkiego wykorzystamy fukncje z folderu common>messages
+
 namespace ue
 {
 
