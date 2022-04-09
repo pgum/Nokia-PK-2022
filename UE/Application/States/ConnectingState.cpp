@@ -1,5 +1,6 @@
 #include "ConnectingState.hpp"
 #include "ConnectedState.hpp"
+#include "NotConnectedState.hpp"
 
 namespace ue
 {
@@ -16,4 +17,10 @@ namespace ue
         context.setState<ConnectedState>();
     }
 
+
+    void ConnectingState::handleAttachReject()
+    {
+        context.timer.stopTimer();
+        context.setState<NotConnectedState>();
+    }
 }
