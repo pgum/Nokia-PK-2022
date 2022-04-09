@@ -5,5 +5,5 @@ aux_source_directory(. SRC_LIST)
 aux_source_directory(Ports SRC_LIST)
 aux_source_directory(States SRC_LIST)
 
-add_library(${PROJECT_NAME} ${SRC_LIST} SMS/SMS.hpp)
+add_library(${PROJECT_NAME} ${SRC_LIST} SMS/SMS.hpp SMS/SMS_DB.cpp SMS/SMS_DB.hpp)
 target_link_libraries(${PROJECT_NAME} Common)
