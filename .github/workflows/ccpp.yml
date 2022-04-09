@@ -2,9 +2,9 @@ name: C/C++ CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   build:
@@ -32,6 +32,6 @@ jobs:
     - name: UT for UeApplication
       run: make UeApplicationUT
 
-    - name: next steps
-      run: echo "Here you can add next steps"
+    - name: run UeApplication ut
+      run: ./UE/Tests/Application/UeApplicationUT
 
