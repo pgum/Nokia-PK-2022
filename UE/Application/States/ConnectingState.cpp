@@ -23,4 +23,9 @@ namespace ue
         context.timer.stopTimer();
         context.setState<NotConnectedState>();
     }
+
+    void ConnectingState::handleTimeout()
+    {
+        context.setState<NotConnectedState>();
+    }
 }
