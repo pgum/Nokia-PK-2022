@@ -10,6 +10,8 @@ class IBtsEventsHandler
 public:
     virtual ~IBtsEventsHandler() = default;
 
+    virtual void handleDisconnected() = 0;
+
     virtual void handleSib(common::BtsId) = 0;
     virtual void handleAttachAccept() = 0;
     virtual void handleAttachReject() = 0;

@@ -20,6 +20,11 @@ void BaseState::handleTimeout()
     logger.logError("Uexpected: handleTimeout");
 }
 
+void BaseState::handleDisconnected()
+{
+    logger.logError("Uexpected: handleDisconnnected");
+}
+
 void BaseState::handleSib(common::BtsId btsId)
 {
     logger.logError("Uexpected: handleSib: ", btsId);

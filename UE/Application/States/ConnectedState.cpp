@@ -1,4 +1,5 @@
 #include "ConnectedState.hpp"
+#include "NotConnectedState.hpp"
 
 namespace ue
 {
@@ -6,7 +7,12 @@ namespace ue
     ConnectedState::ConnectedState(Context &context)
         : BaseState(context, "ConnectedState")
     {
-         context.user.showConnected();
+        context.user.showConnected();
+    }
+
+    void ConnectedState::handleDisconnected()
+    {
+        context.setState<NotConnectedState>();
     }
 
 }
