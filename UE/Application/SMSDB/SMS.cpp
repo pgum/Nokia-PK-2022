@@ -7,6 +7,16 @@ namespace ue
 
     }
 
+    SMS::SMS(const SMS& sms)
+    {
+
+    }
+
+    SMS& SMS::operator=(const SMS& sms)
+    {
+
+    }
+
     std::string SMS::getMessageSummary()
     {
 
