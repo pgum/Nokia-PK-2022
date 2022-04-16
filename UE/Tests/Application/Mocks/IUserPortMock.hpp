@@ -24,6 +24,7 @@ public:
     MOCK_METHOD(void, showConnecting, (), (final));
     MOCK_METHOD(void, showConnected, (), (final));
     MOCK_METHOD(void, showNewSMS, (), (final));
+    MOCK_METHOD(void, showSMSList, (), (final));
 };
 
 }

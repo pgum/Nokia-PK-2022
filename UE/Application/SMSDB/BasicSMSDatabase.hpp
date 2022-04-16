@@ -8,7 +8,7 @@ namespace ue
 class BasicSMSDatabase : ISMSDatabase{
 public:
     BasicSMSDatabase();
-    void AddMessage(common::PhoneNumber phoneNumber, std::string message) override;
+    void addSMS(common::PhoneNumber from, common::PhoneNumber to, std::string message) override;
 };
 
 }

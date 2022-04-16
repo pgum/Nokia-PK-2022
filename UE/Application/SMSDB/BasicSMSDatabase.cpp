@@ -7,7 +7,7 @@ namespace ue
 
     }
 
-    void BasicSMSDatabase::AddMessage(common::PhoneNumber phoneNumber, std::string message)
+    void BasicSMSDatabase::addSMS(common::PhoneNumber from, common::PhoneNumber to, std::string message)
     {
 
     }

@@ -45,4 +45,9 @@ void UserPort::showNewSMS()
     // I think its all this function has to do
 }
 
+void UserPort::showSMSList()
+{
+    gui.showNewSms(true);
+}
+
 }
