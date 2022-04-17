@@ -19,7 +19,7 @@ public:
     void showConnecting() override;
     void showConnected() override;
     void showNewSMS() override;
-
+    void showSMSList() override;
 private:
     common::PrefixedLogger logger;
     IUeGui& gui;
