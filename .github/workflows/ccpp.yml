@@ -31,6 +31,9 @@ jobs:
 
     - name: UT for UeApplication
       run: make UeApplicationUT
+  
+    - name: run UE ut
+      run: ./UE/Tests/Application/UeApplicationUT
 
     - name: next steps
       run: echo "Here you can add next steps"
