@@ -4,38 +4,57 @@
 
 namespace ue
 {
+    SMS::SMS()
+    {
+        from = common::PhoneNumber{0};
+        to = common::PhoneNumber{0};
+        message = "";
+
+    }
+
     SMS::SMS(common::PhoneNumber from, common::PhoneNumber to, std::string message)
     {
-        throw std::logic_error("Not implemented!");
+        this->from = from;
+        this->to = to;
+        this->message = message;
     }
 
-    SMS::SMS(const SMS& sms)
+    SMS::SMS(const SMS& other)
     {
-        throw std::logic_error("Not implemented!");
+        this->to = other.to;
+        this->from = other.from;
+        this->message = other.message;
     }
 
-    SMS& SMS::operator=(const SMS& sms)
+    SMS& SMS::operator=(const SMS& other)
     {
-        throw std::logic_error("Not implemented!");
+        if(this == &other)
+            return *this;
+
+        this->to = other.to;
+        this->from = other.from;
+        this->message = other.message;
+
+        return *this;
     }
 
     std::string SMS::getMessageSummary()
     {
-        throw std::logic_error("Not implemented!");
+        return message.substr(0,MAX_SUMMARY_SIZE);
     }
 
     std::string SMS::getMessage()
     {
-        throw std::logic_error("Not implemented!");
+        return message;
     }
 
     common::PhoneNumber SMS::getFromNumber()
     {
-        throw std::logic_error("Not implemented!");
+        return from;
     }
 
     common::PhoneNumber SMS::getToNumber()
     {
-        throw std::logic_error("Not implemented!");
+        return to;
     }
 }
