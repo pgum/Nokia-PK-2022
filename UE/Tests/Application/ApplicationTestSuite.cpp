@@ -73,7 +73,6 @@ TEST_F(ApplicationConnectingTestSuite, shallFailAttachOnTimeout) {
     EXPECT_CALL(userPortMock, showNotConnected());
     objectUnderTest.handleTimeout();
 }
-//reatach
 
 struct ApplicationConnectedTestSuite : ApplicationNotConnectedTestSuite
 {
