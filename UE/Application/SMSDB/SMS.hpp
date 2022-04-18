@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Messages/PhoneNumber.hpp"
+#include "ITextMessege.hpp"
 
 namespace
 {
@@ -9,17 +10,18 @@ namespace
 
 namespace ue{
 
-class SMS{
+class SMS : ITextMessage
+{
 public:
     SMS();
     SMS(common::PhoneNumber from, common::PhoneNumber to, std::string message);
     SMS(const SMS &sms);
     SMS &operator =(const SMS &sms);
 
-    std::string getMessageSummary();                    // let summary be less than 16 characters long (for optimization)
-    std::string getMessage();                           // get full message
-    common::PhoneNumber getFromNumber();
-    common::PhoneNumber getToNumber();
+    std::string getMessageSummary() override;
+    std::string getMessage() override;
+    common::PhoneNumber getFromNumber() override;
+    common::PhoneNumber getToNumber() override;
 
 private:
     std::string message;
