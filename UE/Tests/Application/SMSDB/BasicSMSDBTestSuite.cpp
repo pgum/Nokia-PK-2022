@@ -47,9 +47,9 @@ TEST_F(SingleRecordSMSDBTestSuite, shallReturnAddedDestinationNumber)
 
 TEST_F(SingleRecordSMSDBTestSuite, shallReturnVectorOfOneSummary)
 {
-    auto resultVector = objectUnderTest.viewAllSMS();
+    auto resultVector = objectUnderTest.getAllSMS();
     ASSERT_EQ(resultVector.size(),1);
-    ASSERT_EQ(resultVector[0],SUMMARIES[0]);
+    ASSERT_EQ(resultVector[0].second.getMessageSummary(),SUMMARIES[0]);
 }
 
 struct MultipleRecordsSMSDBTestSuite : BasicSMSDBTestSuite
@@ -94,12 +94,12 @@ TEST_F(MultipleRecordsSMSDBTestSuite, shallReturnAddedDestinationNumbers)
 
 TEST_F(MultipleRecordsSMSDBTestSuite, shallReturnVectorOfSummaries)
 {
-    auto resultVector = objectUnderTest.viewAllSMS();
+    auto resultVector = objectUnderTest.getAllSMS();
 
     ASSERT_EQ(resultVector.size(), 3);
 
-    ASSERT_EQ(resultVector[0], SUMMARIES[0]);
-    ASSERT_EQ(resultVector[1], SUMMARIES[1]);
+    ASSERT_EQ(resultVector[0].second.getMessageSummary(), SUMMARIES[0]);
+    ASSERT_EQ(resultVector[1].second.getMessageSummary(), SUMMARIES[1]);
 
-    ASSERT_EQ(resultVector[2], REPLY_SUMMARY);
+    ASSERT_EQ(resultVector[2].second.getMessageSummary(), REPLY_SUMMARY);
 }

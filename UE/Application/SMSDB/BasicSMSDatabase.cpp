@@ -4,23 +4,28 @@
 
 namespace ue
 {
+
+
     BasicSMSDatabase::BasicSMSDatabase()
+        : nextId{0}
     {
-        throw std::logic_error("Not implemented!");
     }
 
     void BasicSMSDatabase::addSMS(common::PhoneNumber from, common::PhoneNumber to, std::string message)
     {
-        throw std::logic_error("Not implemented!");
+        data.push_back(
+                std::pair<unsigned int, ue::SMS>
+                        {nextId++,SMS{from,to,message}}
+                        );
     }
 
-    ue::SMS BasicSMSDatabase::getSMS(int id)
+    ue::SMS BasicSMSDatabase::getSMS(unsigned int id)
     {
-        throw std::logic_error("Not implemented!");
+        return data.at(id).second;
     }
 
-    std::vector<std::string> BasicSMSDatabase::viewAllSMS()
+    std::vector<std::pair<unsigned int, ue::SMS>> BasicSMSDatabase::getAllSMS()
     {
-        throw std::logic_error("Not implemented!");
+        return data;
     }
 }
