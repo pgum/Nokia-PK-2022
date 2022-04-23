@@ -37,6 +37,14 @@ void UserPort::showConnected()
     menu.clearSelectionList();
     menu.addSelectionListItem("Compose SMS", "");
     menu.addSelectionListItem("View SMS", "");
+
+    gui.setAcceptCallback([&menu]() -> void
+    {
+        auto elementClicked = menu.getCurrentItemIndex();
+        menu.clearSelectionList();
+        menu.addSelectionListItem(std::to_string( elementClicked.second ),"asd");
+    });
+
 }
 
 void UserPort::showNewSMS()
