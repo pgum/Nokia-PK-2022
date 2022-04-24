@@ -6,7 +6,8 @@
 namespace ue
 {
 
-class BasicSMSDatabase : ISMSDatabase{
+class BasicSMSDatabase : public ISMSDatabase
+{
 public:
     BasicSMSDatabase();
     void addSMS(common::PhoneNumber from, common::PhoneNumber to, std::string message) override;

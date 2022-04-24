@@ -10,7 +10,7 @@ namespace
 
 namespace ue{
 
-class SMS : ITextMessage
+class SMS : public ITextMessage
 {
 public:
     SMS();
