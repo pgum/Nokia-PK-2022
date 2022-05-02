@@ -18,12 +18,21 @@ public:
     void showNotConnected() override;
     void showConnecting() override;
     void showConnected() override;
+    void showViewingSms() override;
+    void acceptCallbackClicked(IUeGui::IListViewMode& menu);
+    void acceptCallback(IUeGui::Callback acceptCallback) override;
+    void rejectCallback(IUeGui::Callback rejectCallback) override;
+    int getMenuIndex() override;
+
 
 private:
     common::PrefixedLogger logger;
     IUeGui& gui;
     common::PhoneNumber phoneNumber;
     IUserEventsHandler* handler = nullptr;
+    IUeGui::Callback currentCallbackState;
+    int menuIndex = -1;
+
 };
 
 }
