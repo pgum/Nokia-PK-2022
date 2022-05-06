@@ -3,6 +3,7 @@
 #include "Ports/BtsPort.hpp"
 #include "Ports/UserPort.hpp"
 #include "Ports/TimerPort.hpp"
+#include "SMSDB/BasicSMSDatabase.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -18,11 +19,17 @@ int main(int argc, char* argv[])
     BtsPort bts(logger, tranport, phoneNumber);
     UserPort user(logger, gui, phoneNumber);
     TimerPort timer(logger);
-    Application app(phoneNumber, logger, bts, user, timer);
+
+    BasicSMSDatabase smsDb{};
+
+    Application app(phoneNumber, logger, bts, user, timer, smsDb);
+
     bts.start(app);
     user.start(app);
     timer.start(app);
+
     appEnv->startMessageLoop();
+
     bts.stop();
     user.stop();
     timer.stop();
