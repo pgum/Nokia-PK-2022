@@ -13,6 +13,8 @@ public:
     virtual void handleSib(common::BtsId) = 0;
     virtual void handleAttachAccept() = 0;
     virtual void handleAttachReject() = 0;
+
+    virtual void handleSmsReceive(uint8_t, std::string) = 0; // TODO: poprawic
     virtual void handleDisconnected() = 0;
 
 };

@@ -25,6 +25,8 @@ public:
     ~IBtsPortMock() override;
 
     MOCK_METHOD(void, sendAttachRequest, (common::BtsId), (final));
+
+    MOCK_METHOD(void, handleSmsReceive, (uint8_t, std::string), (final));
 };
 
 }
