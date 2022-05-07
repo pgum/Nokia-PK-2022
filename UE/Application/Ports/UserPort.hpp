@@ -4,6 +4,7 @@
 #include "Logger/PrefixedLogger.hpp"
 #include "IUeGui.hpp"
 #include "Messages/PhoneNumber.hpp"
+#include "Constants/MenuConstans.h"
 
 namespace ue
 {
@@ -17,7 +18,7 @@ public:
 
     void showNotConnected() override;
     void showConnecting() override;
-    void showConnected() override;
+    void showConnected(const ISMSDatabase& smsDb) override;
     void showNewSMS() override;
     void showSMSList() override;
 private:
@@ -25,6 +26,8 @@ private:
     IUeGui& gui;
     common::PhoneNumber phoneNumber;
     IUserEventsHandler* handler = nullptr;
+
+    void handleMainMenu(const ISMSDatabase &smsDb);
 };
 
 }

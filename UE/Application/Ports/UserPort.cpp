@@ -31,19 +31,22 @@ void UserPort::showConnecting()
     gui.showConnecting();
 }
 
-void UserPort::showConnected()
+void UserPort::showConnected(const ISMSDatabase& smsDb)
 {
     IUeGui::IListViewMode& menu = gui.setListViewMode();
     menu.clearSelectionList();
     menu.addSelectionListItem("Compose SMS", "");
     menu.addSelectionListItem("View SMS", "");
 
-    gui.setAcceptCallback([&menu]() -> void
+    gui.setAcceptCallback([&]() -> void
     {
-        auto elementClicked = menu.getCurrentItemIndex();
-        menu.clearSelectionList();
-        menu.addSelectionListItem(std::to_string( elementClicked.second ),"asd");
+        this->handleMainMenu(smsDb);
     });
+
+}
+
+void UserPort::handleMainMenu(const ISMSDatabase& smsDb)
+{
 
 }
 
