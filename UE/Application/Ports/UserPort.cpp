@@ -53,10 +53,8 @@ void UserPort::handleMainMenuInput(ISMSDatabase& smsDb)
     IUeGui::IListViewMode& menu = gui.setListViewMode();
     auto elementSelected = menu.getCurrentItemIndex();
 
-    gui.setRejectCallback([this,&smsDb]
-    {
-        showConnected(smsDb);
-    });
+    gui.setRejectCallback([]{ return; });
+    gui.setAcceptCallback([]{ return; });
 
     if(!elementSelected.first) // no selection
     {
@@ -108,10 +106,10 @@ void UserPort::handleNewSMSInput(ISMSDatabase &smsDb, IUeGui::ISmsComposeMode& s
 
 void UserPort::showSMSList(ISMSDatabase& smsDb)
 {
-    gui.setRejectCallback([this,&smsDb]
-    {
-        showConnected(smsDb);
-    });
+
+    gui.setRejectCallback([this,&smsDb]{ showConnected(smsDb); });
+    gui.setAcceptCallback([this,&smsDb](){ showSelectedSMS(smsDb); });
+
 
     IUeGui::IListViewMode& menu = gui.setListViewMode();
     menu.clearSelectionList();
@@ -122,20 +120,13 @@ void UserPort::showSMSList(ISMSDatabase& smsDb)
         menu.addSelectionListItem(sms.second.getMessageSummary(),"");
     });
 
-    gui.setAcceptCallback([this,&smsDb]()
-    {
-        showSelectedSMS(smsDb);
-    });
 
 }
 
 
 void UserPort::showSelectedSMS(ISMSDatabase &smsDb)
 {
-    gui.setRejectCallback([this,&smsDb]
-    {
-        showSMSList(smsDb);
-    });
+    gui.setRejectCallback([this,&smsDb] { showSMSList(smsDb); });
 
 
     IUeGui::IListViewMode& menu = gui.setListViewMode();
