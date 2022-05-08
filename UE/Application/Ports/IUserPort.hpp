@@ -20,7 +20,6 @@ public:
     virtual void showConnecting() = 0;
     virtual void showConnected(ISMSDatabase& smsDb) = 0;
 
-    virtual void showNewSMS() = 0;
     virtual void showSMSList(ISMSDatabase& smsDb) = 0;
 };
 

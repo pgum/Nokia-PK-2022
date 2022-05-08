@@ -83,13 +83,6 @@ void UserPort::handleMainMenuInput(ISMSDatabase& smsDb)
 
 }
 
-void UserPort::showNewSMS()
-{
-    IUeGui::IListViewMode& menu = gui.setListViewMode();
-    menu.clearSelectionList();
-    menu.addSelectionListItem("new sms", "");
-}
-
 void UserPort::showSMSList(ISMSDatabase& smsDb)
 {
     gui.setRejectCallback([this,&smsDb]

@@ -20,7 +20,6 @@ public:
     void showNotConnected() override;
     void showConnecting() override;
     void showConnected(ISMSDatabase& smsDb) override;
-    void showNewSMS() override;
     void showSMSList(ISMSDatabase& smsDb) override;
 private:
     common::PrefixedLogger logger;
