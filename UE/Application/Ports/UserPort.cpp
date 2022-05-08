@@ -67,6 +67,7 @@ void UserPort::handleMainMenuInput(ISMSDatabase& smsDb)
     {
         case COMPOSE_SMS:
         {
+            showNewSmsCompose(smsDb);
             break;
         }
         case VIEW_SMS_LIST:
@@ -82,6 +83,28 @@ void UserPort::handleMainMenuInput(ISMSDatabase& smsDb)
     }
 
 }
+
+void UserPort::showNewSmsCompose(ISMSDatabase& smsDb)
+{
+    IUeGui::ISmsComposeMode& smsCompose = gui.setSmsComposeMode();
+
+    gui.setRejectCallback([&]{ showConnected(smsDb); });
+    gui.setAcceptCallback([&]{ handleNewSMSInput(smsDb,smsCompose); });
+
+}
+
+
+void UserPort::handleNewSMSInput(ISMSDatabase &smsDb, IUeGui::ISmsComposeMode& smsCompose)
+{
+    auto text = smsCompose.getSmsText();
+    auto number = smsCompose.getPhoneNumber();
+
+    smsDb.addSMS(phoneNumber,number,text);
+    smsCompose.clearSmsText();
+    showConnected(smsDb);
+
+}
+
 
 void UserPort::showSMSList(ISMSDatabase& smsDb)
 {
