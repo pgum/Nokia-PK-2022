@@ -8,23 +8,24 @@
 namespace ue
 {
 
-class BtsPort : public IBtsPort
-{
-public:
-    BtsPort(common::ILogger& logger, common::ITransport& transport, common::PhoneNumber phoneNumber);
-    void start(IBtsEventsHandler& handler);
-    void stop();
+    class BtsPort : public IBtsPort
+    {
+    public:
+        BtsPort(common::ILogger& logger, common::ITransport& transport, common::PhoneNumber phoneNumber);
+        void start(IBtsEventsHandler& handler);
+        void stop();
 
-    void sendAttachRequest(common::BtsId) override;
+        void sendAttachRequest(common::BtsId) override;
+        void sendSms(common::PhoneNumber receiverPhoneNumber, std::string smsText) override;
 
-private:
-    void handleMessage(BinaryMessage msg);
+    private:
+        void handleMessage(BinaryMessage msg);
 
-    common::PrefixedLogger logger;
-    common::ITransport& transport;
-    common::PhoneNumber phoneNumber;
+        common::PrefixedLogger logger;
+        common::ITransport& transport;
+        common::PhoneNumber phoneNumber;
 
-    IBtsEventsHandler* handler = nullptr;
-};
+        IBtsEventsHandler* handler = nullptr;
+    };
 
 }
