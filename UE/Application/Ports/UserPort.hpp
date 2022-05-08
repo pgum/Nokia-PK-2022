@@ -3,6 +3,7 @@
 #include "IUserPort.hpp"
 #include "Logger/PrefixedLogger.hpp"
 #include "IUeGui.hpp"
+#include "UeGui/ITextMode.hpp"
 #include "Messages/PhoneNumber.hpp"
 #include "Constants/MenuConstans.h"
 
@@ -18,16 +19,18 @@ public:
 
     void showNotConnected() override;
     void showConnecting() override;
-    void showConnected(const ISMSDatabase& smsDb) override;
+    void showConnected(ISMSDatabase& smsDb) override;
     void showNewSMS() override;
-    void showSMSList() override;
+    void showSMSList(ISMSDatabase& smsDb) override;
 private:
     common::PrefixedLogger logger;
     IUeGui& gui;
     common::PhoneNumber phoneNumber;
     IUserEventsHandler* handler = nullptr;
 
-    void handleMainMenu(const ISMSDatabase &smsDb);
+
+    void handleMainMenuInput(ISMSDatabase &smsDb);
+    void showSelectedSMS(ISMSDatabase &smsDb);
 };
 
 }

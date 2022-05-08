@@ -3,7 +3,6 @@
 
 #endif //CPP_WORKSHOP_MENUCONSTANS_H
 
-#define ACCEPT_BUTTON
 
 enum MAIN_MENU
 {

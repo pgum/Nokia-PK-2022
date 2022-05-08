@@ -31,34 +31,115 @@ void UserPort::showConnecting()
     gui.showConnecting();
 }
 
-void UserPort::showConnected(const ISMSDatabase& smsDb)
+void UserPort::showConnected(ISMSDatabase& smsDb)
 {
     IUeGui::IListViewMode& menu = gui.setListViewMode();
     menu.clearSelectionList();
     menu.addSelectionListItem("Compose SMS", "");
     menu.addSelectionListItem("View SMS", "");
 
-    gui.setAcceptCallback([&]() -> void
+    gui.setAcceptCallback([this,&menu,&smsDb]() -> void
     {
-        this->handleMainMenu(smsDb);
+        this->handleMainMenuInput(smsDb);
     });
 
+    gui.setRejectCallback([this,&smsDb]{
+        showConnected(smsDb);
+    });
 }
 
-void UserPort::handleMainMenu(const ISMSDatabase& smsDb)
+void UserPort::handleMainMenuInput(ISMSDatabase& smsDb)
 {
+    IUeGui::IListViewMode& menu = gui.setListViewMode();
+    auto elementSelected = menu.getCurrentItemIndex();
+
+    gui.setRejectCallback([this,&smsDb]
+    {
+        showConnected(smsDb);
+    });
+
+    if(!elementSelected.first) // no selection
+    {
+        return;
+    }
+
+    switch (elementSelected.second)
+    {
+        case COMPOSE_SMS:
+        {
+            break;
+        }
+        case VIEW_SMS_LIST:
+        {
+            showSMSList(smsDb);
+            break;
+        }
+        default:
+        {
+            return;
+        }
+
+    }
 
 }
 
 void UserPort::showNewSMS()
 {
-    gui.showNewSms(true); // shows little 'M' in top bar, if false the 'M' is gray
-    // I think its all this function has to do
+    IUeGui::IListViewMode& menu = gui.setListViewMode();
+    menu.clearSelectionList();
+    menu.addSelectionListItem("new sms", "");
 }
 
-void UserPort::showSMSList()
+void UserPort::showSMSList(ISMSDatabase& smsDb)
 {
-    gui.showNewSms(true);
+    gui.setRejectCallback([this,&smsDb]
+    {
+        showConnected(smsDb);
+    });
+
+    IUeGui::IListViewMode& menu = gui.setListViewMode();
+    menu.clearSelectionList();
+    auto allSMS = smsDb.getAllSMS();
+
+    std::for_each(allSMS.begin(), allSMS.end(), [&](auto& sms)
+    {
+        menu.addSelectionListItem(sms.second.getMessageSummary(),"");
+    });
+
+    gui.setAcceptCallback([this,&smsDb]()
+    {
+        showSelectedSMS(smsDb);
+    });
+
 }
+
+
+void UserPort::showSelectedSMS(ISMSDatabase &smsDb)
+{
+    gui.setRejectCallback([this,&smsDb]
+    {
+        showSMSList(smsDb);
+    });
+
+
+    IUeGui::IListViewMode& menu = gui.setListViewMode();
+    auto elementSelected = menu.getCurrentItemIndex();
+
+    if(!elementSelected.first)
+    {
+        showSMSList(smsDb);
+        return;
+    }
+
+    SMS sms = smsDb.getAllSMS().at(elementSelected.second).second;
+
+    menu.clearSelectionList();
+
+    IUeGui::ITextMode& smsView = gui.setViewTextMode();
+    smsView.setText(sms.getMessage());
+
+
+}
+
 
 }
