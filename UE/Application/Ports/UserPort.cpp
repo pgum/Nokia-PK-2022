@@ -30,16 +30,10 @@ namespace ue {
     void UserPort::showViewingSms() {
         IUeGui::IListViewMode &menu = gui.setListViewMode();
         menu.clearSelectionList();
-        SMS_DB ourDataBase = SMS_DB();
-        SMS sms1 = SMS();
-        SMS sms2 = SMS();
-        ourDataBase.addSmsToDB(sms1);
-        ourDataBase.addSmsToDB(sms2);
-        for (auto i: ourDataBase.getAllSMS()) {
-            menu.addSelectionListItem(i.getMTextMessage(), "");
+        for (auto i: smsDb.getAllSMS()) {
+            menu.addSelectionListItem(i.getSmsHeader(),"");
         }
         gui.setAcceptCallback([this, &menu] { acceptCallbackClicked(menu); });
-
     }
 
     void UserPort::showConnected() {
@@ -61,6 +55,10 @@ namespace ue {
         currentCallbackState();
     }
 
+    IUeGui::ISmsComposeMode& UserPort::composeSmsMode() {
+        return gui.setSmsComposeMode();
+    }
+
     int UserPort::getMenuIndex() {
         return menuIndex;
     }
@@ -72,6 +70,14 @@ namespace ue {
 
     void UserPort::rejectCallback(IUeGui::Callback rejectCallback) {
         gui.setRejectCallback(rejectCallback);
+    }
+
+    SMS_DB & UserPort::getSmsDB(){
+        return smsDb;
+    }
+
+    void UserPort::setSmsDB(SMS_DB &smsDb) {
+        UserPort::smsDb = smsDb;
     }
 
 }

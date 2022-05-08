@@ -13,10 +13,13 @@ class SMS {
 public:
     SMS(common::MessageId mMessageId, const common::PhoneNumber &mSender, const common::PhoneNumber &mReceiver,
         const std::string &mTextMessage);
-
-    SMS();
+    SMS(const std::string &mTextMessage, const common::PhoneNumber &mSender);
 
     void Set_Viewed_Value();
 
     const std::string &getMTextMessage() const;
+
+    const common::PhoneNumber &getMSender() const;
+
+    const std::string getSmsHeader();
 };
