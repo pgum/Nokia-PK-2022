@@ -2,10 +2,7 @@
 #include <string>
 #include <vector>
 #include "Sms.hpp"
-#include "PhoneNumber.hpp"
-
-//Uwaga
-//do wszystkiego wykorzystamy fukncje z folderu common>messages
+#include "Messages/PhoneNumber.hpp"
 
 namespace ue
 {
@@ -13,14 +10,14 @@ namespace ue
 class SmsDb
 {
 public:
-    SmsDb();
-    ~SmsDb();
-    void receiveSms(); //uploading sms from bts
-    void viewSms(bool state); //to see concrete sms or list of sms, both state
-    void sendSms(common::PhoneNumber reciverPhoneNumber); // to make new object in smsList and pass to bts
+    SmsDb() = default;
+    ~SmsDb() = default;
 
+    void addSmsToDB(Sms newSms);
+    Sms getSmsFromDB(int smsIndex);
+    std::vector<Sms>& getSmsList();
 
 private:
-    std::vector <SMS> smsList;
+    std::vector <Sms> smsList;
 };
 }

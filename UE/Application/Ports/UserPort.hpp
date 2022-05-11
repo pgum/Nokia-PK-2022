@@ -4,6 +4,7 @@
 #include "Logger/PrefixedLogger.hpp"
 #include "IUeGui.hpp"
 #include "Messages/PhoneNumber.hpp"
+#include "Sms/SmsDb.hpp"
 
 namespace ue
 {
@@ -11,7 +12,7 @@ namespace ue
 class UserPort : public IUserPort
 {
 public:
-    UserPort(common::ILogger& logger, IUeGui& gui, common::PhoneNumber phoneNumber);
+    UserPort(common::ILogger& logger, IUeGui& gui, common::PhoneNumber phoneNumber, SmsDb& smsDB);
     void start(IUserEventsHandler& handler);
     void stop();
 
@@ -23,6 +24,7 @@ private:
     common::PrefixedLogger logger;
     IUeGui& gui;
     common::PhoneNumber phoneNumber;
+    SmsDb& smsDB;
     IUserEventsHandler* handler = nullptr;
 };
 

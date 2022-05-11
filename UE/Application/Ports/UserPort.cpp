@@ -4,10 +4,11 @@
 namespace ue
 {
 
-UserPort::UserPort(common::ILogger &logger, IUeGui &gui, common::PhoneNumber phoneNumber)
+UserPort::UserPort(common::ILogger &logger, IUeGui &gui, common::PhoneNumber phoneNumber, SmsDb& smsDB)
     : logger(logger, "[USER-PORT]"),
       gui(gui),
-      phoneNumber(phoneNumber)
+      phoneNumber(phoneNumber),
+      smsDB(smsDB)
 {}
 
 void UserPort::start(IUserEventsHandler &handler)

@@ -2,23 +2,27 @@
 #include <string>
 #include <ctime>
 #include <chrono>
-#include "PhoneNumber.hpp"
-
-
+#include "Messages/PhoneNumber.hpp"
 
 namespace ue
 {
-    class SMS{
+    class Sms{
         public:
-            SMS(std::string smsMessage, common::PhoneNumber senderPhoneNumber);
-            void changeViewStatus();
+            Sms(common::PhoneNumber from, common::PhoneNumber to, std::string smsMessage);
 
-            int smsId;
+            void setSmsIsViewed();
+
+            common::PhoneNumber getFrom();
+            common::PhoneNumber getTo();
+
+            std::string getsmsMessageTest();
+
+            bool isViewed();
+
         private:
-            bool viewStatus;
+            common::PhoneNumber from{};
+            common::PhoneNumber to{};
+            bool flgIsViewed;
             std::string smsMessage;
-            common::PhoneNumber senderPhoneNumber;
-            std::chrono::time_point <std::chrono::system_clock> recivingTime;
     };
-    
 }

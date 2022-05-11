@@ -1,17 +1,30 @@
-#include <Sms.hpp>
+#include "Sms.hpp"
+namespace ue {
 
+    Sms::Sms(common::PhoneNumber from, common::PhoneNumber to, std::string smsMessage) {
+        Sms::from = from;
+        Sms::to = to;
+        Sms::flgIsViewed = false;
+    }
 
-ue::SMS::SMS( std::string set_smsMessage, common::PhoneNumber set_senderPhoneNumber)
-{
-    ue::SMS::viewStatus = 1; //unread
-    ue::SMS::smsMessage = set_smsMessage;
-    ue::SMS::senderPhoneNumber = set_senderPhoneNumber;
-    ue::SMS::smsId ;
-    ue::SMS::recivingTime = std::chrono::system_clock::now();
+    void Sms::setSmsIsViewed() {
+        flgIsViewed = true;
+    }
 
+    common::PhoneNumber Sms::getFrom() {
+        return from;
+    }
+
+    common::PhoneNumber Sms::getTo() {
+        return to;
+    }
+
+    std::string Sms::getsmsMessageTest() {
+        return smsMessage;
+    }
+
+    bool Sms::isViewed() {
+        return flgIsViewed;
+    }
 }
-void ue::SMS::changeViewStatus()
-{
-    //todo
-    //ustawienie ze dany sms jest lub by odczytany
-}
+

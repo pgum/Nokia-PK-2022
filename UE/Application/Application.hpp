@@ -4,6 +4,7 @@
 #include "Messages/PhoneNumber.hpp"
 #include "IEventsHandler.hpp"
 #include "Context.hpp"
+#include "Sms/SmsDb.hpp"
 
 namespace ue
 {
@@ -18,7 +19,8 @@ public:
                 ILogger& iLogger,
                 IBtsPort& bts,
                 IUserPort& user,
-                ITimerPort& timer);
+                ITimerPort& timer,
+                SmsDb& smsDB);
     ~Application();
 
     // ITimerEventsHandler interface

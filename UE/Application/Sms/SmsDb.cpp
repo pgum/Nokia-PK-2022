@@ -1,31 +1,21 @@
-#pragma once
-#include "PhoneNumber.hpp"
 #include "SmsDb.hpp"
 
 
-ue::SmsDb::SmsDb()
+void ue::SmsDb::addSmsToDB(Sms newSms)
 {
-    //TODO:
-    // stworyć konstruktor
+    auto it = smsList.begin();
+    smsList.insert(it, newSms);
 }
-ue::SmsDb::~SmsDb()
+ue::Sms ue::SmsDb::getSmsFromDB(int smsId) 
 {
-    //TODO:
-    //Stworzyć dekostrukor
+    if(smsId >= smsList.size()) {
+        return Sms({}, {}, "");
+    } else {
+        return smsList[smsId];
+    }
+}
 
-}
-void ue::SmsDb::receiveSms() //uploading sms from bts
-{
-    //TODO
-    //uruchomienie odpowiedznich poleceń i zapisanie wiadomości do listy sms
-}
-void ue::SmsDb::viewSms(bool state) //to see concrete sms or list of sms, both state
-{
-    //TODO
-    //na podstawie stanu uruchomienie listy wiadomości lub wejscie w konkretną wiadomość
-}
-void ue::SmsDb::sendSms(common::PhoneNumber reciverPhoneNumber) // to make new object in smsList and pass to bts
-{
-    //TODO:
-    //wysłanie na konkretny numer wiadomości
+
+std::vector<ue::Sms>& ue::SmsDb::getSmsList() {
+    return smsList;
 }
