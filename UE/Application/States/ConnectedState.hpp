@@ -22,6 +22,7 @@ private:
     void handleSMSView(unsigned int elemIndex);
     void handleAcceptOnComposeSMSView(IUeGui::ISmsComposeMode& smsComposer);
 
+    void handleSMS(common::PhoneNumber from, std::string text) override;
 
 public:
     ConnectedState(Context& context);

@@ -104,15 +104,31 @@ void ConnectedState::handleComposeSMSView()
 
 void ConnectedState::handleAcceptOnComposeSMSView(IUeGui::ISmsComposeMode& smsComposer)
 {
-    context.smsDb.addSMS(
-            context.user.getInputPhoneNumber(smsComposer),
-            context.user.getPhoneNumber(),
-            context.user.getInputString(smsComposer));
+    auto receiverNumber  = context.user.getInputPhoneNumber(smsComposer);
+    auto msgToSend = context.user.getInputString(smsComposer);
 
+    context.smsDb.addSMS(
+            receiverNumber ,
+            context.user.getPhoneNumber(),
+            msgToSend);
+
+    context.bts.sendSMS(receiverNumber,msgToSend);
     handleMainMenu();
 }
 
+
 #pragma endregion
 
+
+#pragma region smsHandling
+void ConnectedState::handleSMS(common::PhoneNumber from, std::string text)
+{
+    context.smsDb.addSMS(
+            from,
+            context.user.getPhoneNumber(),
+            text
+            );
+}
+#pragma endregion
 
 }
