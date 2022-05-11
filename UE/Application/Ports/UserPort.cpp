@@ -31,122 +31,95 @@ void UserPort::showConnecting()
     gui.showConnecting();
 }
 
-void UserPort::showConnected(ISMSDatabase& smsDb)
+IUeGui& UserPort::getUserGui()
+{
+    return gui;
+}
+
+common::PhoneNumber UserPort::getPhoneNumber()
+{
+    return phoneNumber;
+}
+
+IUeGui::ISmsComposeMode& UserPort::initSmsComposer()
+{
+    return gui.setSmsComposeMode();
+}
+
+IUeGui::IListViewMode& UserPort::initListViewMode()
+{
+    return gui.setListViewMode();
+}
+
+IUeGui::ITextMode& UserPort::initTextMode()
+{
+    return gui.setViewTextMode();
+}
+
+
+
+void UserPort::showMainMenu()
 {
     IUeGui::IListViewMode& menu = gui.setListViewMode();
     menu.clearSelectionList();
     menu.addSelectionListItem("Compose SMS", "");
     menu.addSelectionListItem("View SMS", "");
-
-    gui.setAcceptCallback([this,&menu,&smsDb]() -> void
-    {
-        this->handleMainMenuInput(smsDb);
-    });
-
-    gui.setRejectCallback([this,&smsDb]{
-        showConnected(smsDb);
-    });
-}
-
-void UserPort::handleMainMenuInput(ISMSDatabase& smsDb)
-{
-    IUeGui::IListViewMode& menu = gui.setListViewMode();
-    auto elementSelected = menu.getCurrentItemIndex();
-
-    gui.setRejectCallback([]{ return; });
-    gui.setAcceptCallback([]{ return; });
-
-    if(!elementSelected.first) // no selection
-    {
-        return;
-    }
-
-    switch (elementSelected.second)
-    {
-        case COMPOSE_SMS:
-        {
-            showNewSmsCompose(smsDb);
-            break;
-        }
-        case VIEW_SMS_LIST:
-        {
-            showSMSList(smsDb);
-            break;
-        }
-        default:
-        {
-            return;
-        }
-
-    }
-
-}
-
-void UserPort::showNewSmsCompose(ISMSDatabase& smsDb)
-{
-    IUeGui::ISmsComposeMode& smsCompose = gui.setSmsComposeMode();
-
-    gui.setRejectCallback([&]{ showConnected(smsDb); });
-    gui.setAcceptCallback([&]{ handleNewSMSInput(smsDb,smsCompose); });
-
 }
 
 
-void UserPort::handleNewSMSInput(ISMSDatabase &smsDb, IUeGui::ISmsComposeMode& smsCompose)
+
+
+void UserPort::showSMSList(const smsContainer&& smsList)
 {
-    auto text = smsCompose.getSmsText();
-    auto number = smsCompose.getPhoneNumber();
-
-    smsDb.addSMS(phoneNumber,number,text);
-    smsCompose.clearSmsText();
-    showConnected(smsDb);
-
-}
-
-
-void UserPort::showSMSList(ISMSDatabase& smsDb)
-{
-
-    gui.setRejectCallback([this,&smsDb]{ showConnected(smsDb); });
-    gui.setAcceptCallback([this,&smsDb](){ showSelectedSMS(smsDb); });
-
 
     IUeGui::IListViewMode& menu = gui.setListViewMode();
     menu.clearSelectionList();
-    auto allSMS = smsDb.getAllSMS();
 
-    std::for_each(allSMS.begin(), allSMS.end(), [&](auto& sms)
+    std::for_each(smsList.begin(), smsList.end(), [&menu](auto& sms)
     {
-        menu.addSelectionListItem(sms.second.getMessageSummary(),"");
+        menu.addSelectionListItem(sms.second->getMessageSummary(),"");
     });
-
 
 }
 
 
-void UserPort::showSelectedSMS(ISMSDatabase &smsDb)
-{
-    gui.setRejectCallback([this,&smsDb] { showSMSList(smsDb); });
 
+
+
+void UserPort::showSMSList(const smsContainer& smsList)
+{
 
     IUeGui::IListViewMode& menu = gui.setListViewMode();
-    auto elementSelected = menu.getCurrentItemIndex();
-
-    if(!elementSelected.first)
-    {
-        showSMSList(smsDb);
-        return;
-    }
-
-    SMS sms = smsDb.getAllSMS().at(elementSelected.second).second;
-
     menu.clearSelectionList();
 
+    std::for_each(smsList.begin(), smsList.end(), [&menu](auto& sms)
+    {
+        menu.addSelectionListItem(sms.second->getMessageSummary(),"");
+    });
+
+}
+
+void UserPort::showSMS(ITextMessage &sms)
+{
     IUeGui::ITextMode& smsView = gui.setViewTextMode();
     smsView.setText(sms.getMessage());
-
-
 }
 
+void UserPort::showSMS(ITextMessage &&sms)
+{
+    IUeGui::ITextMode& smsView = gui.setViewTextMode();
+    smsView.setText(sms.getMessage());
+}
+
+
+common::PhoneNumber UserPort::getInputPhoneNumber(IUeGui::ISmsComposeMode& composer)
+{
+    return composer.getPhoneNumber();
+}
+
+std::string UserPort::getInputString(IUeGui::ISmsComposeMode& composer)
+{
+    return composer.getSmsText();
+}
 
 }

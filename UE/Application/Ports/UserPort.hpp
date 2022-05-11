@@ -5,6 +5,7 @@
 #include "IUeGui.hpp"
 #include "UeGui/ITextMode.hpp"
 #include "UeGui/ISmsComposeMode.hpp"
+#include "UeGui/IListViewMode.hpp"
 #include "Messages/PhoneNumber.hpp"
 #include "Constants/MenuConstans.h"
 
@@ -20,19 +21,31 @@ public:
 
     void showNotConnected() override;
     void showConnecting() override;
-    void showConnected(ISMSDatabase& smsDb) override;
-    void showSMSList(ISMSDatabase& smsDb) override;
+    IUeGui& getUserGui() override;
+
+    void showMainMenu() override;
+
+    void showSMSList(const smsContainer&& smsList) override;
+    void showSMSList(const smsContainer& smsList) override;
+
+    void showSMS(ITextMessage& sms) override;
+    void showSMS(ITextMessage&& sms) override;
+
+    IUeGui::ISmsComposeMode& initSmsComposer() override;
+    IUeGui::IListViewMode& initListViewMode() override;
+    IUeGui::ITextMode& initTextMode() override;
+
+    common::PhoneNumber getPhoneNumber() override;
+
+    PhoneNumber getInputPhoneNumber(IUeGui::ISmsComposeMode &composer) override;
+    std::string getInputString(IUeGui::ISmsComposeMode &composer) override;
+
 private:
     common::PrefixedLogger logger;
     IUeGui& gui;
     common::PhoneNumber phoneNumber;
     IUserEventsHandler* handler = nullptr;
 
-
-    void handleMainMenuInput(ISMSDatabase &smsDb);
-    void showSelectedSMS(ISMSDatabase &smsDb);
-    void showNewSmsCompose(ISMSDatabase& smsDb);
-    void handleNewSMSInput(ISMSDatabase& smsDb, IUeGui::ISmsComposeMode& smsCompose);
 };
 
 }

@@ -1,7 +1,5 @@
 #include "BasicSMSDatabase.hpp"
 
-#include <stdexcept> //delete after implementation
-
 namespace ue
 {
 
@@ -13,18 +11,17 @@ namespace ue
 
     void BasicSMSDatabase::addSMS(common::PhoneNumber from, common::PhoneNumber to, std::string message)
     {
-        data.push_back(
-                std::pair<unsigned int, ue::SMS>
-                        {nextId++,SMS{from,to,message}}
-                        );
+        data.emplace_back(
+                nextId++, std::make_unique<SMS>(from,to,message)
+                );
     }
 
-    ue::SMS BasicSMSDatabase::getSMS(unsigned int id)
+    ITextMessage& BasicSMSDatabase::getSMS(unsigned int id)
     {
-        return data.at(id).second;
+        return *data.at(id).second;
     }
 
-    std::vector<std::pair<unsigned int, ue::SMS>> BasicSMSDatabase::getAllSMS()
+    const std::vector<std::pair<unsigned int, std::unique_ptr< ITextMessage>>>& BasicSMSDatabase::getAllSMS()
     {
         return data;
     }

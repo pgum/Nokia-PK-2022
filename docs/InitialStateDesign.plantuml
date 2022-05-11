@@ -9,7 +9,7 @@ state ConnectedState
 
 NotConnectedState --> ConnectingState : handleSib(btsId) \n sendAttachRequest(btsId),showConnecting(),startTimer(500ms)
 
-ConnectingState --> ConnectedState  : handleAttachAccept() \n stopTimer(),showConnected()
+ConnectingState --> ConnectedState  : handleAttachAccept() \n stopTimer(),getUserGui()
 
 ConnectingState --> NotConnectedState  : handleAttachReject() \n stopTimer(),showNotConnected()
 ConnectingState --> NotConnectedState  : handleTimeout() \n showNotConnected()

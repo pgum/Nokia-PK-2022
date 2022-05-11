@@ -1,10 +1,6 @@
-#ifndef CPP_WORKSHOP_MENUCONSTANS_H
-#define CPP_WORKSHOP_MENUCONSTANS_H
+#pragma once
 
-#endif //CPP_WORKSHOP_MENUCONSTANS_H
-
-
-enum MAIN_MENU
+enum MainMenuInput
 {
     COMPOSE_SMS = 0,
     VIEW_SMS_LIST = 1

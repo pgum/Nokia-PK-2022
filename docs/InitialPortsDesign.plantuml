@@ -35,7 +35,7 @@ TimerPort ---> ITimerEventsHandler
 interface IUserPort {
  showNotConnected()
  showConnecting()
- showConnected()
+ getUserGui()
 }
 interface IUserEventsHandler {
   # TBD, like handleEditSms
