@@ -47,7 +47,8 @@ TEST_F(SingleRecordSMSDBTestSuite, shallReturnAddedDestinationNumber)
 
 TEST_F(SingleRecordSMSDBTestSuite, shallReturnVectorOfOneSummary)
 {
-    auto resultVector = objectUnderTest.getAllSMS();
+    const std::vector<std::pair<unsigned int, std::unique_ptr< ITextMessage>>>& resultVector = objectUnderTest.getAllSMS();
+
     ASSERT_EQ(resultVector.size(),1);
     ASSERT_EQ(resultVector[0].second->getMessageSummary(),SUMMARIES[0]);
 }
@@ -94,7 +95,7 @@ TEST_F(MultipleRecordsSMSDBTestSuite, shallReturnAddedDestinationNumbers)
 
 TEST_F(MultipleRecordsSMSDBTestSuite, shallReturnVectorOfSummaries)
 {
-    auto resultVector = objectUnderTest.getAllSMS();
+    const std::vector<std::pair<unsigned int, std::unique_ptr< ITextMessage>>>& resultVector = objectUnderTest.getAllSMS();
 
     ASSERT_EQ(resultVector.size(), 3);
 
