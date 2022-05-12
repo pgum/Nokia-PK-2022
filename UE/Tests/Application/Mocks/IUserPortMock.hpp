@@ -3,6 +3,7 @@
 #include <gmock/gmock.h>
 #include "Ports/IUserPort.hpp"
 #include "IUeGui.hpp"
+#include "IUeGuiMock.hpp"
 
 namespace ue
 {
@@ -18,12 +19,13 @@ public:
 class IUserPortMock : public IUserPort
 {
 public:
-    IUserPortMock();
+    IUserPortMock(IUeGuiMock &userGuiMock);
     ~IUserPortMock() override;
 
     MOCK_METHOD(void, showNotConnected, (), (final));
     MOCK_METHOD(void, showConnecting, (), (final));
-    MOCK_METHOD(IUeGui&, getUserGui, (), (final));
+    //MOCK_METHOD(IUeGui&, getUserGui, (), (final));
+    IUeGui &getUserGui();
     MOCK_METHOD(void, showMainMenu, (), (final));
     MOCK_METHOD(common::PhoneNumber,getPhoneNumber,(),(final));
     MOCK_METHOD(void,showSMSList,(smsContainer&&),(final));
@@ -36,6 +38,8 @@ public:
     MOCK_METHOD(PhoneNumber,getInputPhoneNumber,(IUeGui::ISmsComposeMode&),(final));
     MOCK_METHOD(std::string,getInputString,(IUeGui::ISmsComposeMode&),(final));
 
+private:
+    IUeGuiMock &gui;
 };
 
 }

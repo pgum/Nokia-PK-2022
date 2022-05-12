@@ -49,12 +49,12 @@ TEST_F(UserPortTestSuite, shallShowConnecting)
     objectUnderTest.showConnecting();
 }
 
-TEST_F(UserPortTestSuite, shallShowMenuOnConnected)
+TEST_F(UserPortTestSuite, shallShowMainMenu)
 {
     EXPECT_CALL(guiMock, setListViewMode()).WillOnce(ReturnRef(listViewModeMock));
     EXPECT_CALL(listViewModeMock, clearSelectionList());
     EXPECT_CALL(listViewModeMock, addSelectionListItem(_, _)).Times(AtLeast(1));
-    objectUnderTest.getUserGui();
+    objectUnderTest.showMainMenu();
 }
 
 }

@@ -8,6 +8,7 @@
 #include "Mocks/ITimerPortMock.hpp"
 #include "Messages/PhoneNumber.hpp"
 #include "Mocks/ISMSDatabaseMock.hpp"
+#include "Mocks/IUeGuiMock.hpp"
 #include <memory>
 
 namespace ue
@@ -23,7 +24,8 @@ protected:
     const std::string MESSAGE = "Hello there!";
     NiceMock<common::ILoggerMock> loggerMock;
     StrictMock<IBtsPortMock> btsPortMock;
-    StrictMock<IUserPortMock> userPortMock;
+    StrictMock<IUeGuiMock> ueGui;
+    StrictMock<IUserPortMock> userPortMock{ueGui};
     StrictMock<ITimerPortMock> timerPortMock;
     NiceMock<ISMSDatabaseMock> smsDb;
 
@@ -71,7 +73,9 @@ struct ApplicationConnectingTestSuite : ApplicationNotConnectedTestSuite
 void ApplicationConnectingTestSuite::requestConnectOnAttachRequest()
 {
     EXPECT_CALL(timerPortMock, stopTimer());
-    EXPECT_CALL(userPortMock,showMainMenu());
+    EXPECT_CALL(userPortMock, showMainMenu());
+    EXPECT_CALL(ueGui, setAcceptCallback(_));
+    EXPECT_CALL(ueGui, setRejectCallback(_));
 
     objectUnderTest.handleAttachAccept();
 }
@@ -116,10 +120,8 @@ struct ApplicationConnectedTestSuite : ApplicationConnectingTestSuite
 
 ApplicationConnectedTestSuite::ApplicationConnectedTestSuite()
 {
-    EXPECT_CALL(timerPortMock, stopTimer());
-    EXPECT_CALL(userPortMock, showMainMenu());
-
-    objectUnderTest.handleAttachAccept();
+    //preparation
+    requestConnectOnAttachRequest();
 }
 
 TEST_F(ApplicationConnectedTestSuite, shallHandleDisconnect)
