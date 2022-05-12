@@ -11,6 +11,8 @@ namespace ue
 
 class ISMSDatabase{
 public:
+    virtual ~ISMSDatabase() = default;
+
     virtual void addSMS(common::PhoneNumber from, common::PhoneNumber to, std::string message) = 0;
     virtual ITextMessage& getSMS(unsigned int id) = 0;
     virtual const std::vector<std::pair<unsigned int, std::unique_ptr<ITextMessage>>>& getAllSMS() = 0;

@@ -8,7 +8,7 @@ namespace ue {
 class ISMSDatabaseMock : public ISMSDatabase{
 public:
     ISMSDatabaseMock();
-    ~ISMSDatabaseMock();
+    ~ISMSDatabaseMock() override;
 
     MOCK_METHOD(void, addSMS,(common::PhoneNumber,common::PhoneNumber,std::string),(final));
     MOCK_METHOD(ITextMessage&, getSMS,(unsigned int),(final));
