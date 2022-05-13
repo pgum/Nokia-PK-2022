@@ -111,8 +111,16 @@ void UserPort::showSMSList(const smsContainer& smsList)
 void UserPort::showSMS(ITextMessage &sms)
 {
     IUeGui::ITextMode& smsView = gui.setViewTextMode();
-    smsView.setText( "from " + common::to_string(sms.getFromNumber()) +
-                    "\n\n" + sms.getMessage());
+    std::string header;
+    if(sms.getFromNumber()==phoneNumber)
+    {
+        header = "from You to " + common::to_string(sms.getToNumber()) + "\n\n";
+    }
+    else
+    {
+        header = "from " + common::to_string(sms.getFromNumber()) + "\n\n";
+    }
+    smsView.setText( header + sms.getMessage());
 }
 
 void UserPort::showSMS(ITextMessage &&sms)
