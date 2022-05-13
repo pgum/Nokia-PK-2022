@@ -11,8 +11,6 @@ namespace ue
 class ConnectedState : public BaseState
 {
 private:
-    IUeGui& guiRef;
-
     void handleMainMenu();
     void handleSMSList();
     void handleComposeSMSView();

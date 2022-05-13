@@ -38,6 +38,10 @@ public:
     virtual IUeGui::IListViewMode& initListViewMode() = 0;
     virtual IUeGui::ITextMode& initTextMode() = 0;
 
+    virtual void setAcceptCallback(const IUeGui::Callback& callback) = 0;
+    virtual void setRejectCallback(const IUeGui::Callback& callback) = 0;
+    virtual void setHomeCallback(const IUeGui::Callback& callback) = 0;
+
     virtual PhoneNumber getInputPhoneNumber(IUeGui::ISmsComposeMode &composer) = 0;
     virtual std::string getInputString(IUeGui::ISmsComposeMode &composer) = 0;
 

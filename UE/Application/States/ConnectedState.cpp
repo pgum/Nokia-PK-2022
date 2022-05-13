@@ -5,8 +5,7 @@ namespace ue
 {
 
 ConnectedState::ConnectedState(Context &context)
-    : BaseState(context, "ConnectedState"),
-    guiRef(context.user.getUserGui())
+    : BaseState(context, "ConnectedState")
 {
     handleMainMenu();
 }
@@ -24,8 +23,8 @@ void ConnectedState::handleDisconnected()
 void ConnectedState::handleMainMenu()
 {
     context.user.showMainMenu();
-    guiRef.setAcceptCallback([&]{ handleAcceptOnMainMenu(); });
-    guiRef.setRejectCallback([&]{ return; });
+    context.user.setAcceptCallback([&]{ handleAcceptOnMainMenu(); });
+    context.user.setRejectCallback([&]{ return; });
 }
 
 
@@ -64,8 +63,8 @@ void ConnectedState::handleAcceptOnMainMenu()
 void ConnectedState::handleSMSList()
 {
     context.user.showSMSList(context.smsDb.getAllSMS());
-    guiRef.setAcceptCallback([&]{ handleAcceptOnSMSList(); });
-    guiRef.setRejectCallback([&]{ handleMainMenu(); });
+    context.user.setAcceptCallback([&]{ handleAcceptOnSMSList(); });
+    context.user.setRejectCallback([&]{ handleMainMenu(); });
 }
 
 
@@ -89,8 +88,8 @@ void ConnectedState::handleAcceptOnSMSList()
 void ConnectedState::handleSMSView(unsigned int elemIndex)
 {
     context.user.showSMS(context.smsDb.getSMS(elemIndex));
-    guiRef.setAcceptCallback([&]{ return; });
-    guiRef.setRejectCallback([&]{ handleSMSList(); });
+    context.user.setAcceptCallback([&]{ return; });
+    context.user.setRejectCallback([&]{ handleSMSList(); });
 }
 
 void ConnectedState::handleComposeSMSView()
@@ -98,8 +97,8 @@ void ConnectedState::handleComposeSMSView()
     IUeGui::ISmsComposeMode& smsComposer = context.user.initSmsComposer();
     smsComposer.clearSmsText();
 
-    guiRef.setAcceptCallback([&]{ handleAcceptOnComposeSMSView(smsComposer); });
-    guiRef.setRejectCallback([&]{ handleMainMenu(); });
+    context.user.setAcceptCallback([&]{ handleAcceptOnComposeSMSView(smsComposer); });
+    context.user.setRejectCallback([&]{ handleMainMenu(); });
 }
 
 void ConnectedState::handleAcceptOnComposeSMSView(IUeGui::ISmsComposeMode& smsComposer)

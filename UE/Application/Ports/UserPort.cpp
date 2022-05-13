@@ -56,6 +56,20 @@ IUeGui::ITextMode& UserPort::initTextMode()
     return gui.setViewTextMode();
 }
 
+void UserPort::setAcceptCallback(const IUeGui::Callback& callback)
+{
+    gui.setAcceptCallback(callback);
+}
+
+void UserPort::setRejectCallback(const IUeGui::Callback& callback)
+{
+    gui.setRejectCallback(callback);
+}
+
+void UserPort::setHomeCallback(const IUeGui::Callback& callback)
+{
+    throw std::logic_error("setHomeCallback not implemented");
+}
 
 
 void UserPort::showMainMenu()

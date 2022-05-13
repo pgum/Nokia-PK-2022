@@ -23,6 +23,8 @@ public:
     void showConnecting() override;
     IUeGui& getUserGui() override;
 
+    common::PhoneNumber getPhoneNumber() override;
+
     void showMainMenu() override;
 
     void showSMSList(const smsContainer&& smsList) override;
@@ -35,7 +37,9 @@ public:
     IUeGui::IListViewMode& initListViewMode() override;
     IUeGui::ITextMode& initTextMode() override;
 
-    common::PhoneNumber getPhoneNumber() override;
+    void setAcceptCallback(const IUeGui::Callback& callback) override;
+    void setRejectCallback(const IUeGui::Callback& callback) override;
+    void setHomeCallback(const IUeGui::Callback& callback) override;
 
     PhoneNumber getInputPhoneNumber(IUeGui::ISmsComposeMode &composer) override;
     std::string getInputString(IUeGui::ISmsComposeMode &composer) override;
