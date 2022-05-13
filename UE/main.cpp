@@ -12,11 +12,11 @@ int main(int argc, char* argv[])
 
     auto appEnv = ue::createApplicationEnvironment(argc, argv);
     auto& logger = appEnv->getLogger();
-    auto& tranport = appEnv->getTransportToBts();
+    auto& transport = appEnv->getTransportToBts();
     auto& gui = appEnv->getUeGui();
     auto phoneNumber = appEnv->getMyPhoneNumber();
 
-    BtsPort bts(logger, tranport, phoneNumber);
+    BtsPort bts(logger, transport, phoneNumber);
     UserPort user(logger, gui, phoneNumber);
     TimerPort timer(logger);
 
