@@ -43,11 +43,11 @@ namespace ue
     std::string SMS::getMessageSummary()
     {
         int pos = message.find_first_of("\n");
-        if(pos==-1) pos = MAX_SUMMARY_SIZE;
+        if(pos==-1 || pos>MAX_SUMMARY_SIZE) pos = MAX_SUMMARY_SIZE;
         if(isRead)
             return message.substr(0, pos);
         else
-            return "*"+message.substr(0,pos);
+            return "*"+message.substr(0,pos-1);
     }
 
     std::string SMS::getMessage()
