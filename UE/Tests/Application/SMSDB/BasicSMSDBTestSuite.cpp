@@ -14,7 +14,8 @@ protected:
     const common::PhoneNumber FROM[2] = {101, 102};
     const common::PhoneNumber TO{201};
     const std::string MESSAGES[2] = {"Hello. How are you?", "Test message 2."};
-    const std::string SUMMARIES[2] = {"Hello. How are ", "Test message 2."};
+    const std::string SUMMARIES_UNREAD[2] = {"*Hello. How are", "*Test message 2"};
+    const std::string SUMMARIES_READ[2] = {"Hello. How are ", "Test message 2."};
 
     ue::BasicSMSDatabase objectUnderTest{};
 };
@@ -47,18 +48,28 @@ TEST_F(SingleRecordSMSDBTestSuite, shallReturnAddedDestinationNumber)
 
 TEST_F(SingleRecordSMSDBTestSuite, shallReturnVectorOfOneSummary)
 {
-    const std::vector<std::pair<unsigned int, std::unique_ptr< ITextMessage>>>& resultVector = objectUnderTest.getAllSMS();
+    const std::vector<std::pair<unsigned int, std::unique_ptr< ue::ITextMessage>>>& resultVector = objectUnderTest.getAllSMS();
 
     ASSERT_EQ(resultVector.size(),1);
-    ASSERT_EQ(resultVector[0].second->getMessageSummary(),SUMMARIES[0]);
+    ASSERT_EQ(resultVector[0].second->getMessageSummary(), SUMMARIES_UNREAD[0]);
+}
+
+TEST_F(SingleRecordSMSDBTestSuite, shallReturnReadSummaryAfterGetMessage)
+{
+    const std::vector<std::pair<unsigned int, std::unique_ptr< ue::ITextMessage>>>& resultVector = objectUnderTest.getAllSMS();
+
+    ASSERT_EQ(resultVector.size(),1);
+    ASSERT_EQ(resultVector[0].second->getMessageSummary(), SUMMARIES_UNREAD[0]);
+    ASSERT_EQ(resultVector[0].second->getMessage(), MESSAGES[0]);
+    ASSERT_EQ(resultVector[0].second->getMessageSummary(), SUMMARIES_READ[0]);
 }
 
 struct MultipleRecordsSMSDBTestSuite : BasicSMSDBTestSuite
 {
 protected:
     MultipleRecordsSMSDBTestSuite();
-    const std::string REPLY_MESSAGE = "Reply.";
-    const std::string REPLY_SUMMARY = "Reply.";
+    const std::string REPLY_MESSAGE = "Reply. Testing long message.";
+    const std::string REPLY_SUMMARY_READ = "Reply. Testing ";
 };
 
 MultipleRecordsSMSDBTestSuite::MultipleRecordsSMSDBTestSuite()
@@ -66,7 +77,7 @@ MultipleRecordsSMSDBTestSuite::MultipleRecordsSMSDBTestSuite()
     objectUnderTest.addSMS(FROM[0], TO, MESSAGES[0]);
     objectUnderTest.addSMS(FROM[1], TO, MESSAGES[1]);
     //reply to FROM[1] number
-    objectUnderTest.addSMS(TO, FROM[1], REPLY_MESSAGE);
+    objectUnderTest.addSMS(TO, FROM[1], REPLY_MESSAGE,true);
 }
 
 TEST_F(MultipleRecordsSMSDBTestSuite, shallReturnAddedMessages)
@@ -95,12 +106,31 @@ TEST_F(MultipleRecordsSMSDBTestSuite, shallReturnAddedDestinationNumbers)
 
 TEST_F(MultipleRecordsSMSDBTestSuite, shallReturnVectorOfSummaries)
 {
-    const std::vector<std::pair<unsigned int, std::unique_ptr< ITextMessage>>>& resultVector = objectUnderTest.getAllSMS();
+    const std::vector<std::pair<unsigned int, std::unique_ptr< ue::ITextMessage>>>& resultVector = objectUnderTest.getAllSMS();
 
     ASSERT_EQ(resultVector.size(), 3);
 
-    ASSERT_EQ(resultVector[0].second->getMessageSummary(), SUMMARIES[0]);
-    ASSERT_EQ(resultVector[1].second->getMessageSummary(), SUMMARIES[1]);
+    ASSERT_EQ(resultVector[0].second->getMessageSummary(), SUMMARIES_UNREAD[0]);
+    ASSERT_EQ(resultVector[1].second->getMessageSummary(), SUMMARIES_UNREAD[1]);
 
-    ASSERT_EQ(resultVector[2].second->getMessageSummary(), REPLY_SUMMARY);
+    ASSERT_EQ(resultVector[2].second->getMessageSummary(), REPLY_SUMMARY_READ);
+}
+
+TEST_F(MultipleRecordsSMSDBTestSuite, shallReturnReadSummariesAfterGetMessage)
+{
+    const std::vector<std::pair<unsigned int, std::unique_ptr< ue::ITextMessage>>>& resultVector = objectUnderTest.getAllSMS();
+
+    ASSERT_EQ(resultVector.size(), 3);
+
+    ASSERT_EQ(resultVector[0].second->getMessageSummary(), SUMMARIES_UNREAD[0]);
+    ASSERT_EQ(resultVector[1].second->getMessageSummary(), SUMMARIES_UNREAD[1]);
+
+    ASSERT_EQ(resultVector[2].second->getMessageSummary(), REPLY_SUMMARY_READ);
+
+    ASSERT_EQ(resultVector[0].second->getMessage(), MESSAGES[0]);
+    ASSERT_EQ(resultVector[1].second->getMessage(), MESSAGES[1]);
+
+    ASSERT_EQ(resultVector[0].second->getMessageSummary(), SUMMARIES_READ[0]);
+    ASSERT_EQ(resultVector[1].second->getMessageSummary(), SUMMARIES_READ[1]);
+
 }
