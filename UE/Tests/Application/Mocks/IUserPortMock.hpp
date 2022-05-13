@@ -24,13 +24,13 @@ public:
 
     MOCK_METHOD(void, showNotConnected, (), (final));
     MOCK_METHOD(void, showConnecting, (), (final));
-    //MOCK_METHOD(IUeGui&, getUserGui, (), (final));
     MOCK_METHOD(void, showMainMenu, (), (final));
     MOCK_METHOD(common::PhoneNumber,getPhoneNumber,(),(final));
     MOCK_METHOD(void,showSMSList,(smsContainer&&),(final));
     MOCK_METHOD(void,showSMSList,(smsContainer&),(final));
     MOCK_METHOD(void,showSMS,(ITextMessage&),(final));
     MOCK_METHOD(void,showSMS,(ITextMessage&&),(final));
+    MOCK_METHOD(void,showSMSNotification,(),(final));
     MOCK_METHOD(IUeGui::ISmsComposeMode&,initSmsComposer,(),(final));
     MOCK_METHOD(IUeGui::IListViewMode&,initListViewMode,(),(final));
     MOCK_METHOD(IUeGui::ITextMode&,initTextMode,(),(final));
