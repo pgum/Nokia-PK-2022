@@ -14,7 +14,7 @@ class SMS : public ITextMessage
 {
 public:
     SMS();
-    SMS(common::PhoneNumber from, common::PhoneNumber to, std::string message, bool isRead = false);
+    SMS(common::PhoneNumber from, common::PhoneNumber to, std::string message, bool isRead);
     SMS(const SMS &sms);
     SMS &operator =(const SMS &sms);
 

@@ -109,7 +109,8 @@ void ConnectedState::handleAcceptOnComposeSMSView(IUeGui::ISmsComposeMode& smsCo
     context.smsDb.addSMS(
             receiverNumber ,
             context.user.getPhoneNumber(),
-            msgToSend);
+            msgToSend,
+            true);
 
     context.bts.sendSMS(receiverNumber,msgToSend);
     handleMainMenu();

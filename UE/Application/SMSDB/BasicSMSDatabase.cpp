@@ -9,10 +9,10 @@ namespace ue
     {
     }
 
-    void BasicSMSDatabase::addSMS(common::PhoneNumber from, common::PhoneNumber to, std::string message)
+    void BasicSMSDatabase::addSMS(common::PhoneNumber from, common::PhoneNumber to, std::string message, bool isRead)
     {
         data.emplace_back(
-                nextId++, std::make_unique<SMS>(from,to,message)
+                nextId++, std::make_unique<SMS>(from,to,message,isRead)
                 );
     }
 
