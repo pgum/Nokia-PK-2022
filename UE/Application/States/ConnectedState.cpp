@@ -128,6 +128,7 @@ void ConnectedState::handleSMS(common::PhoneNumber from, std::string text)
             context.user.getPhoneNumber(),
             text
             );
+    context.user.showSMSNotification();
 }
 #pragma endregion
 

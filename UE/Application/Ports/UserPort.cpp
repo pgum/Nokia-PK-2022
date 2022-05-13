@@ -97,7 +97,7 @@ void UserPort::showSMSList(const smsContainer&& smsList)
 
 void UserPort::showSMSList(const smsContainer& smsList)
 {
-
+    gui.showNewSms(false);
     IUeGui::IListViewMode& menu = gui.setListViewMode();
     menu.clearSelectionList();
 
@@ -127,6 +127,11 @@ void UserPort::showSMS(ITextMessage &&sms)
 {
     IUeGui::ITextMode& smsView = gui.setViewTextMode();
     smsView.setText(sms.getMessage());
+}
+
+void UserPort::showSMSNotification()
+{
+    gui.showNewSms(true);
 }
 
 

@@ -32,6 +32,8 @@ public:
     void showSMS(ITextMessage& sms) override;
     void showSMS(ITextMessage&& sms) override;
 
+    void showSMSNotification() override;
+
     IUeGui::ISmsComposeMode& initSmsComposer() override;
     IUeGui::IListViewMode& initListViewMode() override;
     IUeGui::ITextMode& initTextMode() override;
@@ -48,7 +50,6 @@ private:
     IUeGui& gui;
     common::PhoneNumber phoneNumber;
     IUserEventsHandler* handler = nullptr;
-
 };
 
 }

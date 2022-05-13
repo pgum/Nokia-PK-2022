@@ -32,6 +32,8 @@ public:
     virtual void showSMS(ITextMessage& sms) = 0;
     virtual void showSMS(ITextMessage&& sms) = 0;
 
+    virtual void showSMSNotification() = 0;
+
     virtual IUeGui::ISmsComposeMode& initSmsComposer() = 0;
     virtual IUeGui::IListViewMode& initListViewMode() = 0;
     virtual IUeGui::ITextMode& initTextMode() = 0;
