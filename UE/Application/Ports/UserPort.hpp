@@ -21,7 +21,6 @@ public:
 
     void showNotConnected() override;
     void showConnecting() override;
-    IUeGui& getUserGui() override;
 
     common::PhoneNumber getPhoneNumber() override;
 

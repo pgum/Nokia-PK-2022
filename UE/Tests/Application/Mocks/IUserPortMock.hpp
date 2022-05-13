@@ -19,13 +19,12 @@ public:
 class IUserPortMock : public IUserPort
 {
 public:
-    IUserPortMock(IUeGuiMock &userGuiMock);
+    IUserPortMock();
     ~IUserPortMock() override;
 
     MOCK_METHOD(void, showNotConnected, (), (final));
     MOCK_METHOD(void, showConnecting, (), (final));
     //MOCK_METHOD(IUeGui&, getUserGui, (), (final));
-    IUeGui &getUserGui();
     MOCK_METHOD(void, showMainMenu, (), (final));
     MOCK_METHOD(common::PhoneNumber,getPhoneNumber,(),(final));
     MOCK_METHOD(void,showSMSList,(smsContainer&&),(final));
@@ -35,11 +34,12 @@ public:
     MOCK_METHOD(IUeGui::ISmsComposeMode&,initSmsComposer,(),(final));
     MOCK_METHOD(IUeGui::IListViewMode&,initListViewMode,(),(final));
     MOCK_METHOD(IUeGui::ITextMode&,initTextMode,(),(final));
+    MOCK_METHOD(void,setAcceptCallback,(const IUeGui::Callback& callback),(final));
+    MOCK_METHOD(void,setRejectCallback,(const IUeGui::Callback& callback),(final));
+    MOCK_METHOD(void,setHomeCallback,(const IUeGui::Callback& callback),(final));
     MOCK_METHOD(PhoneNumber,getInputPhoneNumber,(IUeGui::ISmsComposeMode&),(final));
     MOCK_METHOD(std::string,getInputString,(IUeGui::ISmsComposeMode&),(final));
 
-private:
-    IUeGuiMock &gui;
 };
 
 }

@@ -21,7 +21,8 @@ int main(int argc, char* argv[])
     TimerPort timer(logger);
 
     BasicSMSDatabase smsDb{};
-
+    smsDb.addSMS(PhoneNumber{123},phoneNumber,"1111111111111111111111111111111111111");
+    smsDb.addSMS(PhoneNumber{123},phoneNumber,"2222222222222222222222222222222222222");
     Application app(phoneNumber, logger, bts, user, timer, smsDb);
 
     bts.start(app);

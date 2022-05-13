@@ -31,11 +31,6 @@ void UserPort::showConnecting()
     gui.showConnecting();
 }
 
-IUeGui& UserPort::getUserGui()
-{
-    return gui;
-}
-
 common::PhoneNumber UserPort::getPhoneNumber()
 {
     return phoneNumber;

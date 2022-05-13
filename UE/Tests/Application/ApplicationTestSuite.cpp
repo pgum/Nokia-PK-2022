@@ -25,7 +25,7 @@ protected:
     NiceMock<common::ILoggerMock> loggerMock;
     StrictMock<IBtsPortMock> btsPortMock;
     StrictMock<IUeGuiMock> ueGui;
-    StrictMock<IUserPortMock> userPortMock{ueGui};
+    StrictMock<IUserPortMock> userPortMock;
     StrictMock<ITimerPortMock> timerPortMock;
     NiceMock<ISMSDatabaseMock> smsDb;
 
@@ -74,8 +74,8 @@ void ApplicationConnectingTestSuite::requestConnectOnAttachRequest()
 {
     EXPECT_CALL(timerPortMock, stopTimer());
     EXPECT_CALL(userPortMock, showMainMenu());
-    EXPECT_CALL(ueGui, setAcceptCallback(_));
-    EXPECT_CALL(ueGui, setRejectCallback(_));
+    EXPECT_CALL(userPortMock, setAcceptCallback(_));
+    EXPECT_CALL(userPortMock, setRejectCallback(_));
 
     objectUnderTest.handleAttachAccept();
 }

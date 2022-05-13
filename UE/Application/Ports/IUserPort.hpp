@@ -23,8 +23,6 @@ public:
 
     virtual void showNotConnected() = 0;
     virtual void showConnecting() = 0;
-    //maybe change the name? for something like userSpaceInit() or something
-    virtual IUeGui& getUserGui() = 0;
 
     virtual common::PhoneNumber getPhoneNumber() = 0;
 
