@@ -45,4 +45,10 @@ void BaseState::handleSMS(common::PhoneNumber from, std::string text)
     logger.logInfo("Uexpected: handleSMS");
 }
 
+void BaseState::handleReceiveCallRequest(common::PhoneNumber from)
+{
+    logger.logInfo("Uexpected: handleReceiveCallRequest");
+}
+
+
 }
