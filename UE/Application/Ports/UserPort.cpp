@@ -111,7 +111,8 @@ void UserPort::showSMSList(const smsContainer& smsList)
 void UserPort::showSMS(ITextMessage &sms)
 {
     IUeGui::ITextMode& smsView = gui.setViewTextMode();
-    smsView.setText(sms.getMessage());
+    smsView.setText( "from " + common::to_string(sms.getFromNumber()) +
+                    "\n\n" + sms.getMessage());
 }
 
 void UserPort::showSMS(ITextMessage &&sms)

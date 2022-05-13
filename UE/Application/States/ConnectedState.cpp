@@ -87,7 +87,7 @@ void ConnectedState::handleAcceptOnSMSList()
 #pragma region SMSView
 void ConnectedState::handleSMSView(unsigned int elemIndex)
 {
-    context.user.showSMS(context.smsDb.getSMS(elemIndex));
+    context.user.showSMS( context.smsDb.getSMS(elemIndex));
     context.user.setAcceptCallback([&]{ return; });
     context.user.setRejectCallback([&]{ handleSMSList(); });
 }

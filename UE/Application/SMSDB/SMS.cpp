@@ -1,6 +1,5 @@
 #include "SMS.hpp"
 
-#include <stdexcept> //delete after implementation
 
 namespace ue
 {
@@ -43,10 +42,12 @@ namespace ue
 
     std::string SMS::getMessageSummary()
     {
+        int pos = message.find_first_of("\n");
+        if(pos==-1) pos = MAX_SUMMARY_SIZE;
         if(isRead)
-            return message.substr(0,MAX_SUMMARY_SIZE);
+            return message.substr(0, pos);
         else
-            return "*"+message.substr(0,MAX_SUMMARY_SIZE-1);
+            return "*"+message.substr(0,pos);
     }
 
     std::string SMS::getMessage()
