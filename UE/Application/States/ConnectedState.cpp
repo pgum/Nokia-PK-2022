@@ -21,10 +21,10 @@ void ConnectedState::handleCallRequest(common::PhoneNumber from)
     context.user.showNewCallRequest(from);
 }
 
-void ConnectedState::handleSendCallAccept(common::PhoneNumber)
+void ConnectedState::handleSendCallAccept(common::PhoneNumber to)
 {
+    context.bts.sendCallAccept(to);
     context.setState<TalkingState>();
-    //TODO Wysylanie common::MessageId::CallAccepted wiadomości do bts
 }
 
 }

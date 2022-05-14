@@ -79,4 +79,12 @@ void BtsPort::sendAttachRequest(common::BtsId btsId)
 
 }
 
+void BtsPort::sendCallAccept(common::PhoneNumber to)
+{
+    common::OutgoingMessage msg{common::MessageId::CallAccepted,
+                                phoneNumber,
+                                to};
+    transport.sendMessage(msg.getMessage());
+}
+
 }
