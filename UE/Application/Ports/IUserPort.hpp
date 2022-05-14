@@ -20,6 +20,8 @@ public:
     virtual void showConnected() = 0;
 
     virtual void showNewSMS() = 0;
+
+    virtual void showNewCallRequest(common::PhoneNumber from) = 0;
 };
 
 }

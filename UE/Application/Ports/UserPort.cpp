@@ -1,5 +1,6 @@
 #include "UserPort.hpp"
 #include "UeGui/IListViewMode.hpp"
+#include "UeGui/ITextMode.hpp"
 
 namespace ue
 {
@@ -43,6 +44,11 @@ void UserPort::showNewSMS()
 {
     gui.showNewSms(true); // shows little 'M' in top bar, if false the 'M' is gray
     // I think its all this function has to do
+}
+
+void UserPort::showNewCallRequest(common::PhoneNumber from) {
+    IUeGui::ITextMode& incomingCall = gui.setAlertMode();
+    incomingCall.setText("Incoming call");
 }
 
 }
