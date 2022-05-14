@@ -51,4 +51,9 @@ void Application::handleSMS(common::PhoneNumber from, std::string text)
     context.state->handleSMS(from, text);
 }
 
+void Application::handleCallRequest(common::PhoneNumber from)
+{
+    context.state->handleCallRequest(from);
+}
+
 }
