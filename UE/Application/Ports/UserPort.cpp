@@ -125,8 +125,7 @@ void UserPort::showSMS(ITextMessage &sms)
 
 void UserPort::showSMS(ITextMessage &&sms)
 {
-    IUeGui::ITextMode& smsView = gui.setViewTextMode();
-    smsView.setText(sms.getMessage());
+    showSMS(sms);
 }
 
 void UserPort::showSMSNotification()
