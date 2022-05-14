@@ -24,7 +24,6 @@ protected:
     const std::string MESSAGE = "Hello there!";
     NiceMock<common::ILoggerMock> loggerMock;
     StrictMock<IBtsPortMock> btsPortMock;
-    StrictMock<IUeGuiMock> ueGui;
     StrictMock<IUserPortMock> userPortMock;
     StrictMock<ITimerPortMock> timerPortMock;
     NiceMock<ISMSDatabaseMock> smsDb;
@@ -131,15 +130,13 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleDisconnect)
     objectUnderTest.handleDisconnected();
 }
 
+TEST_F(ApplicationConnectedTestSuite, shallHandleReceivingSMS)
+{
+    EXPECT_CALL(userPortMock, showSMSNotification());
+    EXPECT_CALL(userPortMock, getPhoneNumber());
+    EXPECT_CALL(smsDb, addSMS(SENDER_NUMBER,_,MESSAGE,false));
 
-//TEST_F(ApplicationConnectedTestSuite, shallHandleReceivingSMS)
-//{
-//    EXPECT_CALL(userPortMock, showNewSMS());
-//    // TODO: Add EXPECT_CALL for SMS DB adding new sms
-
-//    objectUnderTest.handleSMS(SENDER_NUMBER,MESSAGE);
-//}
-
-
+    objectUnderTest.handleSMS(SENDER_NUMBER,MESSAGE);
+}
 
 }
