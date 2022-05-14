@@ -11,6 +11,8 @@ public:
     ConnectedState(Context& context);
     void handleDisconnected() override;
     void handleCallRequest(common::PhoneNumber) override;
+
+    void handleSendCallAccept(common::PhoneNumber) override;
 };
 
 }

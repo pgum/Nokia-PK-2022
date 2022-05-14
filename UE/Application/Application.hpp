@@ -32,6 +32,9 @@ public:
     void handleSMS(common::PhoneNumber from, std::string text) override;
     void handleCallRequest(common::PhoneNumber from) override;
 
+    // IUserEventsHandler interface
+    void handleSendCallAccept(common::PhoneNumber to) override;
+
 private:
     Context context;
     common::PrefixedLogger logger;

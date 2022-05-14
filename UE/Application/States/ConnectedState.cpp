@@ -1,5 +1,6 @@
 #include "ConnectedState.hpp"
 #include "NotConnectedState.hpp"
+#include "TalkingState.hpp"
 
 namespace ue
 {
@@ -18,6 +19,12 @@ void ConnectedState::handleDisconnected()
 void ConnectedState::handleCallRequest(common::PhoneNumber from)
 {
     context.user.showNewCallRequest(from);
+}
+
+void ConnectedState::handleSendCallAccept(common::PhoneNumber)
+{
+    context.setState<TalkingState>();
+    //TODO Wysylanie common::MessageId::CallAccepted wiadomości do bts
 }
 
 }
