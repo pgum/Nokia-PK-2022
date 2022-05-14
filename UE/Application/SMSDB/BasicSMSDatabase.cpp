@@ -25,4 +25,9 @@ namespace ue
     {
         return data;
     }
+
+    ITextMessage &BasicSMSDatabase::getLastSMSSend()
+    {
+        return *data.end()->second;
+    }
 }
