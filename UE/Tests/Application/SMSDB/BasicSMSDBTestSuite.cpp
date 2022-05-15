@@ -61,6 +61,7 @@ TEST_F(SingleRecordSMSDBTestSuite, shallReturnReadSummaryAfterGetMessage)
     ASSERT_EQ(resultVector.size(),1);
     ASSERT_EQ(resultVector[0].second->getMessageSummary(), SUMMARIES_UNREAD[0]);
     ASSERT_EQ(resultVector[0].second->getMessage(), MESSAGES[0]);
+    resultVector[0].second->setIsReadStatus(true);
     ASSERT_EQ(resultVector[0].second->getMessageSummary(), SUMMARIES_READ[0]);
 }
 
@@ -129,6 +130,9 @@ TEST_F(MultipleRecordsSMSDBTestSuite, shallReturnReadSummariesAfterGetMessage)
 
     ASSERT_EQ(resultVector[0].second->getMessage(), MESSAGES[0]);
     ASSERT_EQ(resultVector[1].second->getMessage(), MESSAGES[1]);
+
+    resultVector[0].second->setIsReadStatus(true);
+    resultVector[1].second->setIsReadStatus(true);
 
     ASSERT_EQ(resultVector[0].second->getMessageSummary(), SUMMARIES_READ[0]);
     ASSERT_EQ(resultVector[1].second->getMessageSummary(), SUMMARIES_READ[1]);
