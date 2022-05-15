@@ -17,6 +17,7 @@ class ApplicationTestSuite : public Test
 {
 protected:
     const common::PhoneNumber PHONE_NUMBER{112};
+    const common::PhoneNumber NUMBER{101};
     const common::BtsId BTS_ID{42};
     const common::PhoneNumber SENDER_NUMBER{111};
     const std::string MESSAGE = "Hello there!";
@@ -109,6 +110,7 @@ TEST_F(ApplicationConnectingTestSuite, shallFailAttachOnTimeOut)
 struct ApplicationConnectedTestSuite : ApplicationConnectingTestSuite
 {
     ApplicationConnectedTestSuite();
+    void testHandleCallRequest();
 };
 
 ApplicationConnectedTestSuite::ApplicationConnectedTestSuite()
@@ -133,6 +135,29 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleReceivingSMS)
     // TODO: Add EXPECT_CALL for SMS DB adding new sms
 
     objectUnderTest.handleSMS(SENDER_NUMBER,MESSAGE);
+}
+
+void ApplicationConnectedTestSuite::testHandleCallRequest()
+{
+    using namespace std::chrono_literals;
+    EXPECT_CALL(userPortMock, showNewCallRequest(NUMBER));
+    EXPECT_CALL(timerPortMock, startTimer(30000ms));
+    objectUnderTest.handleCallRequest(NUMBER);
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleCallRequest)
+{
+    testHandleCallRequest();
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleSendCallAccept)
+{
+    testHandleCallRequest();
+    EXPECT_CALL(btsPortMock, sendCallAccept(NUMBER));
+    EXPECT_CALL(timerPortMock, stopTimer());
+
+    //TODO Trzeba jeszcze sprawdzić wyświetlania okna rozmowy
+    objectUnderTest.handleSendCallAccept(NUMBER);
 }
 
 
