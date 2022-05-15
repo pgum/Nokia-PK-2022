@@ -121,7 +121,7 @@ void ConnectedState::handleAcceptOnComposeSMSView(IUeGui::ISmsComposeMode& smsCo
 
 
 #pragma region smsHandling
-void ConnectedState::handleSMS(common::PhoneNumber from, std::string text)
+void ConnectedState::handleSMS(common::PhoneNumber from, std::string text, common::MessageId msgType)
 {
     context.smsDb.addSMS(
             from,
