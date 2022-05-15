@@ -2,15 +2,12 @@
 
 #include "Messages/PhoneNumber.hpp"
 
-namespace
+enum SmsTransmissionState
 {
-    enum SmsTransmissionState
-    {
-        initial,
-        SuccessfullySend,
-        Bounce
-    };
-}
+    initial,
+    SuccessfullySend,
+    Bounce
+};
 
 namespace ue {
 

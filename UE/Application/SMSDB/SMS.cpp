@@ -11,12 +11,13 @@ namespace ue
         isRead = false;
     }
 
-    SMS::SMS(common::PhoneNumber from, common::PhoneNumber to, std::string message, bool is_read)
+    SMS::SMS(common::PhoneNumber from, common::PhoneNumber to, std::string message, bool is_read, SmsTransmissionState state)
     {
         this->from = from;
         this->to = to;
         this->message = message;
         this->isRead = is_read;
+        this->smsTransmissionState = state;
     }
 
     SMS::SMS(const SMS& other)
@@ -25,6 +26,7 @@ namespace ue
         this->from = other.from;
         this->message = other.message;
         this->isRead = other.isRead;
+        this->smsTransmissionState = other.smsTransmissionState;
     }
 
     SMS& SMS::operator=(const SMS& other)
@@ -36,6 +38,7 @@ namespace ue
         this->from = other.from;
         this->message = other.message;
         this->isRead = other.isRead;
+        this->smsTransmissionState = other.smsTransmissionState;
 
         return *this;
     }
