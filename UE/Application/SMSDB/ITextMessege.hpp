@@ -5,7 +5,8 @@
 enum SmsTransmissionState
 {
     initial,
-    SuccessfullySend,
+    Send,
+    Received,
     Bounce
 };
 

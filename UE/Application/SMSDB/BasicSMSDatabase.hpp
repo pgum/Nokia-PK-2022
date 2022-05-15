@@ -10,9 +10,10 @@ class BasicSMSDatabase : public ISMSDatabase
 {
 public:
     BasicSMSDatabase();
-    void addSMS(common::PhoneNumber from, common::PhoneNumber to, std::string message, bool isRead = false) override;
+    void addSMS(common::PhoneNumber from, common::PhoneNumber to, std::string message, bool isRead = false, SmsTransmissionState state = initial) override;
+    void addSMS(ITextMessage& sms) override;
     ITextMessage& getSMS(unsigned int id) override;
-    ITextMessage& getLastSMSSend() override;
+    std::optional<std::shared_ptr<ITextMessage>> getLastSMSSend() override;
     const std::vector<std::pair<unsigned int, std::shared_ptr<ITextMessage>>> & getAllSMS() override; //returns summaries
 
 private:
