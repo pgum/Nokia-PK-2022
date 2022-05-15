@@ -81,7 +81,6 @@ namespace ue
 
     std::string SMS::getMessage()
     {
-        isRead = true;
         return message;
     }
 

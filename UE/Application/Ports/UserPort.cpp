@@ -121,6 +121,7 @@ void UserPort::showSMS(ITextMessage &sms)
         header = "from " + common::to_string(sms.getFromNumber()) + "\n\n";
     }
     smsView.setText( header + sms.getMessage());
+    sms.setIsReadStatus(true);
 }
 
 void UserPort::showSMS(ITextMessage &&sms)
