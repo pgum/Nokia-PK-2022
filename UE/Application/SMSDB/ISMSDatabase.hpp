@@ -16,7 +16,7 @@ public:
     virtual void addSMS(common::PhoneNumber from, common::PhoneNumber to, std::string message, bool isRead = false) = 0;
     virtual ITextMessage& getSMS(unsigned int id) = 0;
     virtual ITextMessage& getLastSMSSend() = 0;
-    virtual const std::vector<std::pair<unsigned int, std::unique_ptr<ITextMessage>>>& getAllSMS() = 0;
+    virtual const std::vector<std::pair<unsigned int, std::shared_ptr<ITextMessage>>>& getAllSMS() = 0;
 };
 
 }

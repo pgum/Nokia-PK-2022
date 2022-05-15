@@ -18,7 +18,7 @@ public:
 class IUserPort
 {
 public:
-    typedef const std::vector<std::pair<unsigned int, std::unique_ptr<ITextMessage>>> smsContainer;
+    typedef const std::vector<std::pair<unsigned int, std::shared_ptr<ITextMessage>>> smsContainer;
     virtual ~IUserPort() = default;
 
     virtual void showNotConnected() = 0;

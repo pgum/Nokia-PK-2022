@@ -21,7 +21,7 @@ namespace ue
         return *data.at(id).second;
     }
 
-    const std::vector<std::pair<unsigned int, std::unique_ptr< ITextMessage>>>& BasicSMSDatabase::getAllSMS()
+    const std::vector<std::pair<unsigned int, std::shared_ptr< ITextMessage>>>& BasicSMSDatabase::getAllSMS()
     {
         return data;
     }
