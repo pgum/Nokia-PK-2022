@@ -65,8 +65,17 @@ namespace ue
             {
                 return message.substr(0, pos);
             }
+            case initial:
+            {
+                if (isRead)
+                    return message.substr(0, pos);
+                else
+                    return "*" + message.substr(0, pos - 1);
+            }
             default:
-                return message.substr(0, pos);
+            {
+                return "unhandled-case";
+            }
         }
     }
 

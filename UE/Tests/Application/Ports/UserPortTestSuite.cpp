@@ -18,7 +18,7 @@ class UserPortTestSuite : public Test
 {
 protected:
     const common::PhoneNumber PHONE_NUMBER{112};
-    std::vector<std::pair<unsigned int,std::unique_ptr< ITextMessage>>> smsContainer;
+    std::vector<std::pair<unsigned int,std::shared_ptr< ITextMessage>>> smsContainer;
 
     NiceMock<common::ILoggerMock> loggerMock;
     StrictMock<IUserEventsHandlerMock> handlerMock;

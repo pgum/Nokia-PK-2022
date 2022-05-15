@@ -134,9 +134,9 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleReceivingSMS)
 {
     EXPECT_CALL(userPortMock, showSMSNotification());
     EXPECT_CALL(userPortMock, getPhoneNumber());
-    EXPECT_CALL(smsDb, addSMS(SENDER_NUMBER,_,MESSAGE,false));
+    EXPECT_CALL(smsDb, addSMS(SENDER_NUMBER,_,MESSAGE,false,Received));
 
-    objectUnderTest.handleSMS(SENDER_NUMBER,MESSAGE);
+    objectUnderTest.handleSMS(SENDER_NUMBER,MESSAGE,common::MessageId::Sms);
 }
 
 }

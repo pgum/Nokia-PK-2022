@@ -48,7 +48,7 @@ TEST_F(SingleRecordSMSDBTestSuite, shallReturnAddedDestinationNumber)
 
 TEST_F(SingleRecordSMSDBTestSuite, shallReturnVectorOfOneSummary)
 {
-    const std::vector<std::pair<unsigned int, std::unique_ptr< ue::ITextMessage>>>& resultVector = objectUnderTest.getAllSMS();
+    const std::vector<std::pair<unsigned int, std::shared_ptr< ue::ITextMessage>>>& resultVector = objectUnderTest.getAllSMS();
 
     ASSERT_EQ(resultVector.size(),1);
     ASSERT_EQ(resultVector[0].second->getMessageSummary(), SUMMARIES_UNREAD[0]);
@@ -56,7 +56,7 @@ TEST_F(SingleRecordSMSDBTestSuite, shallReturnVectorOfOneSummary)
 
 TEST_F(SingleRecordSMSDBTestSuite, shallReturnReadSummaryAfterGetMessage)
 {
-    const std::vector<std::pair<unsigned int, std::unique_ptr< ue::ITextMessage>>>& resultVector = objectUnderTest.getAllSMS();
+    const std::vector<std::pair<unsigned int, std::shared_ptr< ue::ITextMessage>>>& resultVector = objectUnderTest.getAllSMS();
 
     ASSERT_EQ(resultVector.size(),1);
     ASSERT_EQ(resultVector[0].second->getMessageSummary(), SUMMARIES_UNREAD[0]);
@@ -106,7 +106,7 @@ TEST_F(MultipleRecordsSMSDBTestSuite, shallReturnAddedDestinationNumbers)
 
 TEST_F(MultipleRecordsSMSDBTestSuite, shallReturnVectorOfSummaries)
 {
-    const std::vector<std::pair<unsigned int, std::unique_ptr< ue::ITextMessage>>>& resultVector = objectUnderTest.getAllSMS();
+    const std::vector<std::pair<unsigned int, std::shared_ptr< ue::ITextMessage>>>& resultVector = objectUnderTest.getAllSMS();
 
     ASSERT_EQ(resultVector.size(), 3);
 
@@ -118,7 +118,7 @@ TEST_F(MultipleRecordsSMSDBTestSuite, shallReturnVectorOfSummaries)
 
 TEST_F(MultipleRecordsSMSDBTestSuite, shallReturnReadSummariesAfterGetMessage)
 {
-    const std::vector<std::pair<unsigned int, std::unique_ptr< ue::ITextMessage>>>& resultVector = objectUnderTest.getAllSMS();
+    const std::vector<std::pair<unsigned int, std::shared_ptr< ue::ITextMessage>>>& resultVector = objectUnderTest.getAllSMS();
 
     ASSERT_EQ(resultVector.size(), 3);
 
