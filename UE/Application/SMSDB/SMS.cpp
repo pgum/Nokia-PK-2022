@@ -65,4 +65,24 @@ namespace ue
     {
         return to;
     }
+
+    void SMS::setSMSTransmissionState(SmsTransmissionState state)
+    {
+        smsTransmissionState = state;
+    }
+
+    SmsTransmissionState SMS::getSMSTransmissionState()
+    {
+        return smsTransmissionState;
+    }
+
+    void SMS::setIsReadStatus(bool status)
+    {
+        isRead = status;
+    }
+
+    bool SMS::getIsReadStatus()
+    {
+        return isRead;
+    }
 }

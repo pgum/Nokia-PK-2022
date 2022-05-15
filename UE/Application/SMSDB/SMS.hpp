@@ -22,12 +22,17 @@ public:
     std::string getMessage() override;
     common::PhoneNumber getFromNumber() override;
     common::PhoneNumber getToNumber() override;
+    void setSMSTransmissionState(SmsTransmissionState state) override;
+    SmsTransmissionState getSMSTransmissionState() override;
+    void setIsReadStatus(bool status) override;
+    bool getIsReadStatus() override;
 
 private:
     std::string message;
     common::PhoneNumber from;
     common::PhoneNumber to;
     bool isRead = false;
+    std::uint8_t smsTransmissionState = ;
 };
 
 }

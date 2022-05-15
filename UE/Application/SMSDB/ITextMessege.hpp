@@ -2,6 +2,16 @@
 
 #include "Messages/PhoneNumber.hpp"
 
+namespace
+{
+    enum SmsTransmissionState
+    {
+        initial,
+        SuccessfullySend,
+        Bounce
+    };
+}
+
 namespace ue {
 
 class ITextMessage {
@@ -12,6 +22,10 @@ public:
     virtual common::PhoneNumber getFromNumber() = 0;
 
     virtual common::PhoneNumber getToNumber() = 0;
+    virtual void setIsReadStatus(bool status) = 0;
+    virtual bool getIsReadStatus() = 0;
+    virtual void setSMSTransmissionState(SmsTransmissionState state) = 0;
+    virtual SmsTransmissionState getSMSTransmissionState() = 0;
 };
 
 }
