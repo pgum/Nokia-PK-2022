@@ -21,6 +21,8 @@ void ConnectedState::handleCallRequest(common::PhoneNumber from)
     using namespace std::chrono_literals;
     context.user.showNewCallRequest(from);
     context.timer.startTimer(30000ms);
+
+    //TODO logika dla odbieranie i odrzucania połączenia
 }
 
 void ConnectedState::handleSendCallAccept(common::PhoneNumber to)
@@ -28,8 +30,9 @@ void ConnectedState::handleSendCallAccept(common::PhoneNumber to)
     context.bts.sendCallAccept(to);
     context.timer.stopTimer();
     context.setState<TalkingState>();
+    context.user.showTalkingState();
 
-    //TODO Wyświetlania okna rozmowy dla użytkownika
+    //TODO Dodanie logiki dla przerywanie połączenia
 }
 
 void ConnectedState::handleSendCallReject(common::PhoneNumber to)
@@ -39,8 +42,11 @@ void ConnectedState::handleSendCallReject(common::PhoneNumber to)
     context.user.showMainMenu();
 }
 
-
-
+void ConnectedState::handleTimeout()
+{
+    context.user.showMainMenu();
+    //TODO Metoda powinna jeszcze wysyłać sendCallReject(to), więc trzeba gdzieś zapisywać numer dzwoniącego
+}
 
 
 #pragma region MainMenu

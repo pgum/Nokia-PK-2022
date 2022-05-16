@@ -44,6 +44,8 @@ public:
 
     virtual void showSMSNotification() = 0;
 
+    virtual void showTalkingState() = 0;
+
     virtual IUeGui::ISmsComposeMode& initSmsComposer() = 0;
     virtual IUeGui::IListViewMode& initListViewMode() = 0;
     virtual IUeGui::ITextMode& initTextMode() = 0;

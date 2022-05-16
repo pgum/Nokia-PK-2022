@@ -151,4 +151,11 @@ void UserPort::showNewCallRequest(common::PhoneNumber from) {
     incomingCall.setText("Incoming call");
 }
 
+void UserPort::showTalkingState()
+{
+    IUeGui::ICallMode& call = gui.setCallMode();
+
+
+}
+
 }

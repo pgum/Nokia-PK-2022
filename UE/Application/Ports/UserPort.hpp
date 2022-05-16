@@ -46,6 +46,7 @@ public:
     std::string getInputString(IUeGui::ISmsComposeMode &composer) override;
 
     void showNewCallRequest(common::PhoneNumber from) override;
+    void showTalkingState() override;
 
 private:
     common::PrefixedLogger logger;

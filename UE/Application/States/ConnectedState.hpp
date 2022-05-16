@@ -22,6 +22,8 @@ private:
 
     void handleSMS(common::PhoneNumber from, std::string text, common::MessageId msgType) override;
 
+    void handleTimeout() override;
+
 public:
     ConnectedState(Context& context);
     void handleDisconnected() override;
