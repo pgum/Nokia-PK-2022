@@ -32,4 +32,12 @@ void ConnectedState::handleSendCallAccept(common::PhoneNumber to)
     //TODO Wyświetlania okna rozmowy dla użytkownika
 }
 
+void ConnectedState::handleSendCallReject(common::PhoneNumber to)
+{
+    context.bts.sendCallReject(to);
+    context.timer.stopTimer();
+
+    //TODO Wyświetlania głownego menu
+}
+
 }

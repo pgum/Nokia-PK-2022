@@ -55,5 +55,10 @@ void BaseState::handleSendCallAccept(common::PhoneNumber)
     logger.logInfo("Uexpected: handleCallAccept");
 }
 
+void BaseState::handleSendCallReject(common::PhoneNumber)
+{
+    logger.logInfo("Uexpected: handleCallReject");
+}
+
 
 }

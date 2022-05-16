@@ -87,4 +87,12 @@ void BtsPort::sendCallAccept(common::PhoneNumber to)
     transport.sendMessage(msg.getMessage());
 }
 
+    void BtsPort::sendCallReject(common::PhoneNumber to)
+    {
+        common::OutgoingMessage msg{common::MessageId::CallDropped,
+                                    phoneNumber,
+                                    to};
+        transport.sendMessage(msg.getMessage());
+    }
+
 }

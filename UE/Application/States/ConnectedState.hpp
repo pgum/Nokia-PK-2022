@@ -13,6 +13,7 @@ public:
     void handleCallRequest(common::PhoneNumber) override;
 
     void handleSendCallAccept(common::PhoneNumber) override;
+    void handleSendCallReject(common::PhoneNumber) override;
 };
 
 }

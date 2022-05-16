@@ -61,4 +61,9 @@ void Application::handleSendCallAccept(common::PhoneNumber to)
     context.state->handleSendCallAccept(to);
 }
 
+void Application::handleSendCallReject(common::PhoneNumber to)
+{
+    context.state ->handleSendCallReject(to);
+}
+
 }
