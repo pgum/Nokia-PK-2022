@@ -14,4 +14,6 @@ public:
     std::vector<SMS> getAllSMS();
 
     virtual ~SMS_DB();
+
+    SMS getSingleSmsAt(int smsListPosition);
 };

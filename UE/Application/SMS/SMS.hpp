@@ -10,10 +10,13 @@ class SMS {
     common::PhoneNumber m_receiver;
     std::string m_textMessage;
     bool m_isViewed;
+    bool m_isSended;
+
 public:
     SMS(common::MessageId mMessageId, const common::PhoneNumber &mSender, const common::PhoneNumber &mReceiver,
         const std::string &mTextMessage);
     SMS(const std::string &mTextMessage, const common::PhoneNumber &mSender);
+    SMS(const std::string &mTextMessage, const common::PhoneNumber &mSender, const std::string kindOfSms);
 
     void Set_Viewed_Value();
 
@@ -22,4 +25,6 @@ public:
     const common::PhoneNumber &getMSender() const;
 
     const std::string getSmsHeader();
+
+    std::string isMIsViewed() const;
 };
