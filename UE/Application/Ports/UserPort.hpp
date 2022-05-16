@@ -6,37 +6,52 @@
 #include "Messages/PhoneNumber.hpp"
 #include "../SMS/SMS_DB.hpp"
 
-namespace ue
-{
+namespace ue {
 
-class UserPort : public IUserPort
-{
-public:
-    UserPort(common::ILogger& logger, IUeGui& gui, common::PhoneNumber phoneNumber);
-    void start(IUserEventsHandler& handler);
-    void stop();
+    class UserPort : public IUserPort {
+    public:
+        UserPort(common::ILogger &logger, IUeGui &gui, common::PhoneNumber phoneNumber);
 
-    void showNotConnected() override;
-    void showConnecting() override;
-    void showConnected() override;
-    void showViewingSms() override;
-    IUeGui::ISmsComposeMode& composeSmsMode() override;
-    void acceptCallbackClicked(IUeGui::IListViewMode& menu);
-    void acceptCallback(IUeGui::Callback acceptCallback) override;
-    void rejectCallback(IUeGui::Callback rejectCallback) override;
-    int getMenuIndex() override;
-    SMS_DB &getSmsDB() override;
-    SMS_DB smsDb;
-    void setSmsDB(SMS_DB &smsDb) override;
+        void start(IUserEventsHandler &handler);
 
-private:
-    common::PrefixedLogger logger;
-    IUeGui& gui;
-    common::PhoneNumber phoneNumber;
-    IUserEventsHandler* handler = nullptr;
-    IUeGui::Callback currentCallbackState;
-    int menuIndex = -1;
+        void stop();
 
-};
+        void showNotConnected() override;
+
+        void showConnecting() override;
+
+        void showConnected(int notification) override;
+
+        void showViewingSms() override;
+
+        SMS returnSingleSms(int smsListPosition) override;
+
+        void showSingleSms(int smsListPosition) override;
+
+        IUeGui::ISmsComposeMode &composeSmsMode() override;
+
+        void acceptCallbackClicked(IUeGui::IListViewMode &menu);
+
+        void acceptCallback(IUeGui::Callback acceptCallback) override;
+
+        void rejectCallback(IUeGui::Callback rejectCallback) override;
+
+        int getMenuIndex() override;
+
+        SMS_DB &getSmsDB() override;
+
+        SMS_DB smsDb;
+
+        void setSmsDB(SMS_DB &smsDb) override;
+
+    private:
+        common::PrefixedLogger logger;
+        IUeGui &gui;
+        common::PhoneNumber phoneNumber;
+        IUserEventsHandler *handler = nullptr;
+        IUeGui::Callback currentCallbackState;
+        int menuIndex = -1;
+
+    };
 
 }

@@ -1,5 +1,6 @@
 #include "UserPort.hpp"
 #include "UeGui/IListViewMode.hpp"
+#include "UeGui/ITextMode.hpp"
 #include "SMS/SMS.hpp"
 #include "SMS/SMS_DB.hpp"
 
@@ -31,16 +32,29 @@ namespace ue {
         IUeGui::IListViewMode &menu = gui.setListViewMode();
         menu.clearSelectionList();
         for (auto i: smsDb.getAllSMS()) {
-            menu.addSelectionListItem(i.getSmsHeader(),"");
+            menu.addSelectionListItem(i.getSmsHeader(), "");
         }
         gui.setAcceptCallback([this, &menu] { acceptCallbackClicked(menu); });
     }
 
-    void UserPort::showConnected() {
+    SMS UserPort::returnSingleSms(int smsListPosition) {
+        return smsDb.getSingleSmsAt(smsListPosition);
+    }
+
+    void UserPort::showSingleSms(int smsListPosition) {
+        IUeGui::ITextMode &menu = gui.setViewTextMode();
+        menu.setText(returnSingleSms(smsListPosition - 1).getMTextMessage());
+    }
+
+    void UserPort::showConnected(int notification) {
         IUeGui::IListViewMode &menu = gui.setListViewMode();
         menu.clearSelectionList();
         menu.addSelectionListItem("Compose SMS", "");
-        menu.addSelectionListItem("View SMS", "");
+        if (notification == 1) {
+            menu.addSelectionListItem("[NEW] View SMS", "");
+        } else if (notification == 0) {
+            menu.addSelectionListItem("View SMS", "");
+        }
         gui.setAcceptCallback([this, &menu] { acceptCallbackClicked(menu); });
     }
 
@@ -55,7 +69,7 @@ namespace ue {
         currentCallbackState();
     }
 
-    IUeGui::ISmsComposeMode& UserPort::composeSmsMode() {
+    IUeGui::ISmsComposeMode &UserPort::composeSmsMode() {
         return gui.setSmsComposeMode();
     }
 
@@ -72,7 +86,7 @@ namespace ue {
         gui.setRejectCallback(rejectCallback);
     }
 
-    SMS_DB & UserPort::getSmsDB(){
+    SMS_DB &UserPort::getSmsDB() {
         return smsDb;
     }
 

@@ -8,8 +8,10 @@ namespace ue {
 
     class SendingSmsState : public ConnectedState {
     public:
-        SendingSmsState(Context &context);
-        IUeGui::ISmsComposeMode& smsComposeMode;
+        SendingSmsState(Context &context, int powiadomienie);
+
+        IUeGui::ISmsComposeMode &smsComposeMode;
+        int notification = 0;
 
     protected:
 
