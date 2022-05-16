@@ -19,6 +19,8 @@ namespace ue {
 
         void onDeclineCallbackClicked();
 
+        void handleSMSReceive(const std::string smsText, const common::PhoneNumber senderNumber);
+
         void sendSms();
     };
 }

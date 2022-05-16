@@ -30,4 +30,12 @@ namespace ue {
         context.bts.sendSms(receiverNumber, smsText);
     }
 
+    void SendingSmsState::handleSMSReceive(const std::string smsText, const common::PhoneNumber senderNumber) {
+        this->notification = 1;
+        SMS sms1 = SMS(smsText, senderNumber, "received");
+        SMS_DB ourDataBase = context.user.getSmsDB();
+        ourDataBase.addSmsToDB(sms1);
+        context.user.setSmsDB(ourDataBase);
+    }
+
 }
