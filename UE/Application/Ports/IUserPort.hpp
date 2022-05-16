@@ -1,15 +1,14 @@
 #pragma once
 
-<<<<<<< HEAD
+
 #include "Messages/PhoneNumber.hpp"
 #include "IUeGui.hpp"
-=======
 #include "SMSDB/ISMSDatabase.hpp"
 #include "SMSDB/ITextMessege.hpp"
 #include "Constants/MenuConstans.h"
 #include "IUeGui.hpp"
 #include <memory>
->>>>>>> main
+
 
 namespace ue
 {

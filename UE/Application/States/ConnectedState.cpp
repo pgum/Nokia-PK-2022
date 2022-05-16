@@ -36,8 +36,7 @@ void ConnectedState::handleSendCallReject(common::PhoneNumber to)
 {
     context.bts.sendCallReject(to);
     context.timer.stopTimer();
-
-    //TODO Wyświetlania głownego menu
+    context.user.showMainMenu();
 }
 
 

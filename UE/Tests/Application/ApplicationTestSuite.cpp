@@ -170,6 +170,7 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleSendCallReject)
 
     EXPECT_CALL(btsPortMock, sendCallReject(NUMBER));
     EXPECT_CALL(timerPortMock, stopTimer());
+    EXPECT_CALL(userPortMock, showMainMenu());
 
     objectUnderTest.handleSendCallReject(NUMBER);
 
