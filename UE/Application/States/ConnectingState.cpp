@@ -6,7 +6,7 @@ namespace ue
 {
 
     ConnectingState::ConnectingState(Context &context)
-        : BaseState(context, "ConnectingState")
+            : BaseState(context, "ConnectingState")
     {
         context.user.showConnecting();
     }
@@ -14,7 +14,7 @@ namespace ue
     void ConnectingState::handleAttachAccept()
     {
         context.timer.stopTimer();
-        context.setState<ConnectedState>();
+        context.setState<ConnectedState>(0);
     }
 
 
