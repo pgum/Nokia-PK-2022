@@ -7,6 +7,8 @@
 #include "Mocks/IUserPortMock.hpp"
 #include "Mocks/ITimerPortMock.hpp"
 #include "Messages/PhoneNumber.hpp"
+#include "Mocks/ISMSDatabaseMock.hpp"
+#include "Mocks/IUeGuiMock.hpp"
 #include <memory>
 
 namespace ue
@@ -24,6 +26,7 @@ protected:
     StrictMock<IBtsPortMock> btsPortMock;
     StrictMock<IUserPortMock> userPortMock;
     StrictMock<ITimerPortMock> timerPortMock;
+    NiceMock<ISMSDatabaseMock> smsDb;
 
     Expectation expectNoTConnected = EXPECT_CALL(userPortMock, showNotConnected());
 
@@ -31,7 +34,8 @@ protected:
                                 loggerMock,
                                 btsPortMock,
                                 userPortMock,
-                                timerPortMock};
+                                timerPortMock,
+                                smsDb};
 };
 
 
@@ -68,7 +72,9 @@ struct ApplicationConnectingTestSuite : ApplicationNotConnectedTestSuite
 void ApplicationConnectingTestSuite::requestConnectOnAttachRequest()
 {
     EXPECT_CALL(timerPortMock, stopTimer());
-    EXPECT_CALL(userPortMock,showConnected());
+    EXPECT_CALL(userPortMock, showMainMenu());
+    EXPECT_CALL(userPortMock, setAcceptCallback(_));
+    EXPECT_CALL(userPortMock, setRejectCallback(_));
 
     objectUnderTest.handleAttachAccept();
 }
@@ -113,10 +119,8 @@ struct ApplicationConnectedTestSuite : ApplicationConnectingTestSuite
 
 ApplicationConnectedTestSuite::ApplicationConnectedTestSuite()
 {
-    EXPECT_CALL(timerPortMock, stopTimer());
-    EXPECT_CALL(userPortMock, showConnected());
-
-    objectUnderTest.handleAttachAccept();
+    //preparation
+    requestConnectOnAttachRequest();
 }
 
 TEST_F(ApplicationConnectedTestSuite, shallHandleDisconnect)
@@ -126,15 +130,13 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleDisconnect)
     objectUnderTest.handleDisconnected();
 }
 
-
 TEST_F(ApplicationConnectedTestSuite, shallHandleReceivingSMS)
 {
-    EXPECT_CALL(userPortMock, showNewSMS());
-    // TODO: Add EXPECT_CALL for SMS DB adding new sms
+    EXPECT_CALL(userPortMock, showSMSNotification());
+    EXPECT_CALL(userPortMock, getPhoneNumber());
+    EXPECT_CALL(smsDb, addSMS(SENDER_NUMBER,_,MESSAGE,false,Received));
 
-    objectUnderTest.handleSMS(SENDER_NUMBER,MESSAGE);
+    objectUnderTest.handleSMS(SENDER_NUMBER,MESSAGE,common::MessageId::Sms);
 }
-
-
 
 }

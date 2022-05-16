@@ -1,6 +1,7 @@
 #include "Application.hpp"
 #include "States/NotConnectedState.hpp"
 
+
 namespace ue
 {
 
@@ -8,8 +9,9 @@ Application::Application(common::PhoneNumber phoneNumber,
                          common::ILogger &iLogger,
                          IBtsPort &bts,
                          IUserPort &user,
-                         ITimerPort &timer)
-    : context{iLogger, bts, user, timer},
+                         ITimerPort &timer,
+                         ISMSDatabase& smsDb)
+    : context{iLogger, bts, user, timer, smsDb},
       logger(iLogger, "[APP] ")
 {
     logger.logInfo("Started");
@@ -46,9 +48,9 @@ void Application::handleDisconnected()
     context.state->handleDisconnected();
 }
 
-void Application::handleSMS(common::PhoneNumber from, std::string text)
+void Application::handleSMS(common::PhoneNumber from, std::string text, common::MessageId msgType)
 {
-    context.state->handleSMS(from, text);
+    context.state->handleSMS(from, text, msgType);
 }
 
 }

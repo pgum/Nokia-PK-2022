@@ -16,6 +16,7 @@ struct IUeGuiMock : public IUeGui
     IUeGuiMock();
     ~IUeGuiMock() override;
 
+public:
     MOCK_METHOD(void, setCloseGuard, (CloseGuard closeGuard), (final));
     MOCK_METHOD(void, setAcceptCallback, (Callback), (final));
     MOCK_METHOD(void, setRejectCallback, (Callback), (final));
