@@ -4,9 +4,9 @@
 
 namespace ue {
 
-    class ViewingSmsState : public BaseState {
+    class ViewingSingleSmsState : public BaseState {
     public:
-        ViewingSmsState(Context &context);
+        ViewingSingleSmsState(Context &context, int smsListPosition);
 
     protected:
 
