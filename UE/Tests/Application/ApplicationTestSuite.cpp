@@ -159,8 +159,8 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleSendCallAccept)
     testHandleCallRequest();
     EXPECT_CALL(btsPortMock, sendCallAccept(NUMBER));
     EXPECT_CALL(timerPortMock, stopTimer());
+    EXPECT_CALL(userPortMock, showTalkingState());
 
-    //TODO Trzeba jeszcze sprawdzić wyświetlania okna rozmowy
     objectUnderTest.handleSendCallAccept(NUMBER);
 }
 
@@ -176,5 +176,11 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleSendCallReject)
 
 }
 
+TEST_F(ApplicationConnectedTestSuite, shallSendCallRejectOnTimeout)
+{
+    testHandleCallRequest();
+    EXPECT_CALL(userPortMock, showMainMenu());
+    objectUnderTest.handleTimeout();
+}
 
 }
