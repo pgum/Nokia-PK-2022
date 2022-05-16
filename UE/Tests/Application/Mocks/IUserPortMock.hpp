@@ -13,6 +13,7 @@ public:
     ~IUserEventsHandlerMock() override;
 
     MOCK_METHOD(void, handleSendCallAccept, (common::PhoneNumber to), (final));
+    MOCK_METHOD(void, handleSendCallReject, (common::PhoneNumber to), (final));
 
 
 };
