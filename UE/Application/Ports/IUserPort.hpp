@@ -25,25 +25,21 @@ class IUserPort
 {
 public:
     typedef const std::vector<std::pair<unsigned int, std::shared_ptr<ITextMessage>>> smsContainer;
+
     virtual ~IUserPort() = default;
+
+    virtual common::PhoneNumber getPhoneNumber() = 0;
 
     virtual void showNotConnected() = 0;
     virtual void showConnecting() = 0;
 
-
-    virtual void showNewCallRequest(common::PhoneNumber from) = 0;
-
-    virtual common::PhoneNumber getPhoneNumber() = 0;
-
     virtual void showMainMenu() = 0;
+
     virtual void showSMSList(const smsContainer&& smsList) = 0;
     virtual void showSMSList(const smsContainer& smsList) = 0;
     virtual void showSMS(ITextMessage& sms) = 0;
     virtual void showSMS(ITextMessage&& sms) = 0;
-
     virtual void showSMSNotification() = 0;
-
-    virtual void showTalking() = 0;
 
     virtual IUeGui::ISmsComposeMode& initSmsComposer() = 0;
     virtual IUeGui::IListViewMode& initListViewMode() = 0;
@@ -57,6 +53,9 @@ public:
     virtual PhoneNumber getInputPhoneNumber(IUeGui::ISmsComposeMode &composer) = 0;
     virtual PhoneNumber getInputPhoneNumber(IUeGui::IDialMode &dial) = 0;
     virtual std::string getInputString(IUeGui::ISmsComposeMode &composer) = 0;
+
+    virtual void showNewCallRequest(common::PhoneNumber from) = 0;
+    virtual void showTalking() = 0;
 
 };
 

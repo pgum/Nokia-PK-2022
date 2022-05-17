@@ -11,18 +11,20 @@ namespace ue
 class ConnectedState : public BaseState
 {
 private:
+
     void handleMainMenu();
+    void handleAcceptOnMainMenu();
+
     void handleSMSList();
     void handleComposeSMSView();
-
-    void handleAcceptOnMainMenu();
     void handleAcceptOnSMSList();
     void handleSMSView(unsigned int elemIndex);
     void handleAcceptOnComposeSMSView(IUeGui::ISmsComposeMode& smsComposer);
-
     void handleSMS(common::PhoneNumber from, std::string text, common::MessageId msgType) override;
 
+
     void startDial();
+
     void handleAcceptOnDial(IUeGui::IDialMode&);
 
     void handleTimeout() override;

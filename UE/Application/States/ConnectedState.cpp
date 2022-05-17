@@ -11,35 +11,50 @@ ConnectedState::ConnectedState(Context &context)
     handleMainMenu();
 }
 
+#pragma region MainMenu
+void ConnectedState::handleMainMenu()
+    {
+        context.user.showMainMenu();
+        context.user.setAcceptCallback([&]{ handleAcceptOnMainMenu(); });
+        context.user.setRejectCallback([&]{ return; });
+    }
+
+void ConnectedState::handleAcceptOnMainMenu()
+    {
+        IUeGui::IListViewMode& mainMenu = context.user.initListViewMode();
+        auto[isElementSelected,elemIndex] = mainMenu.getCurrentItemIndex();
+        if(not isElementSelected)
+            return;
+
+        mainMenu.clearSelectionList();
+        switch (elemIndex)
+        {
+            case VIEW_SMS_LIST:
+            {
+                handleSMSList();
+                break;
+            }
+            case COMPOSE_SMS:
+            {
+                handleComposeSMSView();
+                break;
+            }
+            case DIAL:
+            {
+                startDial();
+                break;
+            }
+            default:
+                return;
+        }
+
+    }
+#pragma endregion
+
+
 void ConnectedState::handleDisconnected()
 {
     context.setState<NotConnectedState>();
-}
-
-void ConnectedState::handleCallRequest(common::PhoneNumber from)
-{
-    using namespace std::chrono_literals;
-    context.user.showNewCallRequest(from);
-    context.timer.startTimer(30000ms);
-    context.user.setAcceptCallback([&]{handleSendCallAccept(from); });
-    context.user.setRejectCallback([&]{handleSendCallReject(from);});
-}
-
-void ConnectedState::handleSendCallAccept(common::PhoneNumber to)
-{
-    context.bts.sendCallAccept(to);
-    context.timer.stopTimer();
-    context.setState<TalkingState>();
-    context.user.showTalking();
-
-    //TODO Dodanie logiki dla przerywanie połączenia
-}
-
-void ConnectedState::handleSendCallReject(common::PhoneNumber to)
-{
-    context.bts.sendCallReject(to);
-    context.timer.stopTimer();
-    handleMainMenu();
 }
 
 void ConnectedState::handleTimeout()
@@ -49,49 +64,6 @@ void ConnectedState::handleTimeout()
 }
 
 
-#pragma region MainMenu
-void ConnectedState::handleMainMenu()
-{
-    context.user.showMainMenu();
-    context.user.setAcceptCallback([&]{ handleAcceptOnMainMenu(); });
-    context.user.setRejectCallback([&]{ return; });
-}
-
-
-void ConnectedState::handleAcceptOnMainMenu()
-{
-    IUeGui::IListViewMode& mainMenu = context.user.initListViewMode();
-    auto[isElementSelected,elemIndex] = mainMenu.getCurrentItemIndex();
-    if(not isElementSelected)
-        return;
-
-    mainMenu.clearSelectionList();
-    switch (elemIndex)
-    {
-        case VIEW_SMS_LIST:
-        {
-            handleSMSList();
-            break;
-        }
-        case COMPOSE_SMS:
-        {
-            handleComposeSMSView();
-            break;
-        }
-        case DIAL:
-        {
-            startDial();
-            break;
-        }
-        default:
-            return;
-    }
-
-}
-#pragma endregion
-
-
-
 #pragma region SMSList
 void ConnectedState::handleSMSList()
 {
@@ -99,7 +71,6 @@ void ConnectedState::handleSMSList()
     context.user.setAcceptCallback([&]{ handleAcceptOnSMSList(); });
     context.user.setRejectCallback([&]{ handleMainMenu(); });
 }
-
 
 void ConnectedState::handleAcceptOnSMSList()
 {
@@ -113,8 +84,6 @@ void ConnectedState::handleAcceptOnSMSList()
 }
 
 #pragma endregion
-
-
 
 
 #pragma region SMSView
@@ -150,7 +119,6 @@ void ConnectedState::handleAcceptOnComposeSMSView(IUeGui::ISmsComposeMode& smsCo
     handleMainMenu();
 }
 
-
 #pragma endregion
 
 
@@ -180,11 +148,38 @@ void ConnectedState::handleSMS(common::PhoneNumber from, std::string text, commo
 }
 #pragma endregion
 
+
 void ConnectedState::handleAcceptOnDial(IUeGui::IDialMode& dial)
 {
     auto phoneNumber = dial.getPhoneNumber();
     context.bts.sendCallRequest(phoneNumber);
 }
+
+void ConnectedState::handleCallRequest(common::PhoneNumber from)
+    {
+        using namespace std::chrono_literals;
+        context.user.showNewCallRequest(from);
+        context.timer.startTimer(30000ms);
+        context.user.setAcceptCallback([&]{handleSendCallAccept(from); });
+        context.user.setRejectCallback([&]{handleSendCallReject(from);});
+    }
+
+void ConnectedState::handleSendCallAccept(common::PhoneNumber to)
+    {
+        context.bts.sendCallAccept(to);
+        context.timer.stopTimer();
+        context.setState<TalkingState>();
+        context.user.showTalking();
+
+        //TODO Dodanie logiki dla przerywanie połączenia
+    }
+
+void ConnectedState::handleSendCallReject(common::PhoneNumber to)
+    {
+        context.bts.sendCallReject(to);
+        context.timer.stopTimer();
+        handleMainMenu();
+    }
 
 void ConnectedState::startDial()
 {
@@ -193,6 +188,7 @@ void ConnectedState::startDial()
         handleAcceptOnDial(dial); });
     context.user.setRejectCallback([&]{ handleMainMenu(); });
 }
+
 
 
 }

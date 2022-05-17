@@ -22,6 +22,7 @@ void UserPort::stop()
     handler = nullptr;
 }
 
+
 void UserPort::showNotConnected()
 {
     gui.showNotConnected();
@@ -32,10 +33,12 @@ void UserPort::showConnecting()
     gui.showConnecting();
 }
 
+
 common::PhoneNumber UserPort::getPhoneNumber()
 {
     return phoneNumber;
 }
+
 
 IUeGui::ISmsComposeMode& UserPort::initSmsComposer()
 {
@@ -56,6 +59,7 @@ IUeGui::IDialMode& UserPort::initDialMode()
 {
     return gui.setDialMode();
 }
+
 
 void UserPort::setAcceptCallback(const IUeGui::Callback& callback)
 {
@@ -83,8 +87,6 @@ void UserPort::showMainMenu()
 }
 
 
-
-
 void UserPort::showSMSList(const smsContainer&& smsList)
 {
 
@@ -97,10 +99,6 @@ void UserPort::showSMSList(const smsContainer&& smsList)
     });
 
 }
-
-
-
-
 
 void UserPort::showSMSList(const smsContainer& smsList)
 {
@@ -156,6 +154,7 @@ std::string UserPort::getInputString(IUeGui::ISmsComposeMode& composer)
 {
     return composer.getSmsText();
 }
+
 
 void UserPort::showNewCallRequest(common::PhoneNumber from) {
     IUeGui::ITextMode& incomingCall = gui.setAlertMode();

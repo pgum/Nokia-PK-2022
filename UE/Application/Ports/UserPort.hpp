@@ -28,10 +28,8 @@ public:
 
     void showSMSList(const smsContainer&& smsList) override;
     void showSMSList(const smsContainer& smsList) override;
-
     void showSMS(ITextMessage& sms) override;
     void showSMS(ITextMessage&& sms) override;
-
     void showSMSNotification() override;
 
     IUeGui::ISmsComposeMode& initSmsComposer() override;
