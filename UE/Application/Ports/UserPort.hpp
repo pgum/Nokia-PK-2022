@@ -37,16 +37,18 @@ public:
     IUeGui::ISmsComposeMode& initSmsComposer() override;
     IUeGui::IListViewMode& initListViewMode() override;
     IUeGui::ITextMode& initTextMode() override;
+    IUeGui::IDialMode& initDialMode() override;
 
     void setAcceptCallback(const IUeGui::Callback& callback) override;
     void setRejectCallback(const IUeGui::Callback& callback) override;
     void setHomeCallback(const IUeGui::Callback& callback) override;
 
     PhoneNumber getInputPhoneNumber(IUeGui::ISmsComposeMode &composer) override;
+    PhoneNumber getInputPhoneNumber(IUeGui::IDialMode &dial) override;
     std::string getInputString(IUeGui::ISmsComposeMode &composer) override;
 
     void showNewCallRequest(common::PhoneNumber from) override;
-    void showTalkingState() override;
+    void showTalking() override;
 
 private:
     common::PrefixedLogger logger;

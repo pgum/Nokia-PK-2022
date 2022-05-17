@@ -7,6 +7,7 @@
 #include "SMSDB/ITextMessege.hpp"
 #include "Constants/MenuConstans.h"
 #include "IUeGui.hpp"
+#include "UeGui/IDialMode.hpp"
 #include <memory>
 
 
@@ -44,17 +45,19 @@ public:
 
     virtual void showSMSNotification() = 0;
 
-    virtual void showTalkingState() = 0;
+    virtual void showTalking() = 0;
 
     virtual IUeGui::ISmsComposeMode& initSmsComposer() = 0;
     virtual IUeGui::IListViewMode& initListViewMode() = 0;
     virtual IUeGui::ITextMode& initTextMode() = 0;
+    virtual IUeGui::IDialMode& initDialMode() = 0;
 
     virtual void setAcceptCallback(const IUeGui::Callback& callback) = 0;
     virtual void setRejectCallback(const IUeGui::Callback& callback) = 0;
     virtual void setHomeCallback(const IUeGui::Callback& callback) = 0;
 
     virtual PhoneNumber getInputPhoneNumber(IUeGui::ISmsComposeMode &composer) = 0;
+    virtual PhoneNumber getInputPhoneNumber(IUeGui::IDialMode &dial) = 0;
     virtual std::string getInputString(IUeGui::ISmsComposeMode &composer) = 0;
 
 };

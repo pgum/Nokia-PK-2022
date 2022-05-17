@@ -52,6 +52,11 @@ IUeGui::ITextMode& UserPort::initTextMode()
     return gui.setViewTextMode();
 }
 
+IUeGui::IDialMode& UserPort::initDialMode()
+{
+    return gui.setDialMode();
+}
+
 void UserPort::setAcceptCallback(const IUeGui::Callback& callback)
 {
     gui.setAcceptCallback(callback);
@@ -74,6 +79,7 @@ void UserPort::showMainMenu()
     menu.clearSelectionList();
     menu.addSelectionListItem("Compose SMS", "");
     menu.addSelectionListItem("View SMS", "");
+    menu.addSelectionListItem("Dial", "");
 }
 
 
@@ -141,6 +147,11 @@ common::PhoneNumber UserPort::getInputPhoneNumber(IUeGui::ISmsComposeMode& compo
     return composer.getPhoneNumber();
 }
 
+common::PhoneNumber UserPort::getInputPhoneNumber(IUeGui::IDialMode &dial)
+{
+    return  dial.getPhoneNumber();
+}
+
 std::string UserPort::getInputString(IUeGui::ISmsComposeMode& composer)
 {
     return composer.getSmsText();
@@ -151,10 +162,9 @@ void UserPort::showNewCallRequest(common::PhoneNumber from) {
     incomingCall.setText("Incoming call");
 }
 
-void UserPort::showTalkingState()
+void UserPort::showTalking()
 {
     IUeGui::ICallMode& call = gui.setCallMode();
-
 
 }
 
