@@ -54,6 +54,7 @@ void BtsPort::handleMessage(BinaryMessage msg)
         case common::MessageId::CallRequest:
         {
             handler->handleCallRequest(from);
+            break;
         }
         case common::MessageId::Sms:
         {
@@ -107,9 +108,13 @@ void BtsPort::sendCallAccept(common::PhoneNumber to)
     transport.sendMessage(msg.getMessage());
 }
 
-
-
-
+void BtsPort::sendCallRequest(common::PhoneNumber to)
+{
+    common::OutgoingMessage msg{common::MessageId::CallRequest,
+                                phoneNumber,
+                                to};
+    transport.sendMessage(msg.getMessage());
+}
 
 void BtsPort::sendSMS(common::PhoneNumber to, std::string msg)
 {
