@@ -24,9 +24,6 @@ public:
 
     void handleCallRequest(common::PhoneNumber) override;
 
-    // IUserEventsHandler interface
-    void handleSendCallAccept(common::PhoneNumber) override;
-    void handleSendCallReject(common::PhoneNumber) override;
 
     void handleSMS(common::PhoneNumber from, std::string text, common::MessageId msgType) override;
 

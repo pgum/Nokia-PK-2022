@@ -14,10 +14,6 @@ public:
     IUserEventsHandlerMock();
     ~IUserEventsHandlerMock() override;
 
-    MOCK_METHOD(void, handleSendCallAccept, (common::PhoneNumber to), (final));
-    MOCK_METHOD(void, handleSendCallReject, (common::PhoneNumber to), (final));
-
-
 };
 
 class IUserPortMock : public IUserPort
@@ -38,14 +34,16 @@ public:
     MOCK_METHOD(void,showSMS,(ITextMessage&),(final));
     MOCK_METHOD(void,showSMS,(ITextMessage&&),(final));
     MOCK_METHOD(void,showSMSNotification,(),(final));
-    MOCK_METHOD(void, showTalkingState, (), (final));
+    MOCK_METHOD(void, showTalking, (), (final));
     MOCK_METHOD(IUeGui::ISmsComposeMode&,initSmsComposer,(),(final));
     MOCK_METHOD(IUeGui::IListViewMode&,initListViewMode,(),(final));
     MOCK_METHOD(IUeGui::ITextMode&,initTextMode,(),(final));
+    MOCK_METHOD(IUeGui::IDialMode&,initDialMode,(),(final));
     MOCK_METHOD(void,setAcceptCallback,(const IUeGui::Callback& callback),(final));
     MOCK_METHOD(void,setRejectCallback,(const IUeGui::Callback& callback),(final));
     MOCK_METHOD(void,setHomeCallback,(const IUeGui::Callback& callback),(final));
     MOCK_METHOD(PhoneNumber,getInputPhoneNumber,(IUeGui::ISmsComposeMode&),(final));
+    MOCK_METHOD(PhoneNumber,getInputPhoneNumber,(IUeGui::IDialMode&),(final));
     MOCK_METHOD(std::string,getInputString,(IUeGui::ISmsComposeMode&),(final));
 
 };

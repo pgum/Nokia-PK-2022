@@ -146,6 +146,8 @@ void ApplicationConnectedTestSuite::testHandleCallRequest()
     using namespace std::chrono_literals;
     EXPECT_CALL(userPortMock, showNewCallRequest(NUMBER));
     EXPECT_CALL(timerPortMock, startTimer(30000ms));
+    EXPECT_CALL(userPortMock, setAcceptCallback(_));
+    EXPECT_CALL(userPortMock, setRejectCallback(_));
     objectUnderTest.handleCallRequest(NUMBER);
 }
 
@@ -154,33 +156,8 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleCallRequest)
     testHandleCallRequest();
 }
 
-TEST_F(ApplicationConnectedTestSuite, shallHandleSendCallAccept)
-{
-    testHandleCallRequest();
-    EXPECT_CALL(btsPortMock, sendCallAccept(NUMBER));
-    EXPECT_CALL(timerPortMock, stopTimer());
-    EXPECT_CALL(userPortMock, showTalkingState());
 
-    objectUnderTest.handleSendCallAccept(NUMBER);
-}
 
-TEST_F(ApplicationConnectedTestSuite, shallHandleSendCallReject)
-{
-    testHandleCallRequest();
 
-    EXPECT_CALL(btsPortMock, sendCallReject(NUMBER));
-    EXPECT_CALL(timerPortMock, stopTimer());
-    EXPECT_CALL(userPortMock, showMainMenu());
-
-    objectUnderTest.handleSendCallReject(NUMBER);
-
-}
-
-TEST_F(ApplicationConnectedTestSuite, shallSendCallRejectOnTimeout)
-{
-    testHandleCallRequest();
-    EXPECT_CALL(userPortMock, showMainMenu());
-    objectUnderTest.handleTimeout();
-}
 
 }
