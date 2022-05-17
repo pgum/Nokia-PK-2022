@@ -21,8 +21,8 @@ void ConnectedState::handleCallRequest(common::PhoneNumber from)
     using namespace std::chrono_literals;
     context.user.showNewCallRequest(from);
     context.timer.startTimer(30000ms);
-
-    //TODO logika dla odbieranie i odrzucania połączenia
+    context.user.setAcceptCallback([&]{handleSendCallAccept(from); });
+    context.user.setRejectCallback([&]{handleSendCallReject(from);});
 }
 
 void ConnectedState::handleSendCallAccept(common::PhoneNumber to)
@@ -30,7 +30,7 @@ void ConnectedState::handleSendCallAccept(common::PhoneNumber to)
     context.bts.sendCallAccept(to);
     context.timer.stopTimer();
     context.setState<TalkingState>();
-    context.user.showTalkingState();
+    context.user.showTalking();
 
     //TODO Dodanie logiki dla przerywanie połączenia
 }
@@ -39,7 +39,7 @@ void ConnectedState::handleSendCallReject(common::PhoneNumber to)
 {
     context.bts.sendCallReject(to);
     context.timer.stopTimer();
-    context.user.showMainMenu();
+    handleMainMenu();
 }
 
 void ConnectedState::handleTimeout()
@@ -78,14 +78,17 @@ void ConnectedState::handleAcceptOnMainMenu()
             handleComposeSMSView();
             break;
         }
+        case DIAL:
+        {
+            startDial();
+            break;
+        }
         default:
             return;
     }
 
 }
 #pragma endregion
-
-
 
 
 
@@ -176,6 +179,20 @@ void ConnectedState::handleSMS(common::PhoneNumber from, std::string text, commo
     }
 }
 #pragma endregion
+
+void ConnectedState::handleAcceptOnDial(IUeGui::IDialMode& dial)
+{
+    auto phoneNumber = dial.getPhoneNumber();
+    context.bts.sendCallRequest(phoneNumber);
+}
+
+void ConnectedState::startDial()
+{
+    IUeGui::IDialMode& dial = context.user.initDialMode();
+    context.user.setAcceptCallback([&]{
+        handleAcceptOnDial(dial); });
+    context.user.setRejectCallback([&]{ handleMainMenu(); });
+}
 
 
 }

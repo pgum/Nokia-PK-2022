@@ -22,6 +22,9 @@ private:
 
     void handleSMS(common::PhoneNumber from, std::string text, common::MessageId msgType) override;
 
+    void startDial();
+    void handleAcceptOnDial(IUeGui::IDialMode&);
+
     void handleTimeout() override;
 
 public:
