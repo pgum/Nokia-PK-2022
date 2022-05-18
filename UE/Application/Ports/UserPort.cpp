@@ -158,13 +158,19 @@ std::string UserPort::getInputString(IUeGui::ISmsComposeMode& composer)
 
 void UserPort::showNewCallRequest(common::PhoneNumber from) {
     IUeGui::ITextMode& incomingCall = gui.setAlertMode();
-    incomingCall.setText("Incoming call");
+    incomingCall.setText("Incoming call from " + to_string(from));
 }
 
 void UserPort::showTalking()
 {
     IUeGui::ICallMode& call = gui.setCallMode();
 
+}
+
+void UserPort::showDialing(common::PhoneNumber to)
+{
+    IUeGui::ITextMode& dialing = gui.setAlertMode();
+    dialing.setText("Dialling to " + to_string(to) + "...");
 }
 
 }
