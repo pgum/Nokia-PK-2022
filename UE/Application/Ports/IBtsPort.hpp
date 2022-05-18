@@ -17,6 +17,8 @@ public:
     virtual void handleDisconnected() = 0;
     virtual void handleSMS(common::PhoneNumber from, std::string text, common::MessageId msgType) = 0;
     virtual void handleCallRequest(common::PhoneNumber from) = 0;
+    virtual void handleCallAccepted(common::PhoneNumber from) = 0;
+    virtual void handleCallDropped(common::PhoneNumber from) = 0;
 
 };
 

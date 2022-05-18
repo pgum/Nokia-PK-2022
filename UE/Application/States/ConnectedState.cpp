@@ -60,7 +60,8 @@ void ConnectedState::handleDisconnected()
 void ConnectedState::handleTimeout()
 {
     context.user.showMainMenu();
-    //TODO Metoda powinna jeszcze wysyłać sendCallReject(to), więc trzeba gdzieś zapisywać numer dzwoniącego
+    context.bts.sendCallReject(context.callingPhone);
+    handleMainMenu();
 }
 
 
@@ -151,41 +152,58 @@ void ConnectedState::handleSMS(common::PhoneNumber from, std::string text, commo
 
 void ConnectedState::handleAcceptOnDial(IUeGui::IDialMode& dial)
 {
+    using namespace std::chrono_literals;
     auto phoneNumber = dial.getPhoneNumber();
     context.bts.sendCallRequest(phoneNumber);
+    context.user.showDialing(phoneNumber);
+    context.timer.startTimer(60000ms);
 }
 
 void ConnectedState::handleCallRequest(common::PhoneNumber from)
-    {
-        using namespace std::chrono_literals;
-        context.user.showNewCallRequest(from);
-        context.timer.startTimer(30000ms);
-        context.user.setAcceptCallback([&]{handleSendCallAccept(from); });
-        context.user.setRejectCallback([&]{handleSendCallReject(from);});
-    }
+{
+    using namespace std::chrono_literals;
+    context.callingPhone = from;
+    std::cout << "call request"<<std::endl;
+    context.user.showNewCallRequest(from);
+    context.timer.startTimer(30000ms);
+    context.user.setAcceptCallback([&]{handleSendCallAccept(); });
+    context.user.setRejectCallback([&]{handleSendCallReject();});
+}
 
-void ConnectedState::handleSendCallAccept(common::PhoneNumber to)
-    {
-        context.bts.sendCallAccept(to);
-        context.timer.stopTimer();
-        context.setState<TalkingState>();
-        context.user.showTalking();
+void ConnectedState::handleCallAccepted(common::PhoneNumber)
+{
+    context.timer.stopTimer();
+    context.user.showTalking();
+    context.setState<TalkingState>();
+}
 
-        //TODO Dodanie logiki dla przerywanie połączenia
-    }
+void ConnectedState::handleCallDropped(common::PhoneNumber)
+{
+    context.timer.stopTimer();
+    handleMainMenu();
+}
 
-void ConnectedState::handleSendCallReject(common::PhoneNumber to)
-    {
-        context.bts.sendCallReject(to);
-        context.timer.stopTimer();
-        handleMainMenu();
-    }
+void ConnectedState::handleSendCallAccept()
+{
+
+    context.bts.sendCallAccept(context.callingPhone);
+    context.timer.stopTimer();
+    context.user.showTalking();
+    context.setState<TalkingState>();
+}
+
+void ConnectedState::handleSendCallReject()
+{
+    context.bts.sendCallReject(context.callingPhone);
+    context.callingPhone.value = 0;
+    context.timer.stopTimer();
+    handleMainMenu();
+}
 
 void ConnectedState::startDial()
 {
     IUeGui::IDialMode& dial = context.user.initDialMode();
-    context.user.setAcceptCallback([&]{
-        handleAcceptOnDial(dial); });
+    context.user.setAcceptCallback([&]{handleAcceptOnDial(dial); });
     context.user.setRejectCallback([&]{ handleMainMenu(); });
 }
 

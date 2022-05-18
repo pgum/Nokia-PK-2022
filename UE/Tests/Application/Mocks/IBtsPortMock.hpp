@@ -17,8 +17,10 @@ public:
     MOCK_METHOD(void, handleAttachReject, (), (final));
     MOCK_METHOD(void, handleDisconnected, (), (final));
 
-    MOCK_METHOD(void, handleCallRequest, (common::PhoneNumber from), (final));
     MOCK_METHOD(void, handleSMS, (common::PhoneNumber, std::string text, common::MessageId), (final));
+    MOCK_METHOD(void, handleCallRequest, (common::PhoneNumber from), (final));
+    MOCK_METHOD(void, handleCallAccepted, (common::PhoneNumber from), (final));
+    MOCK_METHOD(void, handleCallDropped, (common::PhoneNumber from), (final));
 
 };
 

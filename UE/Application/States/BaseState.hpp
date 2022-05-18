@@ -23,6 +23,8 @@ public:
     void handleDisconnected() override;
     void handleSMS(common::PhoneNumber from, std::string text, common::MessageId msgType) override;
     void handleCallRequest(common::PhoneNumber) override;
+    void handleCallAccepted(common::PhoneNumber) override;
+    void handleCallDropped(common::PhoneNumber) override;
 
 protected:
     Context& context;

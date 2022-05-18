@@ -58,5 +58,15 @@ void Application::handleCallRequest(common::PhoneNumber from)
     context.state->handleCallRequest(from);
 }
 
+void Application::handleCallAccepted(common::PhoneNumber from)
+{
+    context.state->handleCallAccepted(from);
+}
+
+void Application::handleCallDropped(common::PhoneNumber from)
+{
+    context.state->handleCallDropped(from);
+}
+
 
 }

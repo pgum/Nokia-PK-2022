@@ -29,14 +29,16 @@ private:
 
     void handleTimeout() override;
 
-    void handleSendCallAccept(common::PhoneNumber);
-    void handleSendCallReject(common::PhoneNumber);
+    void handleSendCallAccept();
+    void handleSendCallReject();
 
 public:
     ConnectedState(Context& context);
     void handleDisconnected() override;
 
     void handleCallRequest(common::PhoneNumber) override;
+    void handleCallAccepted(common::PhoneNumber) override;
+    void handleCallDropped(common::PhoneNumber) override;
 
 
 };
