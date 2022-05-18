@@ -58,13 +58,11 @@ void BtsPort::handleMessage(BinaryMessage msg)
         }
         case common::MessageId::CallAccepted:
         {
-            std::cout << "call accepted";
             handler->handleCallAccepted(from);
             break;
         }
         case common::MessageId::CallDropped:
         {
-            std::cout << "call dropped";
             handler->handleCallDropped(from);
             break;
         }

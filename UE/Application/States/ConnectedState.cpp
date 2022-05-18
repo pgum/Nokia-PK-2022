@@ -154,8 +154,11 @@ void ConnectedState::handleAcceptOnDial(IUeGui::IDialMode& dial)
 {
     using namespace std::chrono_literals;
     auto phoneNumber = dial.getPhoneNumber();
+    context.callingPhone = phoneNumber;
     context.bts.sendCallRequest(phoneNumber);
     context.user.showDialing(phoneNumber);
+    context.user.setAcceptCallback([&]{return; });
+    context.user.setRejectCallback([&]{callResignation();});
     context.timer.startTimer(60000ms);
 }
 
@@ -163,7 +166,6 @@ void ConnectedState::handleCallRequest(common::PhoneNumber from)
 {
     using namespace std::chrono_literals;
     context.callingPhone = from;
-    std::cout << "call request"<<std::endl;
     context.user.showNewCallRequest(from);
     context.timer.startTimer(30000ms);
     context.user.setAcceptCallback([&]{handleSendCallAccept(); });
@@ -180,6 +182,7 @@ void ConnectedState::handleCallAccepted(common::PhoneNumber)
 void ConnectedState::handleCallDropped(common::PhoneNumber)
 {
     context.timer.stopTimer();
+    context.callingPhone.value = 0;
     handleMainMenu();
 }
 
@@ -205,6 +208,13 @@ void ConnectedState::startDial()
     IUeGui::IDialMode& dial = context.user.initDialMode();
     context.user.setAcceptCallback([&]{handleAcceptOnDial(dial); });
     context.user.setRejectCallback([&]{ handleMainMenu(); });
+}
+
+void ConnectedState::callResignation()
+{
+    context.timer.stopTimer();
+    context.bts.sendCallReject(context.callingPhone);
+    handleMainMenu();
 }
 
 

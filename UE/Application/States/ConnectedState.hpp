@@ -31,6 +31,7 @@ private:
 
     void handleSendCallAccept();
     void handleSendCallReject();
+    void callResignation();
 
 public:
     ConnectedState(Context& context);
