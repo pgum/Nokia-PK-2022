@@ -48,6 +48,7 @@ public:
     void showNewCallRequest(common::PhoneNumber from) override;
     void showTalking() override;
     void showDialing(common::PhoneNumber to) override;
+    void showPartnerNotAvailable() override;
 
 private:
     common::PrefixedLogger logger;

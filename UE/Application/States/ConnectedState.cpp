@@ -210,12 +210,21 @@ void ConnectedState::handleRejectOnCallRequest()
 }
 
 void ConnectedState::handleCallResignation()
-    {
-        context.timer.stopTimer();
+{
+    context.timer.stopTimer();
 
-        context.bts.sendCallDropped(context.callingPhone);
-        handleMainMenu();
-    }
+    context.bts.sendCallDropped(context.callingPhone);
+    handleMainMenu();
+}
+
+void ConnectedState::handleUnknownRecipientAfterCallRequest()
+{
+    context.timer.stopTimer();
+
+    context.user.showPartnerNotAvailable();
+    context.user.setAcceptCallback([&]{ handleMainMenu(); });
+    context.user.setRejectCallback([&]{ handleMainMenu(); });
+}
 
 void ConnectedState::startDial()
 {

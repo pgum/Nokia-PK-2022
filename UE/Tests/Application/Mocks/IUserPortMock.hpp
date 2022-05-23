@@ -36,6 +36,7 @@ public:
     MOCK_METHOD(void,showSMSNotification,(),(final));
     MOCK_METHOD(void, showTalking, (), (final));
     MOCK_METHOD(void, showDialing, (common::PhoneNumber), (final));
+    MOCK_METHOD(void, showPartnerNotAvailable, (), (final));
     MOCK_METHOD(IUeGui::ISmsComposeMode&,initSmsComposer,(),(final));
     MOCK_METHOD(IUeGui::IListViewMode&,initListViewMode,(),(final));
     MOCK_METHOD(IUeGui::ITextMode&,initTextMode,(),(final));

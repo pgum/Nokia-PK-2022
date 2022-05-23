@@ -68,5 +68,9 @@ void Application::handleCallDropped(common::PhoneNumber from)
     context.state->handleCallDropped(from);
 }
 
+void Application::handleUnknownRecipientAfterCallRequest()
+{
+    context.state->handleUnknownRecipientAfterCallRequest();
+}
 
 }

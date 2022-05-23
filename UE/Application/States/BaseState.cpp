@@ -60,6 +60,11 @@ void BaseState::handleCallDropped(common::PhoneNumber)
     logger.logInfo("Uexpected: handleReceiveCallDropped");
 }
 
+void BaseState::handleUnknownRecipientAfterCallRequest()
+{
+    logger.logInfo("Uexpected: handleUnknownRecipientAfterCallRequest");
+}
+
 
 
 }

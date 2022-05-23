@@ -21,6 +21,7 @@ public:
     MOCK_METHOD(void, handleCallRequest, (common::PhoneNumber from), (final));
     MOCK_METHOD(void, handleCallAccepted, (common::PhoneNumber from), (final));
     MOCK_METHOD(void, handleCallDropped, (common::PhoneNumber from), (final));
+    MOCK_METHOD(void, handleUnknownRecipientAfterCallRequest, (), (final));
 
 };
 

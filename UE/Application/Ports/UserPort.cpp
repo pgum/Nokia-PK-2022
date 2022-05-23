@@ -173,4 +173,10 @@ void UserPort::showDialing(common::PhoneNumber to)
     dialing.setText("Dialling to " + to_string(to) + "...");
 }
 
+void UserPort::showPartnerNotAvailable()
+{
+    IUeGui::ITextMode& dialing = gui.setAlertMode();
+    dialing.setText("Number is not available");
+}
+
 }
