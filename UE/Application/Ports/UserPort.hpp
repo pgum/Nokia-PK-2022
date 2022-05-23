@@ -49,6 +49,7 @@ public:
     void showTalking() override;
     void showDialing(common::PhoneNumber to) override;
     void showPartnerNotAvailable() override;
+    void showCallDropped() override;
 
 private:
     common::PrefixedLogger logger;

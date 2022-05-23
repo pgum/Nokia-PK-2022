@@ -175,8 +175,14 @@ void UserPort::showDialing(common::PhoneNumber to)
 
 void UserPort::showPartnerNotAvailable()
 {
-    IUeGui::ITextMode& dialing = gui.setAlertMode();
-    dialing.setText("Number is not available");
+    IUeGui::ITextMode& info = gui.setAlertMode();
+    info.setText("Number is not available");
+}
+
+void UserPort::showCallDropped()
+{
+    IUeGui::ITextMode& info = gui.setAlertMode();
+    info.setText("Call rejected");
 }
 
 }

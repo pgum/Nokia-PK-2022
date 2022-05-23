@@ -187,8 +187,10 @@ void ConnectedState::handleCallDropped(common::PhoneNumber)
     context.timer.stopTimer();
 
     context.callingPhone.value = 0;
-    handleMainMenu();
-    //TODO przed przejściem do mainMenu trzeba jeszcze wyświetlić informacje o odrzuczeniu połączenia
+    context.user.showCallDropped();
+    context.user.setAcceptCallback([&]{ handleMainMenu(); });
+    context.user.setRejectCallback([&]{ handleMainMenu(); });
+
 }
 
 void ConnectedState::handleAcceptOnCallRequest()
