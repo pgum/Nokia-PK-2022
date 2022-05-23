@@ -73,12 +73,12 @@ void BtsPort::handleMessage(BinaryMessage msg)
         }
         case common::MessageId::UnknownRecipient:
         {
-            logger.logError("unknow message: ", msgId, ", to: ",to);
+            logger.logError("unknown message: ", msgId, ", to: ",to);
             handler->handleSMS(from, reader.readRemainingText(),common::MessageId::UnknownRecipient);
             break;
         }
         default:
-            logger.logError("unknow message: ", msgId, ", from: ", from);
+            logger.logError("unknown message: ", msgId, ", from: ", from);
 
         }
     }
@@ -101,7 +101,7 @@ void BtsPort::sendAttachRequest(common::BtsId btsId)
 
 }
 
-void BtsPort::sendCallReject(common::PhoneNumber to)
+void BtsPort::sendCallDropped(common::PhoneNumber to)
 {
     common::OutgoingMessage msg{common::MessageId::CallDropped,
                                 phoneNumber,
@@ -110,7 +110,7 @@ void BtsPort::sendCallReject(common::PhoneNumber to)
 }
 
 
-void BtsPort::sendCallAccept(common::PhoneNumber to)
+void BtsPort::sendCallAccepted(common::PhoneNumber to)
 {
     common::OutgoingMessage msg{common::MessageId::CallAccepted,
                                 phoneNumber,

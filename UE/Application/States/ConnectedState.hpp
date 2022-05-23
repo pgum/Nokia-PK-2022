@@ -15,6 +15,8 @@ private:
     void handleMainMenu();
     void handleAcceptOnMainMenu();
 
+    void handleTimeout() override;
+
     void handleSMSList();
     void handleComposeSMSView();
     void handleAcceptOnSMSList();
@@ -22,16 +24,13 @@ private:
     void handleAcceptOnComposeSMSView(IUeGui::ISmsComposeMode& smsComposer);
     void handleSMS(common::PhoneNumber from, std::string text, common::MessageId msgType) override;
 
-
     void startDial();
-
     void handleAcceptOnDial(IUeGui::IDialMode&);
 
-    void handleTimeout() override;
+    void handleAcceptOnCallRequest();
+    void handleRejectOnCallRequest();
 
-    void handleSendCallAccept();
-    void handleSendCallReject();
-    void callResignation();
+    void handleCallResignation();
 
 public:
     ConnectedState(Context& context);

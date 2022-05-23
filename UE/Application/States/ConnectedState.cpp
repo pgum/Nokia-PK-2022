@@ -59,8 +59,8 @@ void ConnectedState::handleDisconnected()
 
 void ConnectedState::handleTimeout()
 {
-    context.user.showMainMenu();
-    context.bts.sendCallReject(context.callingPhone);
+    context.bts.sendCallDropped(context.callingPhone);
+    context.callingPhone.value = 0;
     handleMainMenu();
 }
 
@@ -153,28 +153,31 @@ void ConnectedState::handleSMS(common::PhoneNumber from, std::string text, commo
 void ConnectedState::handleAcceptOnDial(IUeGui::IDialMode& dial)
 {
     using namespace std::chrono_literals;
+    context.timer.startTimer(60000ms);
+
     auto phoneNumber = dial.getPhoneNumber();
     context.callingPhone = phoneNumber;
-    context.bts.sendCallRequest(phoneNumber);
     context.user.showDialing(phoneNumber);
+    context.bts.sendCallRequest(phoneNumber);
     context.user.setAcceptCallback([&]{return; });
-    context.user.setRejectCallback([&]{callResignation();});
-    context.timer.startTimer(60000ms);
+    context.user.setRejectCallback([&]{handleCallResignation();});
 }
 
 void ConnectedState::handleCallRequest(common::PhoneNumber from)
 {
     using namespace std::chrono_literals;
+    context.timer.startTimer(30000ms);
+
     context.callingPhone = from;
     context.user.showNewCallRequest(from);
-    context.timer.startTimer(30000ms);
-    context.user.setAcceptCallback([&]{handleSendCallAccept(); });
-    context.user.setRejectCallback([&]{handleSendCallReject();});
+    context.user.setAcceptCallback([&]{handleAcceptOnCallRequest(); });
+    context.user.setRejectCallback([&]{handleRejectOnCallRequest();});
 }
 
 void ConnectedState::handleCallAccepted(common::PhoneNumber)
 {
     context.timer.stopTimer();
+
     context.user.showTalking();
     context.setState<TalkingState>();
 }
@@ -182,39 +185,43 @@ void ConnectedState::handleCallAccepted(common::PhoneNumber)
 void ConnectedState::handleCallDropped(common::PhoneNumber)
 {
     context.timer.stopTimer();
+
     context.callingPhone.value = 0;
     handleMainMenu();
+    //TODO przed przejściem do mainMenu trzeba jeszcze wyświetlić informacje o odrzuczeniu połączenia
 }
 
-void ConnectedState::handleSendCallAccept()
+void ConnectedState::handleAcceptOnCallRequest()
 {
-
-    context.bts.sendCallAccept(context.callingPhone);
     context.timer.stopTimer();
+
+    context.bts.sendCallAccepted(context.callingPhone);
     context.user.showTalking();
     context.setState<TalkingState>();
 }
 
-void ConnectedState::handleSendCallReject()
+void ConnectedState::handleRejectOnCallRequest()
 {
-    context.bts.sendCallReject(context.callingPhone);
-    context.callingPhone.value = 0;
     context.timer.stopTimer();
+
+    context.bts.sendCallDropped(context.callingPhone);
+    context.callingPhone.value = 0;
     handleMainMenu();
 }
+
+void ConnectedState::handleCallResignation()
+    {
+        context.timer.stopTimer();
+
+        context.bts.sendCallDropped(context.callingPhone);
+        handleMainMenu();
+    }
 
 void ConnectedState::startDial()
 {
     IUeGui::IDialMode& dial = context.user.initDialMode();
     context.user.setAcceptCallback([&]{handleAcceptOnDial(dial); });
     context.user.setRejectCallback([&]{ handleMainMenu(); });
-}
-
-void ConnectedState::callResignation()
-{
-    context.timer.stopTimer();
-    context.bts.sendCallReject(context.callingPhone);
-    handleMainMenu();
 }
 
 

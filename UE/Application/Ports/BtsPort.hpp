@@ -17,8 +17,8 @@ public:
 
     void sendAttachRequest(common::BtsId) override;
 
-    void sendCallAccept(common::PhoneNumber) override;
-    void sendCallReject(common::PhoneNumber) override;
+    void sendCallAccepted(common::PhoneNumber) override;
+    void sendCallDropped(common::PhoneNumber) override;
     void sendCallRequest(common::PhoneNumber) override;
 
     void sendSMS(common::PhoneNumber to, std::string msg) override;
