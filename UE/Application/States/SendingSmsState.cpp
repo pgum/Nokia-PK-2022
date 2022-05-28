@@ -1,5 +1,4 @@
 #include "ConnectedState.hpp"
-#include "ConnectedState.hpp"
 #include "SendingSmsState.hpp"
 
 namespace ue {
