@@ -55,17 +55,13 @@ namespace ue {
         } else if (notification == 0) {
             menu.addSelectionListItem("View SMS", "");
         }
+        menu.addSelectionListItem("Make Call", "");
         gui.setAcceptCallback([this, &menu] { acceptCallbackClicked(menu); });
     }
 
     void UserPort::acceptCallbackClicked(IUeGui::IListViewMode &menu) {
         auto index = menu.getCurrentItemIndex();
-        if (index.first) {
-            menuIndex = 1;
-        }
-        if (index.second) {
-            menuIndex = 2;
-        }
+        menuIndex = index.first ? index.second : -1;
         currentCallbackState();
     }
 
@@ -73,8 +69,22 @@ namespace ue {
         return gui.setSmsComposeMode();
     }
 
+    IUeGui::IDialMode &UserPort::dialComposeMode() {
+        return gui.setDialMode();
+    }
+
     int UserPort::getMenuIndex() {
         return menuIndex;
+    }
+
+    IUeGui::ITextMode &UserPort::callFromMode(const common::PhoneNumber callerNumber) {
+        gui.setAlertMode().setText("Call from " + common::to_string(callerNumber));
+        return gui.setAlertMode();
+    }
+
+    IUeGui::ITextMode &UserPort::callToMode(const common::PhoneNumber receiverNumber) {
+        gui.setAlertMode().setText("Calling to " + common::to_string(receiverNumber));
+        return gui.setAlertMode();
     }
 
     void UserPort::acceptCallback(IUeGui::Callback acceptCallback) {

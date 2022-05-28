@@ -30,6 +30,12 @@ namespace ue {
 
         virtual IUeGui::ISmsComposeMode& composeSmsMode() = 0;
 
+        virtual IUeGui::IDialMode& dialComposeMode() = 0;
+
+        virtual IUeGui::ITextMode& callFromMode(const common::PhoneNumber callerNumber) = 0;
+
+        virtual IUeGui::ITextMode& callToMode(const common::PhoneNumber receiverNumber) = 0;
+
         virtual void acceptCallback(IUeGui::Callback acceptCallback) = 0;
 
         virtual void rejectCallback(IUeGui::Callback rejectCallback) = 0;

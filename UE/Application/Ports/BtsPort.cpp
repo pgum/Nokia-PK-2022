@@ -56,6 +56,21 @@ namespace ue
                 {
                     std::string text = reader.readRemainingText();
                     handler->handleSMSReceive(text,from);
+                    break;
+                }
+
+                case common::MessageId::CallRequest:
+                {
+                    std::string text = reader.readRemainingText();
+                    handler->handleCallRequest(from);
+                    break;
+                }
+
+                case common::MessageId::CallDropped:
+                {
+                    std::string text = reader.readRemainingText();
+                    handler->handleDropCall(from);
+                    break;
                 }
 
                 default:
@@ -72,6 +87,16 @@ namespace ue
     void BtsPort::sendSms(common::PhoneNumber receiverPhoneNumber, std::string smsText) {
         common::OutgoingMessage outgoingMessage = common::OutgoingMessage(common::MessageId::Sms, phoneNumber, receiverPhoneNumber);
         outgoingMessage.writeText(smsText);
+        transport.sendMessage(outgoingMessage.getMessage());
+    }
+
+    void BtsPort::makeCall(common::PhoneNumber receiverPhoneNumber) {
+        common::OutgoingMessage outgoingMessage{common::MessageId::CallRequest,phoneNumber,receiverPhoneNumber};
+        transport.sendMessage(outgoingMessage.getMessage());
+    }
+
+    void BtsPort::declineCall(common::PhoneNumber callerPhoneNumber) {
+        common::OutgoingMessage outgoingMessage{common::MessageId::CallDropped,phoneNumber,callerPhoneNumber};
         transport.sendMessage(outgoingMessage.getMessage());
     }
 

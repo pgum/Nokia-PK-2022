@@ -17,6 +17,9 @@ namespace ue
         virtual void handleAttachAccept() = 0;
         virtual void handleAttachReject() = 0;
         virtual void handleSMSReceive(const std::string smsText, const common::PhoneNumber senderNumber) = 0;
+        virtual void handleCallRequest(const common::PhoneNumber callerNumber) = 0;
+        virtual void handleDropCall(const common::PhoneNumber callerNumber) = 0;
+        virtual void makeDropCall(const common::PhoneNumber callerNumber) = 0;
     };
 
     class IBtsPort
@@ -26,6 +29,8 @@ namespace ue
 
         virtual void sendAttachRequest(common::BtsId) = 0;
         virtual void sendSms(common::PhoneNumber, std::string)=0;
+        virtual void makeCall(common::PhoneNumber) = 0;
+        virtual void declineCall(common::PhoneNumber) = 0;
     };
 
 }

@@ -30,6 +30,12 @@ namespace ue {
 
         IUeGui::ISmsComposeMode &composeSmsMode() override;
 
+        IUeGui::IDialMode &dialComposeMode() override;
+
+        IUeGui::ITextMode &callFromMode(const common::PhoneNumber callerNumber) override;
+
+        IUeGui::ITextMode &callToMode(const common::PhoneNumber receiverNumber) override;
+
         void acceptCallbackClicked(IUeGui::IListViewMode &menu);
 
         void acceptCallback(IUeGui::Callback acceptCallback) override;
