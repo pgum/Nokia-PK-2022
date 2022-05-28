@@ -11,22 +11,9 @@ namespace ue {
         context.user.showSingleSms(smsListPosition);
     }
 
-    void ViewingSingleSmsState::onAcceptCallbackClicked()
-    {/*
-        int currentMenuIndex = context.user.getMenuIndex();
+    void ViewingSingleSmsState::onAcceptCallbackClicked() {}
 
-        if (currentMenuIndex == 1)
-        {
-            context.logger.logInfo("Konrad Was");
-        }
-        if (currentMenuIndex == 2)
-        {
-            context.logger.logInfo("Bartosz Preweda");
-        }*/
-    }
-
-    void ViewingSingleSmsState::onDeclineCallbackClicked()
-    {
+    void ViewingSingleSmsState::onDeclineCallbackClicked() {
         context.setState<ViewingSmsState>();
     }
 

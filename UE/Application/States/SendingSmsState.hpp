@@ -1,26 +1,24 @@
 #pragma once
 
 #include "BaseState.hpp"
-#include "ConnectedState.hpp"
-#include "UeGui/ISmsComposeMode.hpp"
 
 namespace ue {
 
-    class SendingSmsState : public ConnectedState {
+    class ConnectedState : public BaseState {
     public:
-        SendingSmsState(Context &context, int powiadomienie);
+        ConnectedState(Context &context, int notification);
 
-        IUeGui::ISmsComposeMode &smsComposeMode;
+        void handleDisconnected() override;
+
+        void handleSMSReceive(const std::string smsText, const common::PhoneNumber senderNumber) override;
+
+        void handleCallRequest(const common::PhoneNumber callerNumber) override;
+
         int notification = 0;
-
     protected:
-
         void onAcceptCallbackClicked();
 
         void onDeclineCallbackClicked();
-
-        void handleSMSReceive(const std::string smsText, const common::PhoneNumber senderNumber);
-
-        void sendSms();
     };
+
 }

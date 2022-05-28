@@ -11,21 +11,19 @@ namespace ue {
         context.user.showViewingSms();
     }
 
-    void ViewingSmsState::onAcceptCallbackClicked()
-    {
+    void ViewingSmsState::onAcceptCallbackClicked() {
         int currentMenuIndex = context.user.getMenuIndex();
-        context.setState<ViewingSingleSmsState>(currentMenuIndex);
+        context.setState<ViewingSingleSmsState>(currentMenuIndex + 1);
     }
 
-    void ViewingSmsState::onDeclineCallbackClicked()
-    {
+    void ViewingSmsState::onDeclineCallbackClicked() {
         context.setState<ConnectedState>(0);
     }
 
     void ViewingSmsState::handleSMSReceive(const std::string smsText, const common::PhoneNumber senderNumber) {
-        SMS sms1 = SMS(smsText, senderNumber, "received");
+        SMS sms = SMS(smsText, senderNumber, "received");
         SMS_DB ourDataBase = context.user.getSmsDB();
-        ourDataBase.addSmsToDB(sms1);
+        ourDataBase.addSmsToDB(sms);
         context.user.setSmsDB(ourDataBase);
         context.user.showViewingSms();
     }
