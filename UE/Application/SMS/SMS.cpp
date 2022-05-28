@@ -18,19 +18,15 @@ SMS::SMS(const std::string &mTextMessage, const common::PhoneNumber &mSender, co
     m_textMessage = mTextMessage;
     m_sender = mSender;
     m_isViewed = false;
-    if(kindOfSms=="sended"){
-        m_isSended = true;
+    if(kindOfSms=="send"){
+        m_isSend = true;
     }else if(kindOfSms == "received"){
-       m_isSended = false;
+        m_isSend = false;
     }
 }
 
 void SMS::Set_Viewed_Value() {
     this->m_isViewed = true;
-}
-
-const common::PhoneNumber &SMS::getMSender() const {
-    return m_sender;
 }
 
 const std::string &SMS::getMTextMessage() const {
@@ -40,24 +36,13 @@ const std::string &SMS::getMTextMessage() const {
 const std::string SMS::getSmsHeader(){
     std::string kindOfSms;
     std::string status;
+    kindOfSms = "";
+    if(!this->m_isViewed)kindOfSms = "[N]";
+    if(this->m_isSend){
+        kindOfSms = "";
+        status = "To:";
+    }else if(!this->m_isSend)
+        status = "From:";
 
-    if(this->m_isViewed){
-        kindOfSms = "P: ";
-    }else if(!this->m_isViewed)
-        kindOfSms = "NP: ";
-
-    if(this->m_isSended){
-        status = "W ";
-    }else if(!this->m_isSended)
-        status = "O ";
-
-    return status + kindOfSms + common::to_string(m_sender)+" "+m_textMessage.substr(0,5)+"...";
-
-}
-
-std::string SMS::isMIsViewed() const{
-    if(this->m_isViewed){
-        return "true";
-    }
-    return "false";
+    return kindOfSms + status + common::to_string(m_sender)+"|"+m_textMessage.substr(0,4)+"...";
 }
