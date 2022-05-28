@@ -22,6 +22,9 @@ namespace ue
         void handleAttachAccept() override;
         void handleAttachReject() override;
         void handleSMSReceive(const std::string smsText, const common::PhoneNumber senderNumber) override;
+        void handleCallRequest(const common::PhoneNumber callerNumber) override;
+        void handleDropCall(const common::PhoneNumber callerNumber) override;
+        void makeDropCall(const common::PhoneNumber callerNumber) override;
 
     protected:
         Context& context;
