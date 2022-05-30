@@ -73,4 +73,9 @@ void Application::handleUnknownRecipientAfterCallRequest()
     context.state->handleUnknownRecipientAfterCallRequest();
 }
 
+void Application::handleUnknownRecipientAfterCallAccepted()
+{
+    context.state->handleUnknownRecipientAfterCallAccepted();
+}
+
 }

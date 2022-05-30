@@ -4,12 +4,16 @@
 
 namespace ue
 {
+class TalkingState : public BaseState
+{
+private:
+    void handleUnknownRecipientAfterCallAccepted() override;
+    void handleCallRequest(common::PhoneNumber from) override;
+    void handleCallEnded ();
 
-    class TalkingState : public BaseState
-    {
-    public:
+public:
         TalkingState(Context& context);
 
-    };
+};
 
 }

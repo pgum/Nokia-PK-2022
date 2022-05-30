@@ -65,6 +65,11 @@ void BaseState::handleUnknownRecipientAfterCallRequest()
     logger.logInfo("Uexpected: handleUnknownRecipientAfterCallRequest");
 }
 
+void BaseState::handleUnknownRecipientAfterCallAccepted()
+{
+    logger.logInfo("Uexpected: handleUnknownRecipientAfterCallAccepted");
+}
+
 
 
 }

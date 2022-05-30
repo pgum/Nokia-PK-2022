@@ -20,6 +20,7 @@ public:
     virtual void handleCallAccepted(common::PhoneNumber from) = 0;
     virtual void handleCallDropped(common::PhoneNumber from) = 0;
     virtual void handleUnknownRecipientAfterCallRequest() = 0;
+    virtual void handleUnknownRecipientAfterCallAccepted() = 0;
 
 };
 

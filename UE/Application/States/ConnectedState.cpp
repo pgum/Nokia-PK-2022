@@ -166,12 +166,16 @@ void ConnectedState::handleAcceptOnDial(IUeGui::IDialMode& dial)
 void ConnectedState::handleCallRequest(common::PhoneNumber from)
 {
     using namespace std::chrono_literals;
-    context.timer.startTimer(30000ms);
+    if(context.callingPhone.value == 0){
+        context.timer.startTimer(30000ms);
 
-    context.callingPhone = from;
-    context.user.showNewCallRequest(from);
-    context.user.setAcceptCallback([&]{handleAcceptOnCallRequest(); });
-    context.user.setRejectCallback([&]{handleRejectOnCallRequest();});
+        context.callingPhone = from;
+        context.user.showNewCallRequest(from);
+        context.user.setAcceptCallback([&]{handleAcceptOnCallRequest(); });
+        context.user.setRejectCallback([&]{handleRejectOnCallRequest();});
+    } else {
+        context.bts.sendCallDropped(from);
+    }
 }
 
 void ConnectedState::handleCallAccepted(common::PhoneNumber)
