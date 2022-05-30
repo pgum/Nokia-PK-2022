@@ -22,7 +22,8 @@ namespace ue
 
     void TalkingState::handleCallEnded()
     {
-        context.callingPhone.value = 0;
+        context.currentCallingStatus.callingNumber.value = 0;
+        context.currentCallingStatus.isOutgoingCall = false;
         context.setState<ConnectedState>();
     }
 }
