@@ -41,13 +41,18 @@ void Application::handleAttachReject()
     context.state->handleAttachReject();
 }
 
-void Application::handleSmsReceive(uint8_t action, std::string text) {
-    context.state->handleSmsReceive(action, text);
-}
-
 void Application::handleDisconnected()
 {
     context.state->handleDisconnected();
+}
+
+void Application::handleSmsReceive(uint8_t action, const std::string& text, common::PhoneNumber fromPhoneNumber, common::PhoneNumber toPhoneNumber) {
+    context.state->handleSmsReceive(action, text, fromPhoneNumber, toPhoneNumber);
+}
+
+void Application::handleFailedSmsSend()
+{
+    context.state->handleFailedSmsSend();
 }
 
 }

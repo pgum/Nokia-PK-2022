@@ -16,9 +16,9 @@ class UserPortTestSuite : public Test
 protected:
     const common::PhoneNumber PHONE_NUMBER{112};
     NiceMock<common::ILoggerMock> loggerMock;
-    StrictMock<IUserEventsHandlerMock> handlerMock;
-    StrictMock<IUeGuiMock> guiMock;
-    StrictMock<IListViewModeMock> listViewModeMock;
+    NiceMock<IUserEventsHandlerMock> handlerMock;
+    NiceMock<IUeGuiMock> guiMock;
+    NiceMock<IListViewModeMock> listViewModeMock;
 
     UserPort objectUnderTest{loggerMock, guiMock, PHONE_NUMBER};
 

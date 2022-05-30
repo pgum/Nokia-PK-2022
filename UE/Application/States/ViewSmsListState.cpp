@@ -17,4 +17,9 @@ namespace ue {
     void ViewSmsListState::closeSmsButton() {
         context.setState<ConnectedState>();
     }
+
+    void ViewSmsListState::handleSmsReceive(uint8_t action, const std::string& text, common::PhoneNumber fromPhoneNumber, common::PhoneNumber toPhoneNumber) {
+        ConnectedState::handleSmsReceive(action, text, fromPhoneNumber, toPhoneNumber);
+        context.setState<ViewSmsListState>();
+    }
 }

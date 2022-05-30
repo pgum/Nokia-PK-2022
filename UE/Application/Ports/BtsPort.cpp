@@ -56,15 +56,20 @@ void BtsPort::handleMessage(BinaryMessage msg)
             auto action = reader.readNumber<std::uint8_t>();
             if(action == 0) {
                 std::string text = reader.readRemainingText();
-                handler->handleSmsReceive(action, text);
+                handler->handleSmsReceive(action, text, from, to);
             }
-            else {
-                // TODO
-            };
+            break;
         }
-
+        case common::MessageId::UnknownRecipient:
+        {
+            handler->handleFailedSmsSend();
+            logger.logInfo("Handle for unknown recipient");
+            break;
+        }
         default:
-            logger.logError("unknow message: ", msgId, ", from: ", from);
+        {
+            logger.logError("message handler for ", msgId, "not implemented(from ", from,")");
+        }
 
         }
     }
@@ -72,6 +77,19 @@ void BtsPort::handleMessage(BinaryMessage msg)
     {
         logger.logError("handleMessage error: ", ex.what());
     }
+}
+void BtsPort::sendSms(common::PhoneNumber toPhoneNumber, std::string text) {
+
+    common::OutgoingMessage outgoingMessage = common::OutgoingMessage(common::MessageId::Sms, phoneNumber, toPhoneNumber);
+    outgoingMessage.writeNumber(static_cast<uint8_t>(0));
+    outgoingMessage.writeText(text);
+
+    transport.sendMessage(outgoingMessage.getMessage());
+}
+
+
+common::PhoneNumber BtsPort::getOwnPhoneNumber() {
+    return phoneNumber;
 }
 
 
@@ -83,8 +101,8 @@ void BtsPort::sendAttachRequest(common::BtsId btsId)
                                 common::PhoneNumber{}};
     msg.writeBtsId(btsId);
     transport.sendMessage(msg.getMessage());
-
-
 }
+
+
 
 }

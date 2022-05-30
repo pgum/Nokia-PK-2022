@@ -19,9 +19,9 @@ protected:
     const common::PhoneNumber PHONE_NUMBER{112};
     const common::BtsId BTS_ID{42};
     NiceMock<common::ILoggerMock> loggerMock;
-    StrictMock<IBtsPortMock> btsPortMock;
-    StrictMock<IUserPortMock> userPortMock;
-    StrictMock<ITimerPortMock> timerPortMock;
+    NiceMock<IBtsPortMock> btsPortMock;
+    NiceMock<IUserPortMock> userPortMock;
+    NiceMock<ITimerPortMock> timerPortMock;
 
     Application objectUnderTest{PHONE_NUMBER,
                                 loggerMock,
@@ -74,7 +74,7 @@ TEST_F(ApplicationConnectingTestSuite, shallFailAttachOnTimeout) {
     objectUnderTest.handleTimeout();
 }
 
-struct ApplicationConnectedTestSuite : ApplicationNotConnectedTestSuite
+struct ApplicationConnectedTestSuite : ApplicationConnectingTestSuite
 {
     ApplicationConnectedTestSuite();
 };
@@ -85,8 +85,27 @@ ApplicationConnectedTestSuite::ApplicationConnectedTestSuite() {
     objectUnderTest.handleAttachAccept();
 }
 
+TEST_F(ApplicationConnectedTestSuite, shallReturnPhoneNumber) {
+    common::PhoneNumber number {000};
+//    EXPECT_CALL(userPortMock, showConnected());
+    EXPECT_EQ(btsPortMock.getOwnPhoneNumber(), number);
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallShowSms) {
+    // TODO: sms test
+    EXPECT_CALL(userPortMock, getSmsDb());
+    EXPECT_CALL(userPortMock, showSms(0));
+//    objectUnderTest.handleSmsReceive(0, "SMS_TEST", PHONE_NUMBER, PHONE_NUMBER);
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallShowSmsList) {
+    // TODO: sms list test
+    EXPECT_CALL(userPortMock, showSmsList());
+}
+
 TEST_F(ApplicationConnectedTestSuite, shallHandleDisconnect) {
     EXPECT_CALL(userPortMock, showNotConnected());
     objectUnderTest.handleDisconnected();
 }
+
 }

@@ -2,6 +2,7 @@
 
 #include <gmock/gmock.h>
 #include "Ports/IUserPort.hpp"
+#include "IUeGui.hpp"
 
 namespace ue
 {
@@ -26,6 +27,7 @@ public:
 
     MOCK_METHOD(void, showSms, (int), (final));
     MOCK_METHOD(void, showSmsList, (), (final));
+    MOCK_METHOD(IUeGui::ISmsComposeMode &, composeSms, (), (final));
     MOCK_METHOD(int, getAction, (), (final));
     MOCK_METHOD(SmsDb&, getSmsDb, (), (final));
 

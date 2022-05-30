@@ -23,6 +23,7 @@ public:
 
     virtual void showSmsList() = 0;
     virtual void showSms(int index) = 0;
+    virtual IUeGui::ISmsComposeMode& composeSms() = 0;
     virtual int getAction() = 0;
     virtual void acceptCallback(IUeGui::Callback acceptCallback) = 0;
     virtual void rejectCallback(IUeGui::Callback rejectCallback) = 0;
