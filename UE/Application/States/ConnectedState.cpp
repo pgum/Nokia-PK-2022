@@ -59,8 +59,9 @@ void ConnectedState::handleDisconnected()
 
 void ConnectedState::handleTimeout()
 {
-    context.bts.sendCallDropped(context.callingPhone);
-    context.callingPhone.value = 0;
+    context.bts.sendCallDropped(context.currentCallingStatus.callingNumber);
+    context.currentCallingStatus.callingNumber.value = 0;
+    context.currentCallingStatus.isOutgoingCall = false;
     handleMainMenu();
 }
 
@@ -156,7 +157,8 @@ void ConnectedState::handleAcceptOnDial(IUeGui::IDialMode& dial)
     context.timer.startTimer(60000ms);
 
     auto phoneNumber = dial.getPhoneNumber();
-    context.callingPhone = phoneNumber;
+    context.currentCallingStatus.callingNumber = phoneNumber;
+    context.currentCallingStatus.isOutgoingCall = true;
     context.user.showDialing(phoneNumber);
     context.bts.sendCallRequest(phoneNumber);
     context.user.setAcceptCallback([&]{return; });
@@ -166,10 +168,16 @@ void ConnectedState::handleAcceptOnDial(IUeGui::IDialMode& dial)
 void ConnectedState::handleCallRequest(common::PhoneNumber from)
 {
     using namespace std::chrono_literals;
-    if(context.callingPhone.value == 0){
+    if(context.currentCallingStatus.isOutgoingCall){
+        context.bts.sendCallDropped(context.currentCallingStatus.callingNumber);
+        context.currentCallingStatus.callingNumber.value = 0;
+        context.currentCallingStatus.isOutgoingCall = false;
+    }
+    if(context.currentCallingStatus.callingNumber.value == 0)
+    {
         context.timer.startTimer(30000ms);
-
-        context.callingPhone = from;
+        context.currentCallingStatus.callingNumber = from;
+        context.currentCallingStatus.isOutgoingCall = false;
         context.user.showNewCallRequest(from);
         context.user.setAcceptCallback([&]{handleAcceptOnCallRequest(); });
         context.user.setRejectCallback([&]{handleRejectOnCallRequest();});
@@ -190,7 +198,8 @@ void ConnectedState::handleCallDropped(common::PhoneNumber)
 {
     context.timer.stopTimer();
 
-    context.callingPhone.value = 0;
+    context.currentCallingStatus.callingNumber.value = 0;
+    context.currentCallingStatus.isOutgoingCall = false;
     context.user.showCallDropped();
     context.user.setAcceptCallback([&]{ handleMainMenu(); });
     context.user.setRejectCallback([&]{ handleMainMenu(); });
@@ -201,7 +210,7 @@ void ConnectedState::handleAcceptOnCallRequest()
 {
     context.timer.stopTimer();
 
-    context.bts.sendCallAccepted(context.callingPhone);
+    context.bts.sendCallAccepted(context.currentCallingStatus.callingNumber);
     context.user.showTalking();
     context.setState<TalkingState>();
 }
@@ -210,16 +219,18 @@ void ConnectedState::handleRejectOnCallRequest()
 {
     context.timer.stopTimer();
 
-    context.bts.sendCallDropped(context.callingPhone);
-    context.callingPhone.value = 0;
+    context.bts.sendCallDropped(context.currentCallingStatus.callingNumber);
+    context.currentCallingStatus.callingNumber.value = 0;
+    context.currentCallingStatus.isOutgoingCall = false;
     handleMainMenu();
 }
 
 void ConnectedState::handleCallResignation()
 {
     context.timer.stopTimer();
-
-    context.bts.sendCallDropped(context.callingPhone);
+    context.bts.sendCallDropped(context.currentCallingStatus.callingNumber);
+    context.currentCallingStatus.callingNumber.value = 0;
+    context.currentCallingStatus.isOutgoingCall = false;
     handleMainMenu();
 }
 

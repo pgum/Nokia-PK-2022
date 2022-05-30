@@ -8,6 +8,12 @@
 namespace ue
 {
 
+struct CallingStatus
+{
+    common::PhoneNumber callingNumber;
+    bool isOutgoingCall;
+};
+
 struct Context
 {
     common::ILogger& logger;
@@ -15,7 +21,7 @@ struct Context
     IUserPort& user;
     ITimerPort& timer;
     ISMSDatabase& smsDb;
-    common::PhoneNumber callingPhone {};
+    CallingStatus currentCallingStatus {};
     std::unique_ptr<IEventsHandler> state{};
 
     template <typename State, typename ...Arg>
@@ -24,5 +30,7 @@ struct Context
         state = std::make_unique<State>(*this, std::forward<Arg>(arg)...);
     }
 };
+
+
 
 }

@@ -71,23 +71,30 @@ void BtsPort::handleMessage(BinaryMessage msg)
             handler->handleSMS(from, reader.readRemainingText(),common::MessageId::Sms);
             break;
         }
+        case common::MessageId::CallTalk:
+        {
+            break;
+        }
         case common::MessageId::UnknownRecipient:
         {
             auto failMsgId = reader.readMessageId();
-            if(failMsgId == common::MessageId::Sms)
-            {
-                logger.logError("unknown message: ", msgId, ", to: ",to);
-                handler->handleSMS(from, reader.readRemainingText(),common::MessageId::UnknownRecipient);
-            }
-            else if(failMsgId == common::MessageId::CallRequest)
-            {
-                handler->handleUnknownRecipientAfterCallRequest();
+            switch (failMsgId) {
+                case common::MessageId::Sms:
+                    logger.logError("unknown message: ", msgId, ", to: ",to);
+                    handler->handleSMS(from, reader.readRemainingText(),
+                                       common::MessageId::UnknownRecipient);
+                    break;
+                case common::MessageId::CallRequest:
+                    handler->handleUnknownRecipientAfterCallRequest();
+                    break;
+                case common::MessageId::CallAccepted:
+                    handler->handleUnknownRecipientAfterCallAccepted();
+                    break;
             }
             break;
         }
         default:
             logger.logError("unknown message: ", msgId, ", from: ", from);
-
         }
     }
     catch (std::exception const& ex)
