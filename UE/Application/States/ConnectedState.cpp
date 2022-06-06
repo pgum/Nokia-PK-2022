@@ -3,6 +3,8 @@
 #include "ViewSmsListState.hpp"
 #include "IUeGui.hpp"
 #include "NotConnectedState.hpp"
+#include "BtsPort.hpp"
+#include "TimerPort.hpp"
 
 namespace {
     enum {
@@ -97,7 +99,7 @@ namespace ue {
 
     void ConnectedState::handleCallDrop(common::PhoneNumber receiverPhoneNumber)
     {
-        context.timer.TIMER_stopTimer();
+        context.timer.stopTimer();
         context.bts.sendCallDrop(receiverPhoneNumber);
     }
 
