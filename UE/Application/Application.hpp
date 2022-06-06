@@ -5,38 +5,59 @@
 #include "IEventsHandler.hpp"
 #include "Context.hpp"
 
-namespace ue
-{
+namespace ue {
 
-using common::PhoneNumber;
-using common::ILogger;
+    using common::PhoneNumber;
+    using common::ILogger;
 
-class Application : public IEventsHandler
-{
-public:
-    Application(PhoneNumber phoneNumber,
-                ILogger& iLogger,
-                IBtsPort& bts,
-                IUserPort& user,
-                ITimerPort& timer);
-    ~Application();
+    class Application : public IEventsHandler {
+    public:
+        Application(PhoneNumber phoneNumber,
+                    ILogger &iLogger,
+                    IBtsPort &bts,
+                    IUserPort &user,
+                    ITimerPort &timer);
 
-    // ITimerEventsHandler interface
-    void handleTimeout() override;
+        ~Application();
 
-    // IBtsEventsHandler interface
-    void handleSib(common::BtsId btsId) override;
-    void handleAttachAccept() override;
-    void handleAttachReject() override;
-    void handleDisconnected() override;
-    void handleSmsReceive(uint8_t action, const std::string& text,
-                          common::PhoneNumber fromPhoneNumber, common::PhoneNumber toPhoneNumber) override;
-    void handleFailedSmsSend() override;
+        // ITimerEventsHandler interface
+        void handleTimeout() override;
 
-private:
-    Context context;
-    common::PrefixedLogger logger;
+        // IBtsEventsHandler interface
+        void handleSib(common::BtsId btsId) override;
 
-};
+        void handleAttachAccept() override;
+
+        void handleAttachReject() override;
+
+        void handleDisconnected() override;
+
+        void handleSmsReceive(uint8_t action, const std::string &text,
+                              common::PhoneNumber fromPhoneNumber, common::PhoneNumber toPhoneNumber) override;
+
+        void handleFailedSmsSend() override;
+
+        void handleCallRequest(common::PhoneNumber phoneNumber) override;
+
+        void handleUknownRecipient(common::PhoneNumber phoneNumber) override;
+
+        void handleCallAccept(common::PhoneNumber phoneNumber) override;
+
+        void handleCallDrop(common::PhoneNumber phoneNumber) override;
+
+        //IUserEventsHandler interface:
+        void USER_handleCallAccept(common::PhoneNumber phoneNumber) override;
+
+        void USER_handleStartDial() override;
+
+        void USER_handleCallRequest(common::PhoneNumber) override;
+
+        void USER_handleCallDrop(common::PhoneNumber) override;
+
+    private:
+        Context context;
+        common::PrefixedLogger logger;
+
+    };
 
 }

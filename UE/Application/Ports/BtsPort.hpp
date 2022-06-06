@@ -5,29 +5,35 @@
 #include "ITransport.hpp"
 #include "Messages/PhoneNumber.hpp"
 
-namespace ue
-{
+namespace ue {
 
-class BtsPort : public IBtsPort
-{
-public:
-    BtsPort(common::ILogger& logger, common::ITransport& transport, common::PhoneNumber phoneNumber);
-    void start(IBtsEventsHandler& handler);
-    void stop();
+    class BtsPort : public IBtsPort {
+    public:
+        BtsPort(common::ILogger &logger, common::ITransport &transport, common::PhoneNumber phoneNumber);
 
-    void sendAttachRequest(common::BtsId) override;
+        void start(IBtsEventsHandler &handler);
 
-    common::PhoneNumber getOwnPhoneNumber() override;
-    void sendSms(common::PhoneNumber, std::string);
+        void stop();
 
-private:
-    void handleMessage(BinaryMessage msg);
+        void sendAttachRequest(common::BtsId) override;
+        void sendCallAccept(common::PhoneNumber) override;
+        void sendCallDrop(common::PhoneNumber) override;
+        void sendCallRequest(common::PhoneNumber) override;
 
-    common::PrefixedLogger logger;
-    common::ITransport& transport;
-    common::PhoneNumber phoneNumber;
 
-    IBtsEventsHandler* handler = nullptr;
-};
+        common::PhoneNumber getOwnPhoneNumber() override;
+
+        void sendSms(common::PhoneNumber, std::string);
+
+    private:
+        void handleDisconnected();
+        void handleMessage(BinaryMessage msg);
+
+        common::PrefixedLogger logger;
+        common::ITransport &transport;
+        common::PhoneNumber phoneNumber;
+
+        IBtsEventsHandler *handler = nullptr;
+    };
 
 }

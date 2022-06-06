@@ -11,46 +11,94 @@ namespace {
     };
 }
 
-namespace ue
-{
+namespace ue {
 
-ConnectedState::ConnectedState(Context &context)
-    : BaseState(context, "ConnectedState")
-{
-    context.user.acceptCallback([this] { showSmsButton(); });
-    context.user.rejectCallback([this] { closeSmsButton(); });
-    context.user.showConnected();
-}
-
-void ConnectedState::handleDisconnected()
-{
-    context.setState<NotConnectedState>();
-}
-
-void ConnectedState::showSmsButton() {
-    switch(context.user.getAction()){
-        case SENDING_SMS:
-            context.setState<SendingSmsState>();
-            break;
-        case VIEW_SMS_LIST:
-            context.setState<ViewSmsListState>();
-            break;
+    ConnectedState::ConnectedState(Context &context)
+            : BaseState(context, "ConnectedState") {
+        context.user.acceptCallback([this] { showSmsButton(); });
+        context.user.rejectCallback([this] { closeSmsButton(); });
+        context.user.showConnected();
     }
-}
 
-void ConnectedState::closeSmsButton() {
-    // TODO handle for clicking close sms button
-}
+    void ConnectedState::handleDisconnected() {
+        context.setState<NotConnectedState>();
+    }
 
-void ConnectedState::handleSmsReceive(uint8_t action, const std::string& text, common::PhoneNumber fromPhoneNumber, common::PhoneNumber toPhoneNumber) {
-    SmsDb &db = context.user.getSmsDb();
-    db.addSms(text, fromPhoneNumber, toPhoneNumber);
-}
+    common::PhoneNumber ConnectedState::getSenderPhoneNumber() {
+        return this->senderPhoneNumber;
+    }
 
-void ConnectedState::handleFailedSmsSend()
-{
-    SmsDb &db = context.user.getSmsDb();
-    db.markLastSmsSentAsFailed();
-}
+    void ConnectedState::showSmsButton() {
+        switch (context.user.getAction()) {
+            case SENDING_SMS:
+                context.setState<SendingSmsState>();
+                break;
+            case VIEW_SMS_LIST:
+                context.setState<ViewSmsListState>();
+                break;
+        }
+    }
+
+    void ConnectedState::closeSmsButton() {
+        // TODO handle for clicking close sms button
+    }
+
+    void ConnectedState::handleSmsReceive(uint8_t action, const std::string &text, common::PhoneNumber fromPhoneNumber,
+                                          common::PhoneNumber toPhoneNumber) {
+        SmsDb &db = context.user.getSmsDb();
+        db.addSms(text, fromPhoneNumber, toPhoneNumber);
+    }
+
+    void ConnectedState::handleFailedSmsSend() {
+        SmsDb &db = context.user.getSmsDb();
+        db.markLastSmsSentAsFailed();
+    }
+
+    void ConnectedState::USER_handleCallAccept(common::PhoneNumber phoneNumber)
+    {
+        context.timer.stopTimer();
+        std::cout<<"Accept call from:";
+        context.bts.BTS_sendCallAccept(phoneNumber);
+        context.user.USER_callAchieved(phoneNumber);
+        context.setState<TalkingState>(phoneNumber);
+    }
+
+
+    void ConnectedState::handleCallAccept(common::PhoneNumber phoneNumber)
+    {
+        context.timer.TIMER_stopTimer();
+        context.user.USER_callAchieved(phoneNumber);
+        context.setState<TalkingState>(phoneNumber);
+    }
+
+    void ConnectedState::handleCallDrop(common::PhoneNumber phoneNumber)
+    {
+        context.timer.TIMER_stopTimer();
+        std::printf("Accept call from:");
+        context.user.USER_showPartnerNotAvailable(phoneNumber);
+    }
+
+    void ConnectedState::handleUknownRecipient(common::PhoneNumber receiverPhoneNumber)
+    {
+        context.timer.TIMER_stopTimer();
+        context.user.USER_showPartnerNotAvailable(receiverPhoneNumber);
+    }
+
+    void ConnectedState::handleStartDial()
+    {
+        context.user.USER_showEnterPhoneNumber();
+    }
+
+    void ConnectedState::handleCallRequest(common::PhoneNumber receiverPhoneNumber)
+    {
+        context.bts.sendCallRequest(receiverPhoneNumber);
+        context.user.USER_showDialing(receiverPhoneNumber);
+    }
+
+    void ConnectedState::handleCallDrop(common::PhoneNumber receiverPhoneNumber)
+    {
+        context.timer.TIMER_stopTimer();
+        context.bts.sendCallDrop(receiverPhoneNumber);
+    }
 
 }

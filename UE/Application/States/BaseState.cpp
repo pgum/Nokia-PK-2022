@@ -48,5 +48,43 @@ void BaseState::handleFailedSmsSend()
 {
     logger.logError("Unexpected: handleFailedSmsSend");
 }
+    void BaseState::handleCallRequest(common::PhoneNumber phoneNumber)
+    {
+        logger.logError("Uexpected: handleCallRequest: ",phoneNumber);
+    }
 
+    void BaseState::handleUknownRecipient(common::PhoneNumber recipientPhoneNumber)
+    {
+        logger.logError("Uexpected: handleUknownRecipient: ",recipientPhoneNumber);
+    }
+
+    void BaseState::handleCallAccept(common::PhoneNumber receiverPhoneNumber)
+    {
+        logger.logError("Uexpected: handleCallAccepted: ",receiverPhoneNumber);
+    }
+
+    void BaseState::handleCallAccept(common::PhoneNumber receiverPhoneNumber)
+    {
+        logger.logError("Uexpected: handleCallAccept: ",receiverPhoneNumber);
+    }
+
+    void BaseState::handleCallDrop(common::PhoneNumber receiverPhoneNumber)
+    {
+        logger.logError("Uexpected: handleCallDrop: ",receiverPhoneNumber);
+    }
+
+    void BaseState::handleStartDial()
+    {
+        logger.logError("Uexpected: handleStartDial");
+    }
+
+    void BaseState::handleCallRequest(common::PhoneNumber receiverPhoneNumber)
+    {
+        logger.logError("Uexpected: handleCallRequest: ",receiverPhoneNumber);
+    }
+
+    void BaseState::handleCallDrop(common::PhoneNumber receiverPhoneNumber)
+    {
+        logger.logError("Uexpected: handleCallDropSender: ",receiverPhoneNumber);
+    }
 }
