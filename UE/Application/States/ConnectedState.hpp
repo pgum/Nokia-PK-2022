@@ -26,24 +26,24 @@ namespace ue {
 
         void handleFailedSmsSend();
 
-        void handleCallRequest(common::PhoneNumber) final;
+        void handleCallRequest(common::PhoneNumber) override;
 
-        void handleCallAccept(common::PhoneNumber phoneNumber) final;
+        void handleCallAccept(common::PhoneNumber phoneNumber) override;
 
-        void handleCallDrop(common::PhoneNumber phoneNumber) final;
+        void handleCallDrop(common::PhoneNumber phoneNumber) override;
 
-        void handleUknownRecipient(common::PhoneNumber phoneNumber) final;
+        void handleUknownRecipient(common::PhoneNumber phoneNumber) override;
 
 
         // IUserEventsHandler interface
     public:
-        void USER_handleCallAccept(common::PhoneNumber) final;
+        void USER_handleCallAccept(common::PhoneNumber) override;
 
-        void USER_handleStartDial() final;
+        void USER_handleStartDial() override;
 
-        void USER_handleCallRequest(common::PhoneNumber) final;
+        void USER_handleCallRequest(common::PhoneNumber) override;
 
-        void USER_handleCallDrop(common::PhoneNumber) final;
+        void USER_handleCallDrop(common::PhoneNumber) override;
     };
 
 }
