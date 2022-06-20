@@ -33,6 +33,13 @@ public:
 
     MOCK_METHOD(void, acceptCallback, (IUeGui::Callback), (final));
     MOCK_METHOD(void, rejectCallback, (IUeGui::Callback), (final));
+    MOCK_METHOD(void, showCallRequest, (common::PhoneNumber phoneNumber), (final));
+    MOCK_METHOD(void, callAchieved, (common::PhoneNumber phoneNumber), (final));
+    MOCK_METHOD(void, showPartnerNotAvailable, (common::PhoneNumber phoneNumber), (final));
+    MOCK_METHOD(void, startTalking, (common::PhoneNumber phoneNumber), (final));
+    MOCK_METHOD(void, showStartMenu,(), (final));
+    MOCK_METHOD(void, showEnterPhoneNumber, (), (final));
+    MOCK_METHOD(void, showDialing, (common::PhoneNumber phoneNumber), (final));
 };
 
 }

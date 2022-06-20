@@ -52,7 +52,7 @@ namespace ue {
     }
 
     void Application::handleCallAccept(common::PhoneNumber phoneNumber) {
-        context.state->USER_handleCallAccept(phoneNumber);
+        context.state->handleCallAccept(phoneNumber);
     }
 
     void Application::handleUknownRecipient(common::PhoneNumber recipientPhoneNumber) {
@@ -67,16 +67,16 @@ namespace ue {
         context.state->BTS_handleCallDrop(phoneNumber);
     }
 
-    void Application::USER_handleStartDial() {
-        context.state->USER_handleStartDial();
+    void Application::handleStartDial() {
+        context.state->handleStartDial();
     }
 
-    void Application::USER_handleCallRequest(common::PhoneNumber receiverPhoneNumber) {
-        context.state->USER_handleCallRequest(receiverPhoneNumber);
+    void Application::handleCallRequest(common::PhoneNumber receiverPhoneNumber) {
+        context.state->handleCallRequest(receiverPhoneNumber);
     }
 
-    void Application::USER_handleCallDrop(common::PhoneNumber receiverPhoneNumber) {
-        context.state->USER_handleCallDrop(receiverPhoneNumber);
+    void Application::handleCallDrop(common::PhoneNumber receiverPhoneNumber) {
+        context.state->handleCallDrop(receiverPhoneNumber);
     }
 
 }

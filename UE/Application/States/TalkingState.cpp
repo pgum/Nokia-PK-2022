@@ -8,14 +8,14 @@ namespace ue {
     TalkingState::TalkingState(Context &context,common::PhoneNumber phoneNumber)
             : BaseState(context, "TalkingState"), caller{phoneNumber}
     {
-        context.user.USER_startTalking(phoneNumber);
+        context.user.startTalking(phoneNumber);
         std::cout<<"hello"<<std::endl;
     }
 
     void TalkingState::handleUknownRecipient(common::PhoneNumber recipientPhoneNumber)
     {
         context.timer.stopTimer();
-        context.user.USER_showPartnerNotAvailable(recipientPhoneNumber);
+        context.user.showPartnerNotAvailable(recipientPhoneNumber);
         context.timer.startTimerAndDoSomething([this](){this->context.setState<ConnectedState>();},2);
 
     }

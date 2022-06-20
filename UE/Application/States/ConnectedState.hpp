@@ -37,13 +37,13 @@ namespace ue {
 
         // IUserEventsHandler interface
     public:
-        void USER_handleCallAccept(common::PhoneNumber) override;
+        void handleCallAccept(common::PhoneNumber) override;
 
-        void USER_handleStartDial() override;
+        void handleStartDial() override;
 
-        void USER_handleCallRequest(common::PhoneNumber) override;
+        void handleCallRequest(common::PhoneNumber) override;
 
-        void USER_handleCallDrop(common::PhoneNumber) override;
+        void handleCallDrop(common::PhoneNumber) override;
     };
 
 }

@@ -21,4 +21,7 @@ ICallModeMock::~ICallModeMock() = default;
 IDialModeMock::IDialModeMock() = default;
 IDialModeMock::~IDialModeMock() = default;
 
+ICallModeMock::ICallModeMock() = default;
+ICallModeMock::~ICallModeMock() = default;
+
 }

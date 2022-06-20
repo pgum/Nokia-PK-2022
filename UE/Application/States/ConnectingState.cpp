@@ -6,7 +6,7 @@ namespace ue {
 
     ConnectingState::ConnectingState(Context &context, common::BtsId btsId)
             : BaseState(context, "ConnectingState") {
-        context.user.USER_showConnecting();
+        context.user.showConnecting();
         context.bts.sendAttachRequest(btsId);
         using namespace std::chrono_literals;
         context.timer.startTimer(0.5);

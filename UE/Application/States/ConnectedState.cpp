@@ -56,12 +56,12 @@ namespace ue {
         db.markLastSmsSentAsFailed();
     }
 
-    void ConnectedState::USER_handleCallAccept(common::PhoneNumber phoneNumber)
+    void ConnectedState::handleCallAccept(common::PhoneNumber phoneNumber)
     {
         context.timer.stopTimer();
         std::cout<<"Accept call from:";
         context.bts.BTS_sendCallAccept(phoneNumber);
-        context.user.USER_callAchieved(phoneNumber);
+        context.user.callAchieved(phoneNumber);
         context.setState<TalkingState>(phoneNumber);
     }
 
@@ -69,7 +69,7 @@ namespace ue {
     void ConnectedState::handleCallAccept(common::PhoneNumber phoneNumber)
     {
         context.timer.TIMER_stopTimer();
-        context.user.USER_callAchieved(phoneNumber);
+        context.user.callAchieved(phoneNumber);
         context.setState<TalkingState>(phoneNumber);
     }
 
@@ -77,24 +77,24 @@ namespace ue {
     {
         context.timer.TIMER_stopTimer();
         std::printf("Accept call from:");
-        context.user.USER_showPartnerNotAvailable(phoneNumber);
+        context.user.showPartnerNotAvailable(phoneNumber);
     }
 
     void ConnectedState::handleUknownRecipient(common::PhoneNumber receiverPhoneNumber)
     {
         context.timer.TIMER_stopTimer();
-        context.user.USER_showPartnerNotAvailable(receiverPhoneNumber);
+        context.user.showPartnerNotAvailable(receiverPhoneNumber);
     }
 
     void ConnectedState::handleStartDial()
     {
-        context.user.USER_showEnterPhoneNumber();
+        context.user.showEnterPhoneNumber();
     }
 
     void ConnectedState::handleCallRequest(common::PhoneNumber receiverPhoneNumber)
     {
         context.bts.sendCallRequest(receiverPhoneNumber);
-        context.user.USER_showDialing(receiverPhoneNumber);
+        context.user.showDialing(receiverPhoneNumber);
     }
 
     void ConnectedState::handleCallDrop(common::PhoneNumber receiverPhoneNumber)
