@@ -50,8 +50,26 @@ namespace ue {
                     }
                     break;
                 }
+                case common::MessageId::CallRequest: {
+                    handler->handleCallRequest(from);
+                    break;
+                }
+                case common::MessageId::CallDropped: {
+                    handler->handleCallDrop(from);
+                    break;
+                }
+                case common::MessageId::CallAccepted: {
+                    handler->handleCallAccept(from);
+                    break;
+                }
+                case common::MessageId::CallTalk:
+                    handler->handleCallTalk(from, reader.readRemainingText());
+                    break;
                 case common::MessageId::UnknownRecipient: {
-                    handler->handleFailedSmsSend();
+                    auto failHeader = reader.readMessageHeader();
+                    if(failHeader.messageId == common::MessageId::Sms)handler->handleFailedSmsSend();
+                    else if(failHeader.messageId == common::MessageId::CallTalk)handler->handleUnknownRecipientCallTalk(phoneNumber);
+                    else handler->handleUnknownRecipientCallRequest(phoneNumber);
                     logger.logInfo("Handle for unknown recipient");
                     break;
                 }
@@ -91,10 +109,6 @@ namespace ue {
         transport.sendMessage(msg.getMessage());
     }
 
-    void BtsPort::handleDisconnected() {
-        handler->BST_handleDisconnected();
-    }
-
     void BtsPort::sendCallAccept(common::PhoneNumber receiverPhoneNumber) {
         logger.logDebug("sendCallAccept: ", receiverPhoneNumber);
         common::OutgoingMessage msg{common::MessageId::CallAccepted,
@@ -112,11 +126,19 @@ namespace ue {
     }
 
     void BtsPort::sendCallRequest(common::PhoneNumber receiverPhoneNumber) {
-        logger.logDebug("sendCallDrop: ", receiverPhoneNumber);
         common::OutgoingMessage msg{common::MessageId::CallRequest,
                                     phoneNumber,
                                     receiverPhoneNumber};
         transport.sendMessage(msg.getMessage());
+    }
+
+    void BtsPort::sendCallTalk(common::PhoneNumber receiverPhoneNumber, std::string message)
+    {
+        common::OutgoingMessage outgoingMsg{common::MessageId::CallTalk,
+                                            phoneNumber,
+                                            receiverPhoneNumber};
+        outgoingMsg.writeText(message);
+        transport.sendMessage(outgoingMsg.getMessage());
     }
 
 }

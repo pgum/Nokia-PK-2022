@@ -17,7 +17,7 @@ namespace ue {
 
         // ITimerPort interface
         void startTimer(Duration duration) override;
-        void startTimerAndDoSomething(std::function<void()>,double duration) override;
+//        void startTimerAndDoSomething(std::function<void()>,double duration) override;
         void stopTimer() override;
 
     private:

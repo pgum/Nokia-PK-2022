@@ -12,6 +12,12 @@ class IUserEventsHandlerMock : public IUserEventsHandler
 public:
     IUserEventsHandlerMock();
     ~IUserEventsHandlerMock() override;
+    MOCK_METHOD(void, handleSendCallAccept, (common::PhoneNumber), (final));
+    MOCK_METHOD(void, handleStartDial, (), (final));
+    MOCK_METHOD(void, handleSendCallRequest, (common::PhoneNumber), (final));
+    MOCK_METHOD(void, handleSendCallDrop, (common::PhoneNumber), (final));
+    MOCK_METHOD(void, handleSendCallTalk, (common::PhoneNumber, std::string), (final));
+
 
 };
 
@@ -37,9 +43,9 @@ public:
     MOCK_METHOD(void, callAchieved, (common::PhoneNumber phoneNumber), (final));
     MOCK_METHOD(void, showPartnerNotAvailable, (common::PhoneNumber phoneNumber), (final));
     MOCK_METHOD(void, startTalking, (common::PhoneNumber phoneNumber), (final));
-    MOCK_METHOD(void, showStartMenu,(), (final));
     MOCK_METHOD(void, showEnterPhoneNumber, (), (final));
     MOCK_METHOD(void, showDialing, (common::PhoneNumber phoneNumber), (final));
+    MOCK_METHOD(void, showNewCallTalk, (common::PhoneNumber, std::string), (final));
 };
 
 }

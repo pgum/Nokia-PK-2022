@@ -20,6 +20,18 @@ namespace ue {
         virtual void handleSmsReceive(uint8_t, const std::string &, common::PhoneNumber, common::PhoneNumber) = 0;
 
         virtual void handleFailedSmsSend() = 0;
+
+        virtual void handleCallRequest(common::PhoneNumber) = 0;
+
+        virtual void handleCallDrop(common::PhoneNumber) = 0;
+
+        virtual void handleCallAccept(common::PhoneNumber) = 0;
+
+        virtual void handleCallTalk(common::PhoneNumber, std::string) = 0;
+
+        virtual void handleUnknownRecipientCallRequest(common::PhoneNumber) = 0;
+        virtual void handleUnknownRecipientCallTalk(common::PhoneNumber) = 0;
+
     };
 
     class IBtsPort {
@@ -31,6 +43,14 @@ namespace ue {
         virtual common::PhoneNumber getOwnPhoneNumber() = 0;
 
         virtual void sendSms(common::PhoneNumber, std::string) = 0;
+
+        virtual void sendCallRequest(common::PhoneNumber) = 0;
+
+        virtual void sendCallAccept(common::PhoneNumber) = 0;
+
+        virtual void sendCallDrop(common::PhoneNumber) = 0;
+
+        virtual void sendCallTalk(common::PhoneNumber, std::string) = 0;
     };
 
 }

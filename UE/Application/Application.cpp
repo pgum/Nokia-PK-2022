@@ -48,35 +48,48 @@ namespace ue {
     }
 
     void Application::handleCallRequest(common::PhoneNumber phoneNumber) {
-        context.state->BTS_handleCallRequest(phoneNumber);
+        context.state->handleCallRequest(phoneNumber);
     }
 
     void Application::handleCallAccept(common::PhoneNumber phoneNumber) {
         context.state->handleCallAccept(phoneNumber);
     }
 
-    void Application::handleUknownRecipient(common::PhoneNumber recipientPhoneNumber) {
-        context.state->BTS_handleUknownRecipient(recipientPhoneNumber);
+    void Application::handleCallTalk(common::PhoneNumber phoneNumber, std::string message){
+        context.state->handleCallTalk(phoneNumber, message);
     }
 
-    void Application::handleCallAccept(common::PhoneNumber phoneNumber) {
-        context.state->BTS_handleCallAccept(phoneNumber);
-    }
 
     void Application::handleCallDrop(common::PhoneNumber phoneNumber) {
-        context.state->BTS_handleCallDrop(phoneNumber);
+        context.state->handleCallDrop(phoneNumber);
+    }
+
+    void Application::handleSendCallAccept(common::PhoneNumber phoneNumber) {
+        context.state->handleSendCallAccept(phoneNumber);
     }
 
     void Application::handleStartDial() {
         context.state->handleStartDial();
     }
 
-    void Application::handleCallRequest(common::PhoneNumber receiverPhoneNumber) {
-        context.state->handleCallRequest(receiverPhoneNumber);
+    void Application::handleSendCallRequest(common::PhoneNumber receiverPhoneNumber) {
+        context.state->handleSendCallRequest(receiverPhoneNumber);
     }
 
-    void Application::handleCallDrop(common::PhoneNumber receiverPhoneNumber) {
-        context.state->handleCallDrop(receiverPhoneNumber);
+    void Application::handleSendCallDrop(common::PhoneNumber receiverPhoneNumber) {
+        context.state->handleSendCallDrop(receiverPhoneNumber);
+    }
+
+    void Application::handleSendCallTalk(common::PhoneNumber receiverPhoneNumber, std::string message) {
+        context.state->handleSendCallTalk(receiverPhoneNumber, message);
+    }
+
+    void Application::handleUnknownRecipientCallRequest(common::PhoneNumber phoneNumber) {
+        context.state->handleUnknownRecipientCallRequest(phoneNumber);
+    }
+
+    void Application::handleUnknownRecipientCallTalk(common::PhoneNumber phoneNumber){
+        context.state->handleUnknownRecipientCallTalk(phoneNumber);
     }
 
 }

@@ -19,6 +19,7 @@ namespace ue {
         void sendCallAccept(common::PhoneNumber) override;
         void sendCallDrop(common::PhoneNumber) override;
         void sendCallRequest(common::PhoneNumber) override;
+        void sendCallTalk(common::PhoneNumber, std::string) override;
 
 
         common::PhoneNumber getOwnPhoneNumber() override;

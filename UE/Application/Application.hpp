@@ -39,20 +39,25 @@ namespace ue {
 
         void handleCallRequest(common::PhoneNumber phoneNumber) override;
 
-        void handleUknownRecipient(common::PhoneNumber phoneNumber) override;
+        void handleUnknownRecipientCallRequest(common::PhoneNumber) override;
+        void handleUnknownRecipientCallTalk(common::PhoneNumber) override;
 
         void handleCallAccept(common::PhoneNumber phoneNumber) override;
 
         void handleCallDrop(common::PhoneNumber phoneNumber) override;
 
+        void handleCallTalk(common::PhoneNumber, std::string) override;
+
         //IUserEventsHandler interface:
-        void handleCallAccept(common::PhoneNumber phoneNumber) override;
+        void handleSendCallAccept(common::PhoneNumber phoneNumber) override;
 
         void handleStartDial() override;
 
-        void handleCallRequest(common::PhoneNumber) override;
+        void handleSendCallRequest(common::PhoneNumber) override;
 
-        void handleCallDrop(common::PhoneNumber) override;
+        void handleSendCallDrop(common::PhoneNumber) override;
+
+        void handleSendCallTalk(common::PhoneNumber, std::string) override;
 
     private:
         Context context;

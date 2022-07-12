@@ -6,14 +6,14 @@ namespace ue {
 
     class ConnectedState : public BaseState {
     private :
-        common: PhoneNumber senderPhoneNumber;
+        common::PhoneNumber senderPhoneNumber;
 
     public:
         ConnectedState(Context &context);
 
         void setSenderPhoneNumber(common::PhoneNumber senderPhoneNumber);
 
-        common::PhoneNumber getSenderPhoneNumber();
+        void handleTimeout() override;
 
         virtual void showSmsButton();
 
@@ -32,18 +32,18 @@ namespace ue {
 
         void handleCallDrop(common::PhoneNumber phoneNumber) override;
 
-        void handleUknownRecipient(common::PhoneNumber phoneNumber) override;
+        void handleUnknownRecipientCallRequest(common::PhoneNumber phoneNumber) override;
 
 
         // IUserEventsHandler interface
     public:
-        void handleCallAccept(common::PhoneNumber) override;
+        void handleSendCallAccept(common::PhoneNumber) override;
 
         void handleStartDial() override;
 
-        void handleCallRequest(common::PhoneNumber) override;
+        void handleSendCallRequest(common::PhoneNumber) override;
 
-        void handleCallDrop(common::PhoneNumber) override;
+        void handleSendCallDrop(common::PhoneNumber) override;
     };
 
 }

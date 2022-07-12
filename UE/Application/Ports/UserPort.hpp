@@ -47,6 +47,8 @@ namespace ue {
 
         void startTalking(common::PhoneNumber) override;
 
+        void showNewCallTalk(common::PhoneNumber, std::string) override;
+
         void showPartnerNotAvailable(common::PhoneNumber) override;
 
         void showEnterPhoneNumber() override;
