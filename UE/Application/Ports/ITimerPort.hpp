@@ -2,26 +2,24 @@
 
 #include <chrono>
 
-namespace ue
-{
+namespace ue {
 
-class ITimerEventsHandler
-{
-public:
-    virtual ~ITimerEventsHandler() = default;
+    class ITimerEventsHandler {
+    public:
+        virtual ~ITimerEventsHandler() = default;
 
-    virtual void handleTimeout() = 0;
-};
+        virtual void handleTimeout() = 0;
+    };
 
-class ITimerPort
-{
-public:
-    using Duration = std::chrono::milliseconds;
+    class ITimerPort {
+    public:
+        using Duration = std::chrono::milliseconds;
 
-    virtual ~ITimerPort() = default;
+        virtual ~ITimerPort() = default;
 
-    virtual void startTimer(Duration) = 0;
-    virtual void stopTimer() = 0;
-};
+        virtual void startTimer(Duration) = 0;
+
+        virtual void stopTimer() = 0;
+    };
 
 }

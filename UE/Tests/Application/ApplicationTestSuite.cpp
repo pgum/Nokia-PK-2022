@@ -17,10 +17,11 @@ class ApplicationTestSuite : public Test
 {
 protected:
     const common::PhoneNumber PHONE_NUMBER{112};
+    const common::BtsId BTS_ID{42};
     NiceMock<common::ILoggerMock> loggerMock;
-    StrictMock<IBtsPortMock> btsPortMock;
-    StrictMock<IUserPortMock> userPortMock;
-    StrictMock<ITimerPortMock> timerPortMock;
+    NiceMock<IBtsPortMock> btsPortMock;
+    NiceMock<IUserPortMock> userPortMock;
+    NiceMock<ITimerPortMock> timerPortMock;
 
     Application objectUnderTest{PHONE_NUMBER,
                                 loggerMock,
@@ -30,10 +31,70 @@ protected:
 };
 
 struct ApplicationNotConnectedTestSuite : ApplicationTestSuite
-{};
-
-TEST_F(ApplicationNotConnectedTestSuite, todo)
 {
+    void requestAttachOnSib();
+};
+
+void ApplicationNotConnectedTestSuite::requestAttachOnSib() {
+    EXPECT_CALL(btsPortMock, sendAttachRequest(BTS_ID));
+    EXPECT_CALL(timerPortMock, startTimer(_));
+    EXPECT_CALL(userPortMock, showConnecting());
+    objectUnderTest.handleSib(BTS_ID);
+}
+
+TEST_F(ApplicationNotConnectedTestSuite, shallRequestAttachOnSib)
+{
+    requestAttachOnSib();
+}
+
+struct ApplicationConnectingTestSuite : ApplicationNotConnectedTestSuite
+{
+    ApplicationConnectingTestSuite();
+};
+
+ApplicationConnectingTestSuite::ApplicationConnectingTestSuite() {
+    requestAttachOnSib();
+}
+
+TEST_F(ApplicationConnectingTestSuite, shallCompleteAttachWhenAttachAccepted)
+{
+    EXPECT_CALL(timerPortMock, stopTimer());
+    EXPECT_CALL(userPortMock, showConnected());
+    objectUnderTest.handleAttachAccept();
+}
+
+TEST_F(ApplicationConnectingTestSuite, shallFailAttachWhenAttachRejected) {
+    EXPECT_CALL(timerPortMock, stopTimer());
+    EXPECT_CALL(userPortMock, showNotConnected());
+    objectUnderTest.handleAttachReject();
+}
+
+TEST_F(ApplicationConnectingTestSuite, shallFailAttachOnTimeout) {
+    EXPECT_CALL(userPortMock, showNotConnected());
+    objectUnderTest.handleTimeout();
+}
+
+struct ApplicationConnectedTestSuite : ApplicationConnectingTestSuite
+{
+    ApplicationConnectedTestSuite();
+};
+
+ApplicationConnectedTestSuite::ApplicationConnectedTestSuite() {
+    EXPECT_CALL(timerPortMock, stopTimer());
+    EXPECT_CALL(userPortMock, showConnected());
+    objectUnderTest.handleAttachAccept();
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallReturnPhoneNumber) {
+    common::PhoneNumber number {000};
+//    EXPECT_CALL(userPortMock, showConnected());
+    EXPECT_EQ(btsPortMock.getOwnPhoneNumber(), number);
+}
+
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleDisconnect) {
+    EXPECT_CALL(userPortMock, showNotConnected());
+    objectUnderTest.handleDisconnected();
 }
 
 }

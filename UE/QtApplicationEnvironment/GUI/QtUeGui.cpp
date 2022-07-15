@@ -123,7 +123,7 @@ void QtUeGui::addButtons()
     acceptButton.setIcon(QIcon(QPixmap("images/call_acc.png")));
     acceptButton.move(70,buttonsCOmmonY);
 
-    homeButton.setIcon(QIcon(QPixmap("images/sms.png")));
+    homeButton.setIcon(QIcon(QPixmap("images/smsList.png")));
     homeButton.move(176,buttonsCOmmonY);
 
     rejectButton.setIcon(QIcon(QPixmap("images/call_rej.png")));

@@ -2,9 +2,9 @@ name: C/C++ CI
 
 on:
   push:
-    branches: [ master ]
+    branches: '**'
   pull_request:
-    branches: [ master ]
+    branches: '**'
 
 jobs:
   build:
@@ -15,8 +15,15 @@ jobs:
     - uses: actions/checkout@v2
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
+    - name: install cppcheck
+      run: sudo apt-get install cppcheck
+      
+    - name: static analysis
+      run: cppcheck BTS -i BTS/Tests && cppcheck UE -i UE/Tests && cppcheck COMMON -i COMMON/Tests
+      
     - name: cmake
       run: cmake .
+      
     - name: make all targets
       run: make all
 
@@ -31,7 +38,6 @@ jobs:
 
     - name: UT for UeApplication
       run: make UeApplicationUT
-
-    - name: next steps
-      run: echo "Here you can add next steps"
-
+  
+    - name: run UE ut
+      run: ./UE/Tests/Application/UeApplicationUT
