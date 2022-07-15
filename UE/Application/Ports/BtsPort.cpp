@@ -68,8 +68,8 @@ namespace ue {
                 case common::MessageId::UnknownRecipient: {
                     auto failHeader = reader.readMessageHeader();
                     if(failHeader.messageId == common::MessageId::Sms)handler->handleFailedSmsSend();
-                    else if(failHeader.messageId == common::MessageId::CallTalk)handler->handleUnknownRecipientCallTalk(phoneNumber);
-                    else handler->handleUnknownRecipientCallRequest(phoneNumber);
+                    else if(failHeader.messageId == common::MessageId::CallTalk)handler->handleUnknownRecipientCallTalk(from);
+                    else handler->handleUnknownRecipientCallRequest(from);
                     logger.logInfo("Handle for unknown recipient");
                     break;
                 }

@@ -2,9 +2,10 @@
 
 #include "BaseState.hpp"
 #include "Messages/PhoneNumber.hpp"
+#include "ConnectedState.hpp"
 
 namespace ue {
-    class TalkingState : public BaseState {
+    class TalkingState : public ConnectedState {
     private:
         common::PhoneNumber caller;
     public:

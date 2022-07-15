@@ -1,39 +1,59 @@
 #include "TimerPort.hpp"
 
-namespace ue {
+namespace ue
+{
 
     TimerPort::TimerPort(common::ILogger &logger)
-            : logger(logger, "[TIMER PORT]") {}
+            : logger(logger, "[TIMER PORT]")
+    {}
 
-    void TimerPort::start(ITimerEventsHandler &handler) {
+
+    void TimerPort::start(ITimerEventsHandler &handler)
+    {
         logger.logDebug("Started");
         this->handler = &handler;
+        timerRunning.store(true);
+
     }
 
-    void TimerPort::stop() {
-        logger.logDebug("Stoped");
+    void TimerPort::stop()
+    {
+        logger.logDebug("Stopped");
+        timerRunning.store(false);
         handler = nullptr;
     }
 
-    void TimerPort::startTimer(Duration duration) {
+    void TimerPort::startTimer(Duration duration)
+    {
+        if(timerRunning){
+            timerRunning.store(false);
+            return;
+        }
+        timerRunning.store(true);
         logger.logDebug("Start timer: ", duration.count(), "ms");
-    }
-//    void TimerPort::startTimerAndDoSomething(std::function<void()> function,double duration)
-//    {
-//        logger.logDebug("Start timer: ", duration*1000, "ms");
-//        this->active=true;
-//        std::thread t([=]() {
-//            if(!this->active) return;
-//            int temp = (int)(duration*1000);
-//            std::this_thread::sleep_for(std::chrono::milliseconds(temp));
-//            if(!this->active) return;
-//            function();
-//        });
-//        t.detach();
-//    }
 
-    void TimerPort::stopTimer() {
+        timerThread = std::thread(&TimerPort::timerRun, this, duration);
+        timerThread.detach();
+    }
+
+    void TimerPort::stopTimer()
+    {
         logger.logDebug("Stop timer");
+        timerRunning.store(false);
+    }
+
+    void TimerPort::timerRun(std::chrono::duration<double> timerDuration){
+
+        auto start = std::chrono::system_clock::now();
+
+        while((std::chrono::system_clock::now() - timerDuration) < start){
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            if(!timerRunning){
+                return;
+            }
+        }
+        timerRunning.store(false);
+        handler->handleTimeout();
     }
 
 }

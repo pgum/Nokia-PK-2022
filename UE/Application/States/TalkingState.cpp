@@ -7,7 +7,7 @@ namespace ue {
 
 
     TalkingState::TalkingState(Context &context,common::PhoneNumber phoneNumber)
-            : BaseState(context, "TalkingState"), caller{phoneNumber}
+            : ConnectedState(context), caller{phoneNumber}
     {
         context.user.startTalking(phoneNumber);
         using namespace std::chrono_literals;

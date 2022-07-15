@@ -86,7 +86,8 @@ namespace ue {
 
     void ConnectedState::handleUnknownRecipientCallRequest(common::PhoneNumber phoneNumber) {
         context.timer.stopTimer();
-        context.user.showPartnerNotAvailable(phoneNumber);
+        context.user.showPartnerNotAvailable(senderPhoneNumber);
+        setSenderPhoneNumber({});
     }
 
     void ConnectedState::handleSendCallAccept(common::PhoneNumber phoneNumber)
@@ -126,6 +127,7 @@ namespace ue {
     {
         context.timer.stopTimer();
         context.bts.sendCallDrop(senderPhoneNumber);
+        setSenderPhoneNumber({});
         context.user.showConnected();
     }
 
